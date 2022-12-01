@@ -40,13 +40,18 @@ function Bottom(props) {
                 <View style={styles.outterButton}>
                   {bench === choice && <View style={styles.innerButton} />}
                 </View>
-                <Text style={[styles.font, styles.bold]}>{choice}</Text>
+                <Text style={[styles.font, styles.bold]}>
+                  {choice}
+                  <Text style={[styles.bold, styles.smallFont]}>
+                    {"\n"}PAR
+                  </Text>
+                </Text>
               </TouchableOpacity>
             )
           )}
         </View>
         <View style={styles.time}>
-          <Text>Elapsed Time</Text>
+          <Text>Elapsed Time Notifications</Text>
         </View>
         <View style={styles.teamCharts}>
           <Text style={styles.exampleText}>Team Charts</Text>
@@ -88,6 +93,7 @@ const styles = StyleSheet.create({
   },
   font: {
     fontSize: 14,
+    textAlign: "center",
   },
   innerButton: {
     width: 10,
@@ -107,8 +113,8 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",
-    alignSelf: "center",
-    marginLeft: 10,
+    alignSelf: "flex-start",
+    marginTop: 2,    marginLeft: 10,
     marginRight: 5,
   },
   outterCheck: {
@@ -117,13 +123,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
-    alignSelf: "center",
+    alignSelf: "flex-start",
+    marginTop: 2,
     marginRight: 10,
   },
   rightBotom: {
     width: "55%",
     height: "95%",
     backgroundColor: "orange",
+  },
+  smallFont: {
+    fontSize: 10,
+  },
+  time: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    textAlign: 'center',
   },
   todo: {
     width: "20%",

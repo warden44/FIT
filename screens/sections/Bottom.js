@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Timer from '../Timer'
 
 function Bottom(props) {
   const [bench, setBench] = useState("");
@@ -52,6 +53,7 @@ function Bottom(props) {
         </View>
         <View style={styles.time}>
           <Text>Elapsed Time Notifications</Text>
+                <View><Timer></Timer></View>
         </View>
         <View style={styles.teamCharts}>
           <Text style={styles.exampleText}>Team Charts</Text>

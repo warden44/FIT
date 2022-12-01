@@ -6,22 +6,22 @@ function Top(props) {
   //const [checked, setChecked] = React.useState("first");
 
   const [alarm, setAlarm] = useState("");
-  const [checkAlarm, SetAlarmCheck] = useState("");
+  const [checkAlarm, SetAlarmCheck] = useState(false);
 
   const [report, setReport] = useState("");
-  const [checkReport, setReportCheck] = useState("");
+  const [checkReport, setReportCheck] = useState(false);
 
   const [strategy, setStrategy] = useState("");
-  const [checkStrategy, setStrategyCheck] = useState("");
+  const [checkStrategy, setStrategyCheck] = useState(false);
 
   const [mode, setMode] = useState("");
-  const [checkMode, setCheckMode] = useState("");
+  const [checkMode, setCheckMode] = useState(false);
 
   const [command, setCommand] = useState("");
-  const [checkCommand, setCheckCommand] = useState("");
+  const [checkCommand, setCheckCommand] = useState(false);
 
   const [location, setLocation] = useState("");
-  const [checkLocation, setCheckLocation] = useState("");
+  const [checkLocation, setCheckLocation] = useState(false);
 
   return (
     //header
@@ -42,13 +42,13 @@ function Top(props) {
             <TouchableOpacity
               style={styles.check}
               onPress={() =>
-                checkAlarm === "true"
-                  ? SetAlarmCheck("false")
-                  : SetAlarmCheck("true")
+                checkAlarm === true
+                  ? SetAlarmCheck(false)
+                  : SetAlarmCheck(true)
               }
             >
               <View style={styles.outterCheck}>
-                {checkAlarm === "true" && <View style={styles.innerCheck} />}
+                {checkAlarm === true && <View style={styles.innerCheck} />}
               </View>
               <Text style={styles.bold}>Working Fire Notifications:</Text>
             </TouchableOpacity>
@@ -75,13 +75,13 @@ function Top(props) {
             <TouchableOpacity
               style={styles.check}
               onPress={() =>
-                checkReport === "true"
-                  ? setReportCheck("false")
-                  : setReportCheck("true")
+                checkReport === true
+                  ? setReportCheck(false)
+                  : setReportCheck(true)
               }
             >
               <View style={styles.outterCheck}>
-                {checkReport === "true" && <View style={styles.innerCheck} />}
+                {checkReport === true && <View style={styles.innerCheck} />}
               </View>
               <Text>On Scene Report:</Text>
             </TouchableOpacity>
@@ -111,13 +111,13 @@ function Top(props) {
             <TouchableOpacity
               style={styles.check}
               onPress={() =>
-                checkStrategy === "true"
-                  ? setStrategyCheck("false")
-                  : setStrategyCheck("true")
+                checkStrategy === true
+                  ? setStrategyCheck(false)
+                  : setStrategyCheck(true)
               }
             >
               <View style={styles.outterCheck}>
-                {checkStrategy === "true" && <View style={styles.innerCheck} />}
+                {checkStrategy === true && <View style={styles.innerCheck} />}
               </View>
               <Text>Declare Strategy:</Text>
             </TouchableOpacity>
@@ -145,13 +145,13 @@ function Top(props) {
             <TouchableOpacity
               style={styles.check}
               onPress={() =>
-                checkMode === "true"
-                  ? setCheckMode("false")
-                  : setCheckMode("true")
+                checkMode === true
+                  ? setCheckMode(false)
+                  : setCheckMode(true)
               }
             >
               <View style={styles.outterCheck}>
-                {checkMode === "true" && <View style={styles.innerCheck} />}
+                {checkMode === true && <View style={styles.innerCheck} />}
               </View>
               <Text>Declare Mode:</Text>
             </TouchableOpacity>
@@ -177,13 +177,13 @@ function Top(props) {
             <TouchableOpacity
               style={styles.check}
               onPress={() =>
-                checkCommand === "true"
-                  ? setCheckCommand("false")
-                  : setCheckCommand("true")
+                checkCommand === true
+                  ? setCheckCommand(false)
+                  : setCheckCommand(true)
               }
             >
               <View style={styles.outterCheck}>
-                {checkCommand === "true" && <View style={styles.innerCheck} />}
+                {checkCommand === true && <View style={styles.innerCheck} />}
               </View>
               <Text>Establish Command:</Text>
             </TouchableOpacity>
@@ -212,13 +212,13 @@ function Top(props) {
             <TouchableOpacity
               style={styles.check}
               onPress={() =>
-                checkLocation === "true"
-                  ? setCheckLocation("false")
-                  : setCheckLocation("true")
+                checkLocation === true
+                  ? setCheckLocation(false)
+                  : setCheckLocation(true)
               }
             >
               <View style={styles.outterCheck}>
-                {checkLocation === "true" && <View style={styles.innerCheck} />}
+                {checkLocation === true && <View style={styles.innerCheck} />}
               </View>
               <Text>Designate Accountability Location:</Text>
             </TouchableOpacity>
@@ -259,11 +259,14 @@ function Top(props) {
           </Text>
         </View>
         <View style={styles.mayday}>
-          <Text
-            style={{ fontSize: 20, fontWeight: "bold", alignSelf: "center" }}
-          >
-            Mayday
-          </Text>
+          <Text style={styles.maydayHeader}>"MAYDAY" Lost or Trapped FireFighters</Text>
+          <Text style={styles.chartSection}><Text style={styles.highlight}>E</Text>mergency Traffic Declared</Text>
+          <Text style={styles.chartSection}><Text style={styles.highlight}>R</Text>IT Deployed</Text>
+          <Text style={styles.chartSection}><Text style={styles.highlight}>U</Text>pgrade the assignment</Text>
+          <Text style={styles.chartSection}><Text style={styles.highlight}>P</Text>AR on ALL crews in the hazard zone</Text>
+          <Text style={styles.chartSection}><Text style={styles.highlight}>T</Text>actical Channel assigned for the specific fire</Text>
+          <Text style={styles.chartSection}><Text style={styles.highlight}>T</Text>ools needed</Text>
+          <Text style={styles.chartSection}><Text style={styles.highlight}>T</Text>ime the MAYDAY was called</Text>
         </View>
       </View>
     </View>
@@ -276,6 +279,12 @@ const styles = StyleSheet.create({
   },
   button: {
     flexDirection: "row",
+  },
+  chartSection: {
+    flex: 1,
+    borderTopWidth: 1,
+    paddingLeft: 5,
+    paddingRight: 5,
   },
   check: {
     flexDirection: "row",
@@ -290,7 +299,6 @@ const styles = StyleSheet.create({
     width: "15%",
     height: "95%",
     backgroundColor: "blue",
-    alignSelf: "center",
     borderWidth: 2,
   },
   font: {
@@ -307,6 +315,10 @@ const styles = StyleSheet.create({
     fontSize: 30,
     top: 10,
   },
+  highlight: {
+    color: 'red',
+    fontWeight: 'bold',
+  },
   indent: {
     left: 20,
   },
@@ -322,11 +334,19 @@ const styles = StyleSheet.create({
     backgroundColor: "red",
   },
   mayday: {
-    width: "20%",
+    width: "25%",
     height: "95%",
-    backgroundColor: "purple",
-    alignSelf: "center",
+    backgroundColor: "yellow",
     borderWidth: 2,
+  },
+  maydayHeader: {
+    flex: 1,
+    color: 'white',
+    backgroundColor: 'red',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    paddingLeft: 5,
+    paddingRight: 5,
   },
   outterButton: {
     width: 15,
@@ -351,8 +371,7 @@ const styles = StyleSheet.create({
   ready: {
     width: "15%",
     height: "95%",
-    backgroundColor: "yellow",
-    alignSelf: "center",
+    backgroundColor: "purple",
     borderWidth: 2,
   },
   top: {
@@ -364,6 +383,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 20,
   },
   topButtons: {

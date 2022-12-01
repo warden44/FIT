@@ -1,14 +1,42 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  FlatList,
+} from "react-native";
 
 function Bottom(props) {
   const [bench, setBench] = useState("");
   const [checkBench, setCheckBench] = useState("");
-
+  // scrollable list
+  const renderItem = ({ item }) => <Item title={item.title} />;
+  const Item = ({ title }) => (
+    <View style={styles.item}>
+      <Text style={styles.title}>{title}</Text>
+    </View>
+  );
+  /// sample data
+  const DATA = [
+    { id: "1", title: "First Item" },
+    {
+      id: "2",
+      title: "second item",
+    },
+  ];
   return (
     <View style={styles.container}>
       <View style={styles.todo}>
         <Text style={styles.exampleText}>ToDo Scroll List</Text>
+        {[DATA].map((action) => (
+          <FlatList
+            data={DATA}
+            key={DATA}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
+        ))}
       </View>
       <View style={styles.done}>
         <Text style={styles.exampleText}>Done List</Text>

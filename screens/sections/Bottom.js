@@ -43,6 +43,7 @@ function Bottom(props) {
       </View>
       <View style={styles.rightBotom}>
         <View style={styles.benchmarks}>
+          <Text>Cock</Text>
           {/* Declare Benchmark */}
           <View style={styles.wrapper}>
             <TouchableOpacity

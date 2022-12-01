@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 function Bottom(props) {
   const [bench, setBench] = useState("");
-  const [checkBench, setCheckBench] = useState("");
+  const [checkBench, setCheckBench] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -15,24 +15,21 @@ function Bottom(props) {
       </View>
       <View style={styles.rightBotom}>
         <View style={styles.benchmarks}>
-          <Text>Cock</Text>
-          {/* Declare Benchmark */}
-          <View style={styles.wrapper}>
-            <TouchableOpacity
-              style={styles.check}
-              onPress={() =>
-                checkBench === "true"
-                  ? setCheckBench("false")
-                  : setCheckBench("true")
-              }
-            >
-              <View style={styles.outterCheck}>
-                {checkBench === "true" && <View style={styles.innerCheck} />}
-              </View>
-              <Text>Declare Mode:</Text>
-            </TouchableOpacity>
+          {/* Benchmarks */}
+          <TouchableOpacity
+            style={styles.check}
+            onPress={() =>
+              checkBench === true ? setCheckBench(false) : setCheckBench(true)
+            }
+          >
+            <View style={styles.outterCheck}>
+              {checkBench === true && <View style={styles.innerCheck} />}
+            </View>
+            <Text style={[styles.bold, styles.font]}>Benchmarks:</Text>
+          </TouchableOpacity>
 
-            {["Investigative", "Fast Action", "Command"].map((choice) => (
+          {['"All Clear" Complete', "Fire Under Control", "Loss Stopped"].map(
+            (choice) => (
               <TouchableOpacity
                 key={choice}
                 style={styles.button}
@@ -43,10 +40,10 @@ function Bottom(props) {
                 <View style={styles.outterButton}>
                   {bench === choice && <View style={styles.innerButton} />}
                 </View>
-                <Text style={styles.font}>{choice}</Text>
+                <Text style={[styles.font, styles.bold]}>{choice}</Text>
               </TouchableOpacity>
-            ))}
-          </View>
+            )
+          )}
         </View>
         <View style={styles.time}>
           <Text>Elapsed Time</Text>
@@ -60,6 +57,9 @@ function Bottom(props) {
 }
 
 const styles = StyleSheet.create({
+  bold: {
+    fontWeight: "bold",
+  },
   button: {
     flexDirection: "row",
   },
@@ -87,7 +87,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   font: {
-    fontSize: 13,
+    fontSize: 14,
+  },
+  innerButton: {
+    width: 10,
+    height: 10,
+    backgroundColor: "blue",
+    borderRadius: 10,
   },
   innerCheck: {
     width: 10,
@@ -125,12 +131,14 @@ const styles = StyleSheet.create({
     backgroundColor: "brown",
     opacity: 6,
   },
-  wrapper: {
+  benchmarks: {
     flexDirection: "row",
+    justifyContent: "flex-end",
     width: "100%",
     marginTop: 0,
     marginBottom: 0,
-    alignItems: "center",
+    paddingRight: 10,
+    backgroundColor: "white",
   },
 });
 

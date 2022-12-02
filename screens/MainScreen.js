@@ -20,7 +20,7 @@ function MainScreen(props) {
 
 const styles = StyleSheet.create({
   bottom: {
-    flex: 11,
+    flex: 9,
   },
   container: {
     flex: 1,

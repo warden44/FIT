@@ -7,6 +7,7 @@ function Timer(props) {
   const [hours, setHours] = useState(0);
 
 
+
   var timer;
   useEffect(()=> {
 
@@ -30,7 +31,7 @@ function Timer(props) {
 
   return (
     <View style={styles.timer}>
-      <Text style={styles.font}>{hours < 10 && 0}{hours > 0 && hours}:{minutes < 10 && 0}{minutes}:{seconds < 10 && 0}{seconds}</Text>
+      <Text style={styles.font} adjustsFontSizeToFit>{hours < 10 && 0}{hours > 0 && hours}:{minutes < 10 && 0}{minutes}:{seconds < 10 && 0}{seconds}</Text>
     </View>
   );
 }
@@ -44,6 +45,7 @@ const styles = StyleSheet.create({
     margin: 5,
     paddingLeft: 5,
     paddingRight: 5,
+    textAlign: 'center'
   },
   font: {
     fontSize: 25,

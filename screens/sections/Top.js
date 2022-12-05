@@ -42,9 +42,7 @@ function Top(props) {
             <TouchableOpacity
               style={styles.check}
               onPress={() =>
-                checkAlarm === true
-                  ? SetAlarmCheck(false)
-                  : SetAlarmCheck(true)
+                checkAlarm === true ? SetAlarmCheck(false) : SetAlarmCheck(true)
               }
             >
               <View style={styles.outterCheck}>
@@ -145,9 +143,7 @@ function Top(props) {
             <TouchableOpacity
               style={styles.check}
               onPress={() =>
-                checkMode === true
-                  ? setCheckMode(false)
-                  : setCheckMode(true)
+                checkMode === true ? setCheckMode(false) : setCheckMode(true)
               }
             >
               <View style={styles.outterCheck}>
@@ -250,6 +246,14 @@ function Top(props) {
           >
             Enroute
           </Text>
+          <View>
+          <Text style={styles.teamName}>Team Name</Text>
+          <Text style={styles.teamName}>Team Name</Text>
+          <Text style={styles.teamName}>Team Name</Text>
+          <Text style={styles.teamName}>Team Name</Text>
+          <Text style={styles.teamName}>Team Name</Text>
+
+          </View>
         </View>
         <View style={styles.ready}>
           <Text
@@ -257,16 +261,40 @@ function Top(props) {
           >
             Ready For Assignment
           </Text>
+          <View>
+          <Text style={styles.teamName}>Team Name</Text>
+          <Text style={styles.teamName}>Team Name</Text>
+          <Text style={styles.teamName}>Team Name</Text>
+          <Text style={styles.teamName}>Team Name</Text>
+          </View>
         </View>
         <View style={styles.mayday}>
-          <Text style={styles.maydayHeader}>"MAYDAY" Lost or Trapped FireFighters</Text>
-          <Text style={styles.chartSection}><Text style={styles.highlight}>E</Text>mergency Traffic Declared</Text>
-          <Text style={styles.chartSection}><Text style={styles.highlight}>R</Text>IT Deployed</Text>
-          <Text style={styles.chartSection}><Text style={styles.highlight}>U</Text>pgrade the assignment</Text>
-          <Text style={styles.chartSection}><Text style={styles.highlight}>P</Text>AR on ALL crews in the hazard zone</Text>
-          <Text style={styles.chartSection}><Text style={styles.highlight}>T</Text>actical Channel assigned for the specific fire</Text>
-          <Text style={styles.chartSection}><Text style={styles.highlight}>T</Text>ools needed</Text>
-          <Text style={styles.chartSection}><Text style={styles.highlight}>T</Text>ime the MAYDAY was called</Text>
+          <Text style={styles.maydayHeader}>
+            "MAYDAY" Lost or Trapped FireFighters
+          </Text>
+          <Text style={styles.chartSection}>
+            <Text style={styles.highlight}>E</Text>mergency Traffic Declared
+          </Text>
+          <Text style={styles.chartSection}>
+            <Text style={styles.highlight}>R</Text>IT Deployed
+          </Text>
+          <Text style={styles.chartSection}>
+            <Text style={styles.highlight}>U</Text>pgrade the assignment
+          </Text>
+          <Text style={styles.chartSection}>
+            <Text style={styles.highlight}>P</Text>AR on ALL crews in the hazard
+            zone
+          </Text>
+          <Text style={styles.chartSection}>
+            <Text style={styles.highlight}>T</Text>actical Channel assigned for
+            the specific fire
+          </Text>
+          <Text style={styles.chartSection}>
+            <Text style={styles.highlight}>T</Text>ools needed
+          </Text>
+          <Text style={styles.chartSection}>
+            <Text style={styles.highlight}>T</Text>ime the MAYDAY was called
+          </Text>
         </View>
       </View>
     </View>
@@ -298,7 +326,7 @@ const styles = StyleSheet.create({
   enroute: {
     width: "15%",
     height: "95%",
-    backgroundColor: "blue",
+    backgroundColor: "green",
     borderWidth: 2,
   },
   font: {
@@ -316,8 +344,8 @@ const styles = StyleSheet.create({
     top: 10,
   },
   highlight: {
-    color: 'red',
-    fontWeight: 'bold',
+    color: "red",
+    fontWeight: "bold",
   },
   indent: {
     left: 20,
@@ -341,10 +369,10 @@ const styles = StyleSheet.create({
   },
   maydayHeader: {
     flex: 1,
-    color: 'white',
-    backgroundColor: 'red',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: "white",
+    backgroundColor: "red",
+    fontWeight: "bold",
+    textAlign: "center",
     paddingLeft: 5,
     paddingRight: 5,
   },
@@ -371,8 +399,13 @@ const styles = StyleSheet.create({
   ready: {
     width: "15%",
     height: "95%",
-    backgroundColor: "purple",
+    backgroundColor: "cyan",
     borderWidth: 2,
+  },
+  teamName: {
+    borderTopWidth: 2,
+    margin: 5,
+    textAlign: 'center',
   },
   top: {
     width: "100%",

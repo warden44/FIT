@@ -41,7 +41,7 @@ function Bottom(props) {
             "Overhaul",
             "Medical",
           ].map((task) => (
-            <View style={styles.task}>
+            <View key={task} style={styles.task}>
               <Text style={styles.taskText}>{task}</Text>
             </View>
           ))}
@@ -57,7 +57,7 @@ function Bottom(props) {
             "Red Cross",
             "Board Up",
           ].map((task) => (
-            <View style={[styles.task, styles.taskAdditional]}>
+            <View key={task} style={[styles.task, styles.taskAdditional]}>
               <Text style={styles.taskText}>{task}</Text>
             </View>
           ))}

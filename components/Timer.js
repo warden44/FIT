@@ -5,17 +5,18 @@ function Timer(props) {
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(25);
   const [hours, setHours] = useState(0);
+  const [increment, setIncrement] = useState(0)
 
   var timer;
   useEffect(() => {
     timer = setInterval(() => {
-      setSeconds(seconds + 1);
+      setSeconds(seconds + increment);
 
       if (seconds === 59) {
-        setMinutes(minutes + 1);
+        setMinutes(minutes + increment);
         setSeconds(0);
         if (minutes === 59) {
-          setHours(hours + 1);
+          setHours(hours + increment);
           setMinutes(0);
         }
       }
@@ -33,6 +34,10 @@ function Timer(props) {
             setSeconds(0);
             setMinutes(0);
             setHours(0);
+            setIncrement(0);
+          }}
+          onPress={() => {
+            setIncrement(1);
           }}
         >
           <Text adjustsFontSizeToFit>
@@ -50,6 +55,10 @@ function Timer(props) {
               setSeconds(0);
               setMinutes(0);
               setHours(0);
+              setIncrement(0);
+            }}
+            onPress={() => {
+              setIncrement(1);
             }}
           >
             <Text style={styles.bigFont} adjustsFontSizeToFit>
@@ -62,9 +71,9 @@ function Timer(props) {
           <View style={styles.elapsed}>
             <Text>Elapsed Time Notifications: </Text>
             {[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60].map((fiver) => (
-              <View>
+              <View key={fiver}>
                 {minutes >= fiver ? (
-                  <Text key={fiver} style={styles.currentTime}>
+                  <Text style={styles.currentTime}>
                     {fiver % 20 === 0 ? (
                       <Text style={styles.par}>
                         {" "}{fiver}
@@ -78,7 +87,7 @@ function Timer(props) {
                     )}
                   </Text>
                 ) : (
-                  <Text key={fiver} style={styles.fiver}>
+                  <Text style={styles.fiver}>
                     {fiver % 20 === 0 ? (
                       <Text style={styles.par}>
                         {" "}{fiver}

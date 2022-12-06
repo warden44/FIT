@@ -9,14 +9,17 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo/webpack-config": "^0.17.2",
     "expo": "~47.0.8",
     "expo-status-bar": "~1.4.2",
     "react": "18.1.0",
-    "react-native": "0.70.5",
-    "react-native-paper": "^5.0.0-rc.10",
-    "react-native-web": "~0.18.9",
     "react-dom": "18.1.0",
-    "@expo/webpack-config": "^0.17.2"
+    "react-native": "0.70.5",
+    "react-native-draggable": "^3.3.0",
+    "react-native-drax": "^0.10.3",
+    "react-native-gesture-handler": "^2.8.0",
+    "react-native-paper": "^5.0.0-rc.10",
+    "react-native-web": "~0.18.9"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Top from "./sections/Top";
 import Bottom from "./sections/Bottom";
+import PracticeBottom from './sections/PracticeBottom'
 
 function MainScreen(props) {
   //const [checked, setChecked] = React.useState("first");
@@ -12,7 +13,7 @@ function MainScreen(props) {
         <Top></Top>
       </View>
       <View style={styles.bottom}>
-        <Bottom></Bottom>
+        <PracticeBottom></PracticeBottom>
       </View>
     </View>
   );

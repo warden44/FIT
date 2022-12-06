@@ -1,6 +1,7 @@
 //react native paper
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, Dimensions } from "react-native";
+import Draggable from "react-native-draggable";
 
 function Top(props) {
   //const [checked, setChecked] = React.useState("first");
@@ -247,12 +248,11 @@ function Top(props) {
             Enroute
           </Text>
           <View>
-          <Text style={styles.teamName}>Team Name</Text>
-          <Text style={styles.teamName}>Team Name</Text>
-          <Text style={styles.teamName}>Team Name</Text>
-          <Text style={styles.teamName}>Team Name</Text>
-          <Text style={styles.teamName}>Team Name</Text>
-
+            <Text style={styles.teamName}>Team Name</Text>
+            <Text style={styles.teamName}>Team Name</Text>
+            <Text style={styles.teamName}>Team Name</Text>
+            <Text style={styles.teamName}>Team Name</Text>
+            <Text style={styles.teamName}>Team Name</Text>
           </View>
         </View>
         <View style={styles.ready}>
@@ -262,10 +262,10 @@ function Top(props) {
             Ready For Assignment
           </Text>
           <View>
-          <Text style={styles.teamName}>Team Name</Text>
-          <Text style={styles.teamName}>Team Name</Text>
-          <Text style={styles.teamName}>Team Name</Text>
-          <Text style={styles.teamName}>Team Name</Text>
+            <Text style={styles.teamName}>Team Name</Text>
+            <Text style={styles.teamName}>Team Name</Text>
+            <Text style={styles.teamName}>Team Name</Text>
+            <Text style={styles.teamName}>Team Name</Text>
           </View>
         </View>
         <View style={styles.mayday}>
@@ -405,7 +405,7 @@ const styles = StyleSheet.create({
   teamName: {
     borderTopWidth: 2,
     margin: 5,
-    textAlign: 'center',
+    textAlign: "center",
   },
   top: {
     width: "100%",

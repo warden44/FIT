@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import {
+  draggable,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import Timer from "../Timer";
+import Timer from "../../components/Timer";
 
 function Bottom(props) {
   const [bench, setBench] = useState("");
@@ -109,26 +110,23 @@ function Bottom(props) {
           )}
         </View>
         <View style={styles.elapsed}>
-          <View style={styles.timer}>
-            <Timer></Timer>
-          </View>
-          <Text>
-            Elapsed Time Notifications 5 10 15 20 25 30 35 40 45 50 55 60{" "}
-          </Text>
+          <Timer></Timer>
         </View>
-        <Text style={styles.exampleText}>Team Charts</Text>
         <View style={styles.teamCharts}>
           <View style={styles.tChart}>
-            <View style={styles.tSection}>
+            <View style={styles.tChartSection}>
               <Text>Task</Text>
             </View>
-            <View style={styles.tSection}>
+            <View style={styles.tChartSection}>
               <Text>Team Name</Text>
             </View>
-            <View style={styles.timer}>
-              <Timer></Timer>
+            <View style={styles.tChartTimer}>
+              <Timer size={"smallTimer"}></Timer>
             </View>
           </View>
+          <View style={styles.tChart}></View>
+          <View style={styles.tChart}></View>
+          <View style={styles.tChart}></View>
           <View style={styles.tChart}></View>
           <View style={styles.tChart}></View>
           <View style={styles.tChart}></View>
@@ -144,7 +142,6 @@ function Bottom(props) {
 }
 
 const styles = StyleSheet.create({
-
   benchmarks: {
     flexDirection: "row",
     justifyContent: "flex-end",
@@ -178,9 +175,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   elapsed: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
+    width: "100%",
   },
 
   exampleText: {
@@ -228,7 +223,7 @@ const styles = StyleSheet.create({
   rightBotom: {
     width: "55%",
     height: "95%",
-    backgroundColor: "orange",
+    backgroundColor: "gray",
   },
   scroll: {
     //idk
@@ -264,16 +259,31 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   tChart: {
+    // justifyContent: 'space-around',
+    // alignItems: 'center',
     width: "25%",
-    height: "30%",
+    height: "22%",
     backgroundColor: "white",
     margin: 5,
+    padding: 5,
+    paddingBottom: 0,
   },
-  timer: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    textAlign: 'center',
+  tChartSection: {
+    textAlign: "center",
+    flex: 1,
+    borderWidth: 1,
+    paddingBottom: 0,
   },
+  tChartTimer: {
+    flex: 1,
+    alignSelf: "center",
+    margin: 0,
+  },
+  // timer: {
+  //   flexDirection: "row",
+  //   justifyContent: "flex-start",
+  //   textAlign: 'center',
+  // },
   // timerMain: {
   //   width: 75,
   //   height: 25,
@@ -294,7 +304,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   tSection: {
-    height: '25%',
+    height: "25%",
   },
 });
 

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -176,7 +176,6 @@ function PracticeBottom(props) {
   const [checkBench, setCheckBench] = React.useState(false);
 
   return (
-    
     <View style={styles.container}>
       <View style={styles.todo}>
         <ScrollView style={styles.scroll}>

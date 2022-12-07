@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+  Dimensions,
   ScrollView,
   StyleSheet,
   Text,
@@ -7,6 +8,10 @@ import {
   View,
 } from "react-native";
 import Timer from "../../components/Timer";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { DraxProvider, DraxView, DraxList } from "react-native-drax";
+
+const gestureRootViewStyle = { flex: 1 };
 
 function PracticeBottom(props) {
   const draggableItemList = [
@@ -176,130 +181,104 @@ function PracticeBottom(props) {
   const [checkBench, setCheckBench] = React.useState(false);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.todo}>
-        <ScrollView style={styles.scroll}>
-          <Text style={styles.exampleText}>ToDo Scroll List</Text>
-          {[
-            "Fire Attack",
-            "Support/Backup Lines",
-            "FDC Connection",
-            "Standpipe Connection",
-            "Exposure",
-            "Search/Rescue",
-            "Evacuation",
-            "Ventilation",
-            "Water Supply",
-            "Secondary Water Supply",
-            "IRIT",
-            "RIT",
-            "Assign Safety Officeer",
-            "Assign Accountability Officer",
-            "Utilities",
-            "Gas",
-            "Electric",
-            "Water",
-            "Rehab",
-            "Salvage",
-            "Overhaul",
-            "Medical",
-          ].map((task) => (
-            <View key={task} style={styles.task}>
-              <Text style={styles.taskText}>{task}</Text>
-            </View>
-          ))}
-          {[
-            "Traffic Control",
-            "Police",
-            "PIO",
-            "Investigators",
-            "Fire Marhsal",
-            "State Fire Marhsal",
-            "Health Department",
-            "Occupant Services",
-            "Red Cross",
-            "Board Up",
-          ].map((task) => (
-            <View key={task} style={[styles.task, styles.taskAdditional]}>
-              <Text style={styles.taskText}>{task}</Text>
-            </View>
-          ))}
-        </ScrollView>
-      </View>
-      <View style={styles.done}>
-        <ScrollView style={styles.scroll}>
-          <Text style={styles.exampleText}>Done Scroll List</Text>
-          <Text style={{ textAlign: "center", fontSize: 20 }}>
-            {"\n"}a{"\n"}b{"\n"}c{"\n"}d{"\n"}e{"\n"}f{"\n"}g{"\n"}h{"\n"}i
-            {"\n"}j{"\n"}k{"\n"}l{"\n"}m{"\n"}n{"\n"}o{"\n"}p{"\n"}q{"\n"}r
-            {"\n"}s{"\n"}t{"\n"}u{"\n"}v{"\n"}w{"\n"}x{"\n"}y{"\n"}z
-          </Text>
-        </ScrollView>
-      </View>
-      <View style={styles.rightBotom}>
-        <View style={styles.benchmarks}>
-          {/* Benchmarks */}
-          <TouchableOpacity
-            style={styles.check}
-            onPress={() =>
-              checkBench === true ? setCheckBench(false) : setCheckBench(true)
-            }
-          >
-            <View style={styles.outterCheck}>
-              {checkBench === true && <View style={styles.innerCheck} />}
-            </View>
-            <Text style={[styles.bold, styles.font]}>Benchmarks:</Text>
-          </TouchableOpacity>
-
-          {['"All Clear" Complete', "Fire Under Control", "Loss Stopped"].map(
-            (choice) => (
+    <GestureHandlerRootView style={gestureRootViewStyle}>
+      <View style={styles.container}>
+        <DraxProvider style={styles.container}>
+          <View style={styles.todo}>
+            <ScrollView style={styles.scroll}>
+              <View style={styles.draxListContainer}>
+                <DraxList
+                  data={dragItemMiddleList}
+                  renderItemContent={DragUIComponent}
+                  keyExtractor={(item, index) => index.toString()}
+                  numColumns={8}
+                  ItemSeparatorComponent={FlatListItemSeparator}
+                  scrollEnabled={true}
+                />
+              </View>
+            </ScrollView>
+          </View>
+          <View style={styles.done}>
+            <ScrollView style={styles.scroll}>
+              <View style={styles.receivingContainer}>
+                {receivingItemList.map((item, index) =>
+                  ReceivingZoneUIComponent({ item, index })
+                )}
+              </View>
+            </ScrollView>
+          </View>
+          <View style={styles.rightBotom}>
+            <View style={styles.benchmarks}>
+              {/* Benchmarks */}
               <TouchableOpacity
-                key={choice}
-                style={styles.button}
+                style={styles.check}
                 onPress={() =>
-                  bench === choice ? setBench("none") : setBench(choice)
+                  checkBench === true
+                    ? setCheckBench(false)
+                    : setCheckBench(true)
                 }
               >
-                <View style={styles.outterButton}>
-                  {bench === choice && <View style={styles.innerButton} />}
+                <View style={styles.outterCheck}>
+                  {checkBench === true && <View style={styles.innerCheck} />}
                 </View>
-                <Text style={[styles.font, styles.bold]}>
-                  {choice}
-                  <Text style={[styles.bold, styles.smallFont]}>{"\n"}PAR</Text>
-                </Text>
+                <Text style={[styles.bold, styles.font]}>Benchmarks:</Text>
               </TouchableOpacity>
-            )
-          )}
-        </View>
-        <View style={styles.elapsed}>
-          <Timer></Timer>
-        </View>
-        <View style={styles.teamCharts}>
-          <View style={styles.tChart}>
-            <View style={styles.tChartSection}>
-              <Text>Task</Text>
+
+              {[
+                '"All Clear" Complete',
+                "Fire Under Control",
+                "Loss Stopped",
+              ].map((choice) => (
+                <TouchableOpacity
+                  key={choice}
+                  style={styles.button}
+                  onPress={() =>
+                    bench === choice ? setBench("none") : setBench(choice)
+                  }
+                >
+                  <View style={styles.outterButton}>
+                    {bench === choice && <View style={styles.innerButton} />}
+                  </View>
+                  <Text style={[styles.font, styles.bold]}>
+                    {choice}
+                    <Text style={[styles.bold, styles.smallFont]}>
+                      {"\n"}PAR
+                    </Text>
+                  </Text>
+                </TouchableOpacity>
+              ))}
             </View>
-            <View style={styles.tChartSection}>
-              <Text>Team Name</Text>
+            <View style={styles.elapsed}>
+              <Timer></Timer>
             </View>
-            <View style={styles.tChartTimer}>
-              <Timer size={"smallTimer"}></Timer>
+            <View style={styles.teamCharts}>
+              <View style={styles.tChart}>
+                <View style={styles.tChartSection}>
+                  <Text>Task</Text>
+                </View>
+                <View style={styles.tChartSection}>
+                  <Text>Team Name</Text>
+                </View>
+                <View style={styles.tChartTimer}>
+                  <Timer size={"smallTimer"}></Timer>
+                </View>
+              </View>
+              <View style={styles.tChart}></View>
+              <View style={styles.tChart}></View>
+              <View style={styles.tChart}></View>
+              <View style={styles.tChart}></View>
+              <View style={styles.tChart}></View>
+              <View style={styles.tChart}></View>
+              <View style={styles.tChart}></View>
+              <View style={styles.tChart}></View>
+              <View style={styles.tChart}></View>
+              <View style={styles.tChart}></View>
+              <View style={styles.tChart}></View>
             </View>
           </View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
-        </View>
+        </DraxProvider>
       </View>
-    </View>
+    </GestureHandlerRootView>
   );
 }
 

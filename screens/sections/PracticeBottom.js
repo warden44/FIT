@@ -17,63 +17,103 @@ function PracticeBottom(props) {
   const draggableItemList = [
     {
       id: 1,
-      name: "A",
+      name: "Fire Attack",
       background_color: "red",
     },
     {
       id: 2,
-      name: "B",
+      name: "Support/Backup Lines",
       background_color: "pink",
     },
     {
       id: 3,
-      name: "C",
+      name: "FDC Connection",
       background_color: "orange",
     },
     {
       id: 4,
-      name: "D",
+      name: "Standpipe Connection",
       background_color: "#aaaaff",
     },
     {
       id: 5,
-      name: "E",
+      name: "Exposure",
       background_color: "blue",
     },
     {
       id: 6,
-      name: "F",
+      name: "Search/Rescue",
       background_color: "green",
     },
     {
       id: 7,
-      name: "G",
+      name: "Evacuation",
       background_color: "brown",
     },
     {
       id: 8,
-      name: "H",
+      name: "Ventilation",
       background_color: "#aaaaff",
     },
     {
       id: 9,
-      name: "I",
+      name: "Water Supply",
       background_color: "red",
     },
     {
       id: 10,
-      name: "J",
+      name: "Secondary Water Supply",
       background_color: "pink",
     },
     {
       id: 11,
-      name: "K",
+      name: "IRIT",
       background_color: "orange",
     },
     {
       id: 12,
-      name: "L",
+      name: "RIT",
       background_color: "#aaaaff",
+    },
+    {
+      id: 13,
+      name: "Assign Safety Officeer",
+    },
+    {
+      id: 14,
+      name: "Assign Accountability Officer",
+    },
+    {
+      id: 15,
+      name: "Utilities",
+    },
+    {
+      id: 16,
+      name: "Gas",
+    },
+    {
+      id: 17,
+      name: "Electric",
+    },
+    {
+      id: 18,
+      name: "Water",
+    },
+    {
+      id: 19,
+      name: "Rehab",
+    },
+    {
+      id: 20,
+      name: "Salvage",
+    },
+    {
+      id: 21,
+      name: "Overhaul",
+    },
+    {
+      id: 22,
+      name: "Medical",
     },
   ];
   const FirstReceivingItemList = [
@@ -110,7 +150,7 @@ function PracticeBottom(props) {
       <DraxView
         style={[
           styles.centeredContent,
-          styles.draggableBox,
+          styles.task,
           { backgroundColor: item.background_color },
         ]}
         draggingStyle={styles.dragging}
@@ -184,20 +224,14 @@ function PracticeBottom(props) {
     <GestureHandlerRootView style={gestureRootViewStyle}>
       <View style={styles.container}>
         <DraxProvider style={styles.container}>
-          <View style={styles.todo}>
-            <ScrollView style={styles.scroll}>
-              <View style={styles.draxListContainer}>
-                <DraxList
-                  data={dragItemMiddleList}
-                  renderItemContent={DragUIComponent}
-                  keyExtractor={(item, index) => index.toString()}
-                  numColumns={8}
-                  ItemSeparatorComponent={FlatListItemSeparator}
-                  scrollEnabled={true}
-                />
-              </View>
-            </ScrollView>
-          </View>
+          <DraxList
+            style={styles.todo}
+            data={dragItemMiddleList}
+            renderItemContent={DragUIComponent}
+            keyExtractor={(item, index) => index.toString()}
+            ItemSeparatorComponent={FlatListItemSeparator}
+            scrollEnabled={true}
+          />
           <View style={styles.done}>
             <ScrollView style={styles.scroll}>
               <View style={styles.receivingContainer}>

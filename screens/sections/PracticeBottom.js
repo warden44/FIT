@@ -18,124 +18,207 @@ function PracticeBottom(props) {
     {
       id: 1,
       name: "Fire Attack",
-      background_color: "red",
+      border_color: "red",
     },
     {
       id: 2,
       name: "Support/Backup Lines",
-      background_color: "pink",
+      border_color: "red",
     },
     {
       id: 3,
       name: "FDC Connection",
-      background_color: "orange",
+      border_color: "red",
     },
     {
       id: 4,
       name: "Standpipe Connection",
-      background_color: "#aaaaff",
+      border_color: "red",
     },
     {
       id: 5,
       name: "Exposure",
-      background_color: "blue",
+      border_color: "red",
     },
     {
       id: 6,
       name: "Search/Rescue",
-      background_color: "green",
+      border_color: "red",
     },
     {
       id: 7,
       name: "Evacuation",
-      background_color: "brown",
+      border_color: "red",
     },
     {
       id: 8,
       name: "Ventilation",
-      background_color: "#aaaaff",
+      border_color: "red",
     },
     {
       id: 9,
       name: "Water Supply",
-      background_color: "red",
+      border_color: "red",
     },
     {
       id: 10,
       name: "Secondary Water Supply",
-      background_color: "pink",
+      border_color: "red",
     },
     {
       id: 11,
       name: "IRIT",
-      background_color: "orange",
+      border_color: "red",
     },
     {
       id: 12,
       name: "RIT",
-      background_color: "#aaaaff",
+      border_color: "red",
     },
     {
       id: 13,
       name: "Assign Safety Officeer",
+      border_color: "red",
     },
     {
       id: 14,
       name: "Assign Accountability Officer",
+      border_color: "red",
     },
     {
       id: 15,
       name: "Utilities",
+      border_color: "red",
     },
     {
       id: 16,
       name: "Gas",
+      border_color: "red",
     },
     {
       id: 17,
       name: "Electric",
+      border_color: "red",
     },
     {
       id: 18,
       name: "Water",
+      border_color: "red",
     },
     {
       id: 19,
       name: "Rehab",
+      border_color: "red",
     },
     {
       id: 20,
       name: "Salvage",
+      border_color: "red",
     },
     {
       id: 21,
       name: "Overhaul",
+      border_color: "red",
     },
     {
       id: 22,
       name: "Medical",
+      border_color: "red",
+    },
+    {
+      id: 23,
+      name: "Traffic Control",
+      border_color: "yellow",
+    },
+    {
+      id: 24,
+      name: "Police",
+      border_color: "yellow",
+    },
+    {
+      id: 25,
+      name: "PIO",
+      border_color: "yellow",
+    },
+    {
+      id: 26,
+      name: "Investigators",
+      border_color: "yellow",
+    },
+    {
+      id: 27,
+      name: "Fire Marhsal",
+      border_color: "yellow",
+    },
+    {
+      id: 28,
+      name: "State Fire Marhsal",
+      border_color: "yellow",
+    },
+    {
+      id: 29,
+      name: "Health Department",
+      border_color: "yellow",
+    },
+    {
+      id: 30,
+      name: "Occupant Services",
+      border_color: "yellow",
+    },
+    {
+      id: 31,
+      name: "Board Up",
+      border_color: "yellow",
+    },
+    {
+      id: 32,
+      name: "Red Cross",
+      border_color: "yellow",
     },
   ];
   const FirstReceivingItemList = [
     {
       id: 13,
       name: "M",
-      background_color: "#ffaaff",
+      border_color: "#ffaaff",
     },
     {
       id: 14,
       name: "N",
-      background_color: "#ffaaff",
+      border_color: "#ffaaff",
     },
     {
       id: 15,
       name: "O",
-      background_color: "#ffaaff",
+      border_color: "#ffaaff",
     },
     {
       id: 16,
       name: "P",
-      background_color: "#ffaaff",
+      border_color: "#ffaaff",
+    },
+  ];
+
+  const ReceivingItemList = [
+    {
+      id: 13,
+      name: "M",
+      border_color: "#ffaaff",
+    },
+    {
+      id: 14,
+      name: "N",
+      border_color: "#ffaaff",
+    },
+    {
+      id: 15,
+      name: "O",
+      border_color: "#ffaaff",
+    },
+    {
+      id: 16,
+      name: "P",
+      border_color: "#ffaaff",
     },
   ];
 
@@ -151,7 +234,7 @@ function PracticeBottom(props) {
         style={[
           styles.centeredContent,
           styles.task,
-          { backgroundColor: item.background_color },
+          { borderColor: item.border_color },
         ]}
         draggingStyle={styles.dragging}
         dragReleasedStyle={styles.dragging}
@@ -171,8 +254,13 @@ function PracticeBottom(props) {
         style={[
           styles.centeredContent,
           styles.receivingZone,
-          { backgroundColor: item.background_color },
+          { borderColor: item.border_color },
         ]}
+        draggingStyle={styles.dragging}
+        dragReleasedStyle={styles.dragging}
+        hoverDraggingStyle={styles.hoverDragging}
+        dragPayload={index}
+        longPressDelay={150}
         receivingStyle={styles.receiving}
         renderContent={({ viewState }) => {
           const receivingDrag = viewState && viewState.receivingDrag;

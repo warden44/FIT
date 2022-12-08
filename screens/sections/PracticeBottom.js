@@ -199,43 +199,18 @@ function PracticeBottom(props) {
     },
   ];
 
-  const ReceivingItemList = [
-    {
-      id: 13,
-      name: "M",
-      border_color: "#ffaaff",
-    },
-    {
-      id: 14,
-      name: "N",
-      border_color: "#ffaaff",
-    },
-    {
-      id: 15,
-      name: "O",
-      border_color: "#ffaaff",
-    },
-    {
-      id: 16,
-      name: "P",
-      border_color: "#ffaaff",
-    },
-  ];
-
   const [receivingItemList, setReceivedItemList] = React.useState(
     FirstReceivingItemList
   );
   const [dragItemMiddleList, setDragItemListMiddle] =
     React.useState(draggableItemList);
 
+  const [receivingTaskList, setReceivedTaskList] = React.useState([{}]);
+
   const DragUIComponent = ({ item, index }) => {
     return (
       <DraxView
-        style={[
-          styles.centeredContent,
-          styles.task,
-          { borderColor: item.border_color },
-        ]}
+        style={[styles.task, { borderColor: item.border_color }]}
         draggingStyle={styles.dragging}
         dragReleasedStyle={styles.dragging}
         hoverDraggingStyle={styles.hoverDragging}
@@ -251,11 +226,7 @@ function PracticeBottom(props) {
   const ReceivingZoneUIComponent = ({ item, index }) => {
     return (
       <DraxView
-        style={[
-          styles.centeredContent,
-          styles.receivingZone,
-          { borderColor: item.border_color },
-        ]}
+        style={[styles.task, { borderColor: item.border_color }]}
         draggingStyle={styles.dragging}
         dragReleasedStyle={styles.dragging}
         hoverDraggingStyle={styles.hoverDragging}
@@ -274,28 +245,61 @@ function PracticeBottom(props) {
         key={index}
         onReceiveDragDrop={(event) => {
           let selected_item = dragItemMiddleList[event.dragged.payload];
-          console.log("onReceiveDragDrop::index", selected_item, index);
-          console.log("onReceiveDragDrop :: payload", event.dragged.payload);
+
           let newReceivingItemList = [...receivingItemList];
-          console.log(
-            "onReceiveDragDrop :: newReceivingItemList",
-            newReceivingItemList
-          );
-          newReceivingItemList[index] = selected_item;
+
+          newReceivingItemList.push(selected_item);
           setReceivedItemList(newReceivingItemList);
 
           let newDragItemMiddleList = [...dragItemMiddleList];
-          console.log(
-            "onReceiveDragDrop :: newDragItemMiddleList 1",
-            newDragItemMiddleList
+          newDragItemMiddleList.splice(
+            newDragItemMiddleList.indexOf(selected_item),
+            1
           );
-          newDragItemMiddleList[event.dragged.payload] =
-            receivingItemList[index];
-          console.log(
-            "onReceiveDragDrop :: newDragItemMiddleList 2",
-            newDragItemMiddleList
-          );
+
           setDragItemListMiddle(newDragItemMiddleList);
+        }}
+      />
+    );
+  };
+  //For task zone
+  const recievingTaskZone = ({ item, index }) => {
+    return (
+      <DraxView
+        style={[styles.tChartSection, { borderColor: item.border_color }]}
+        draggingStyle={styles.dragging}
+        dragReleasedStyle={styles.dragging}
+        hoverDraggingStyle={styles.hoverDragging}
+        dragPayload={index}
+        longPressDelay={150}
+        receivingStyle={styles.receiving}
+        renderContent={({ viewState }) => {
+          const receivingDrag = viewState && viewState.receivingDrag;
+          const payload = receivingDrag && receivingDrag.payload;
+          return (
+            <View>
+              <Text style={styles.textStyle}>{item.name}</Text>
+            </View>
+          );
+        }}
+        key={index}
+        onReceiveDragDrop={(event) => {
+          let selected_item = dragItemMiddleList[event.dragged.payload];
+
+          if(dragItemMiddleList.indexOf(selected_item) != -1) {
+            let newReceivingTaskList = [...receivingTaskList];
+
+            newReceivingTaskList[index] = selected_item;
+            setReceivedTaskList(newReceivingTaskList);
+  
+            let newDragItemMiddleList = [...dragItemMiddleList];
+            newDragItemMiddleList.splice(
+              newDragItemMiddleList.indexOf(selected_item),
+              1
+            );
+  
+            setDragItemListMiddle(newDragItemMiddleList);
+          }
         }}
       />
     );
@@ -375,9 +379,9 @@ function PracticeBottom(props) {
             </View>
             <View style={styles.teamCharts}>
               <View style={styles.tChart}>
-                <View style={styles.tChartSection}>
-                  <Text>Task</Text>
-                </View>
+                {receivingTaskList.map((item, index) =>
+                  recievingTaskZone({ item, index })
+                )}
                 <View style={styles.tChartSection}>
                   <Text>Team Name</Text>
                 </View>
@@ -534,7 +538,7 @@ const styles = StyleSheet.create({
   tChartSection: {
     textAlign: "center",
     flex: 1,
-    borderWidth: 1,
+    borderWidth: 2,
     paddingBottom: 0,
   },
   tChartTimer: {

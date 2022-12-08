@@ -4,3 +4,8 @@ make text of radio button clickable, not just the button itself
 make setting a bubble option also check off the corresponding check box
 make bubbles bigger
 match existing colors of white board
+
+Issues with drag and drop
+When dropping, receiving container doesnt know which container is sending, just assumes the task list.
+Dragged items must be dropped on other items, and cannot be dropped on the background inbetween.
+Get error every once in a while when drag and dropping

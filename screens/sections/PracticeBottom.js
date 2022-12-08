@@ -19,188 +19,225 @@ function PracticeBottom(props) {
       id: 1,
       name: "Fire Attack",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 2,
       name: "Support/Backup Lines",
       border_color: "red",
+      currentList: "task"
+
     },
     {
       id: 3,
       name: "FDC Connection",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 4,
       name: "Standpipe Connection",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 5,
       name: "Exposure",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 6,
       name: "Search/Rescue",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 7,
       name: "Evacuation",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 8,
       name: "Ventilation",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 9,
       name: "Water Supply",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 10,
       name: "Secondary Water Supply",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 11,
       name: "IRIT",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 12,
       name: "RIT",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 13,
       name: "Assign Safety Officeer",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 14,
       name: "Assign Accountability Officer",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 15,
       name: "Utilities",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 16,
       name: "Gas",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 17,
       name: "Electric",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 18,
       name: "Water",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 19,
       name: "Rehab",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 20,
       name: "Salvage",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 21,
       name: "Overhaul",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 22,
       name: "Medical",
       border_color: "red",
+      currentList: "task"
     },
     {
       id: 23,
       name: "Traffic Control",
       border_color: "yellow",
+      currentList: "task"
     },
     {
       id: 24,
       name: "Police",
       border_color: "yellow",
+      currentList: "task"
     },
     {
       id: 25,
       name: "PIO",
       border_color: "yellow",
+      currentList: "task"
     },
     {
       id: 26,
       name: "Investigators",
       border_color: "yellow",
+      currentList: "task"
     },
     {
       id: 27,
       name: "Fire Marhsal",
       border_color: "yellow",
+      currentList: "task"
     },
     {
       id: 28,
       name: "State Fire Marhsal",
       border_color: "yellow",
+      currentList: "task"
     },
     {
       id: 29,
       name: "Health Department",
       border_color: "yellow",
+      currentList: "task"
     },
     {
       id: 30,
       name: "Occupant Services",
       border_color: "yellow",
+      currentList: "task"
     },
     {
       id: 31,
       name: "Board Up",
       border_color: "yellow",
+      currentList: "task"
     },
     {
       id: 32,
       name: "Red Cross",
       border_color: "yellow",
+      currentList: "task"
     },
   ];
-  const FirstReceivingItemList = [
+  const FirstDoneItemList = [
     {
       id: 13,
       name: "M",
       border_color: "#ffaaff",
+      currentList: "done"
     },
     {
       id: 14,
       name: "N",
       border_color: "#ffaaff",
+      currentList: "done"
     },
     {
       id: 15,
       name: "O",
       border_color: "#ffaaff",
+      currentList: "done"
     },
     {
       id: 16,
       name: "P",
       border_color: "#ffaaff",
+      currentList: "done"
     },
   ];
 
   const [receivingItemList, setReceivedItemList] = React.useState(
-    FirstReceivingItemList
+    FirstDoneItemList
   );
   const [dragItemMiddleList, setDragItemListMiddle] =
     React.useState(draggableItemList);
@@ -214,7 +251,7 @@ function PracticeBottom(props) {
         draggingStyle={styles.dragging}
         dragReleasedStyle={styles.dragging}
         hoverDraggingStyle={styles.hoverDragging}
-        dragPayload={index}
+        dragPayload={[index, item.currentList]}
         longPressDelay={150}
         key={index}
       >
@@ -230,7 +267,7 @@ function PracticeBottom(props) {
         draggingStyle={styles.dragging}
         dragReleasedStyle={styles.dragging}
         hoverDraggingStyle={styles.hoverDragging}
-        dragPayload={index}
+        dragPayload={[index, item.currentList]}
         longPressDelay={150}
         receivingStyle={styles.receiving}
         renderContent={({ viewState }) => {
@@ -262,6 +299,7 @@ function PracticeBottom(props) {
       />
     );
   };
+  
   //For task zone
   const recievingTaskZone = ({ item, index }) => {
     return (
@@ -284,22 +322,41 @@ function PracticeBottom(props) {
         }}
         key={index}
         onReceiveDragDrop={(event) => {
-          let selected_item = dragItemMiddleList[event.dragged.payload];
+          console.log(event.dragged.payload[0]);
+          console.log(event.dragged.payload[1]);
+          console.log("hello");
+          let fromList;
+          let receivingList;
+          if (event.dragged.payload[1] === "task") { // if from task list
+            fromList = [...dragItemMiddleList];
+            let selected_item = fromList[event.dragged.payload[0]]; //get index of dragged item
 
-          if(dragItemMiddleList.indexOf(selected_item) != -1) {
-            let newReceivingTaskList = [...receivingTaskList];
+            let newReceivingTaskList = [...receivingTaskList]; //set temp list to receiving list
+  
+            newReceivingTaskList[index] = selected_item; //replace receiving item with dragged item
+            setReceivedTaskList(newReceivingTaskList); //set actual list to temp list
+  
+            let newFromList = [...fromList]; //set temp list to
+            newFromList.splice(newFromList.indexOf(selected_item), 1); // removed dragged item from dragged list
+  
+            setDragItemListMiddle(newFromList);
+          }else if (event.dragged.payload[1] === "done") { //if from done list
+            fromList = [...receivingItemList];
+            let selected_item = fromList[event.dragged.payload[0]]; //get index of dragged item
 
-            newReceivingTaskList[index] = selected_item;
-            setReceivedTaskList(newReceivingTaskList);
+            let newReceivingTaskList = [...receivingTaskList]; //set temp list to receiving list
   
-            let newDragItemMiddleList = [...dragItemMiddleList];
-            newDragItemMiddleList.splice(
-              newDragItemMiddleList.indexOf(selected_item),
-              1
-            );
+            newReceivingTaskList[index] = selected_item; //replace receiving item with dragged item
+            setReceivedTaskList(newReceivingTaskList); //set actual list to temp list
   
-            setDragItemListMiddle(newDragItemMiddleList);
+            let newFromList = [...fromList]; //set temp list to
+            newFromList.splice(newFromList.indexOf(selected_item), 1); // removed dragged item from dragged list
+  
+            setReceivedItemList(newFromList);          }
+          if(fromList) {  //if fromList is set...
+
           }
+
         }}
       />
     );
@@ -438,7 +495,7 @@ const styles = StyleSheet.create({
   done: {
     width: "20%",
     height: "95%",
-    backgroundColor: "brown",
+    backgroundColor: "gray",
     borderWidth: 2,
   },
   elapsed: {

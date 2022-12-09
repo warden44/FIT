@@ -13,201 +13,238 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 import AppContext from "../../components/AppContext";
 
+
 const gestureRootViewStyle = { flex: 1 };
 
 function PracticeBottom(props) {
+
+  const myContext = React.useContext(AppContext);
+
   const TaskList = [
     {
       id: 1,
       name: "Fire Attack",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 2,
       name: "Support/Backup Lines",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
+
     },
     {
       id: 3,
       name: "FDC Connection",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 4,
       name: "Standpipe Connection",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 5,
       name: "Exposure",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 6,
       name: "Search/Rescue",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 7,
       name: "Evacuation",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 8,
       name: "Ventilation",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 9,
       name: "Water Supply",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 10,
       name: "Secondary Water Supply",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 11,
       name: "IRIT",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 12,
       name: "RIT",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 13,
       name: "Assign Safety Officeer",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 14,
       name: "Assign Accountability Officer",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 15,
       name: "Utilities",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 16,
       name: "Gas",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 17,
       name: "Electric",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 18,
       name: "Water",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 19,
       name: "Rehab",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 20,
       name: "Salvage",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 21,
       name: "Overhaul",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 22,
       name: "Medical",
       border_color: "red",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 23,
       name: "Traffic Control",
       border_color: "yellow",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 24,
       name: "Police",
       border_color: "yellow",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 25,
       name: "PIO",
       border_color: "yellow",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 26,
       name: "Investigators",
       border_color: "yellow",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 27,
       name: "Fire Marhsal",
       border_color: "yellow",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 28,
       name: "State Fire Marhsal",
       border_color: "yellow",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 29,
       name: "Health Department",
       border_color: "yellow",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 30,
       name: "Occupant Services",
       border_color: "yellow",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 31,
       name: "Board Up",
       border_color: "yellow",
       currentList: "task",
+      tChart: 12,
     },
     {
       id: 32,
       name: "Red Cross",
       border_color: "yellow",
       currentList: "task",
+      tChart: 12,
     },
   ];
   const DoneList = [
@@ -216,26 +253,33 @@ function PracticeBottom(props) {
       name: "M",
       border_color: "#ffaaff",
       currentList: "done",
+      tChart: 12,
     },
     {
       id: 14,
       name: "N",
       border_color: "#ffaaff",
       currentList: "done",
+      tChart: 12,
     },
     {
       id: 15,
       name: "O",
       border_color: "#ffaaff",
       currentList: "done",
+      tChart: 12,
     },
     {
       id: 16,
       name: "P",
       border_color: "#ffaaff",
       currentList: "done",
+      tChart: 12,
     },
   ];
+  const [currentTaskList, setCurrentTaskList] = React.useState(["", "", "", "", "", "", "", "", "", "", "", ""]);
+
+
 
   const [dragDoneList, setDragDoneList] = React.useState(DoneList);
   const [dragTaskList, setDragTaskList] = React.useState(TaskList);
@@ -243,8 +287,10 @@ function PracticeBottom(props) {
   const userSettings = {
     doneList: dragDoneList,
     taskList: dragTaskList,
+    currentList: currentTaskList,
     setDragDoneList,
     setDragTaskList,
+    setCurrentTaskList,
   };
 
   // const [currentTaskList, setCurrentTaskList] = React.useState([""]);
@@ -285,7 +331,10 @@ function PracticeBottom(props) {
 
             setDragDoneList(newDragDoneList);
           } else if (event.dragged.payload[1] === "currentTask") {
-            let selected_item = currentTaskList[event.dragged.payload[0]];
+
+            let selected_item = currentTaskList[event.dragged.payload[2]];
+
+            console.log(selected_item.name);
 
             selected_item.currentList = "task"; //set current task to current task
 
@@ -524,18 +573,18 @@ function PracticeBottom(props) {
               <Timer></Timer>
             </View>
             <View style={styles.teamCharts}>
-              <TChart style={styles.tChart} />
-              <TChart style={styles.tChart} />
-              <TChart style={styles.tChart} />
-              <TChart style={styles.tChart} />
-              <TChart style={styles.tChart} />
-              <TChart style={styles.tChart} />
-              <TChart style={styles.tChart} />
-              <TChart style={styles.tChart} />
-              <TChart style={styles.tChart} />
-              <TChart style={styles.tChart} />
-              <TChart style={styles.tChart} />
-              <TChart style={styles.tChart} />
+              <TChart style={styles.tChart} tChartId={0} />
+              <TChart style={styles.tChart} tChartId={1} />
+              <TChart style={styles.tChart} tChartId={2} />
+              <TChart style={styles.tChart} tChartId={3} />
+              <TChart style={styles.tChart} tChartId={4} />
+              <TChart style={styles.tChart} tChartId={5} />
+              <TChart style={styles.tChart} tChartId={6} />
+              <TChart style={styles.tChart} tChartId={7} />
+              <TChart style={styles.tChart} tChartId={8} />
+              <TChart style={styles.tChart} tChartId={9} />
+              <TChart style={styles.tChart} tChartId={10} />
+              <TChart style={styles.tChart} tChartId={11} />
             </View>
           </View>
         </DraxProvider>

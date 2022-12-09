@@ -1,3 +1,9 @@
+//How to get tchart components to work
+//differentiate each tchart component through props.tchartID
+//create global list of lists corresponding to the tcharts
+//when adding task to tchart, set new task attribute "currentTChart" equal to tChartId
+//when receiving task from tChart, remove task from list index of the tChart or currentTChart, and set currentTChart to 12
+
 import * as React from "react";
 import {
   Dimensions,
@@ -19,14 +25,17 @@ function TChart(props) {
 
   const [currentTaskList, setCurrentTaskList] = React.useState([""]);
 
-  const recievingTaskZone = ({ item, index }) => {
+  var tChartId = props.tChartId;
+  let item = myContext.currentList[tChartId];
+
+  const recievingTaskZone = () => {
     return (
       <DraxView
         style={[styles.tChartSection, { borderColor: item.border_color }]}
         draggingStyle={styles.dragging}
         dragReleasedStyle={styles.dragging}
         hoverDraggingStyle={styles.hoverDragging}
-        dragPayload={[index, item.currentList]}
+        dragPayload={[item.currentList, item.tChart]}
         longPressDelay={150}
         receivingStyle={styles.receiving}
         renderContent={({ viewState }) => {
@@ -35,12 +44,11 @@ function TChart(props) {
           return (
             <View>
               <Text style={styles.textStyle}>
-                {item.name}
+                {item.name}{tChartId}
               </Text>
             </View>
           );
         }}
-        key={index}
         onReceiveDragDrop={(event) => {
           let fromList;
           if (event.dragged.payload[1] === "task") {
@@ -49,13 +57,15 @@ function TChart(props) {
 
             let selected_item = fromList[event.dragged.payload[0]]; //get index of dragged item
             selected_item.currentList = "currentTask"; //set current task to current task
+            selected_item.tChart = tChartId; //set chart id
+            console.log(selected_item);
 
-            let newCurrentTaskList = [...currentTaskList]; //set temp list to receiving list
+            let newCurrentTaskList = [...myContext.currentList]; //set temp list to receiving list
 
             if (!newCurrentTaskList[0]) {
               //if receiving list is empty... add to list
 
-              newCurrentTaskList[index] = selected_item; //replace receiving item with dragged item
+              newCurrentTaskList[tChartId] = selected_item; //replace receiving item with dragged item
               setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
 
               let newFromList = [...fromList]; //set temp from list
@@ -68,8 +78,8 @@ function TChart(props) {
               pushDragDoneList.push(newCurrentTaskList[0]); //push current task to temp dragDoneList
               myContext.setDragDoneList(pushDragDoneList);
 
-              newCurrentTaskList[index] = selected_item; //replace receiving item with dragged item
-              setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
+              newCurrentTaskList[tChartId] = selected_item; //replace receiving item with dragged item
+              myContext.setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
 
               let newFromList = [...fromList]; //set temp from list
               newFromList.splice(newFromList.indexOf(selected_item), 1); // removed dragged item from dragged list
@@ -87,7 +97,7 @@ function TChart(props) {
             if (!newCurrentTaskList[0]) {
               //if receiving list is empty... add to list
 
-              newCurrentTaskList[index] = selected_item; //replace receiving item with dragged item
+              newCurrentTaskList[tChartId] = selected_item; //replace receiving item with dragged item
               setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
 
               let newFromList = [...fromList]; //set temp from list
@@ -100,7 +110,7 @@ function TChart(props) {
               pushDragDoneList.push(newCurrentTaskList[0]); //push current task to temp dragDoneList
               fromList = [...pushDragDoneList]; // update from list with temp list
 
-              newCurrentTaskList[index] = selected_item; //replace receiving item with dragged item
+              newCurrentTaskList[tChartId] = selected_item; //replace receiving item with dragged item
               setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
 
               let newFromList = [...fromList]; //set temp from list
@@ -118,7 +128,7 @@ function TChart(props) {
 
   return (
     <View style={styles.tChart}>
-      {currentTaskList.map((item, index) => recievingTaskZone({ item, index }))}
+      {recievingTaskZone()}
       <View style={styles.tChartSection}>
         <Text>Team Name cock</Text>
       </View>

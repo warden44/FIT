@@ -8,243 +8,240 @@ import {
   View,
 } from "react-native";
 import Timer from "../../components/Timer";
+import TChart from "../../components/TChart";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 
 const gestureRootViewStyle = { flex: 1 };
 
 function PracticeBottom(props) {
-  const draggableItemList = [
+  const TaskList = [
     {
       id: 1,
       name: "Fire Attack",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 2,
       name: "Support/Backup Lines",
       border_color: "red",
-      currentList: "task"
-
+      currentList: "task",
     },
     {
       id: 3,
       name: "FDC Connection",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 4,
       name: "Standpipe Connection",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 5,
       name: "Exposure",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 6,
       name: "Search/Rescue",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 7,
       name: "Evacuation",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 8,
       name: "Ventilation",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 9,
       name: "Water Supply",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 10,
       name: "Secondary Water Supply",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 11,
       name: "IRIT",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 12,
       name: "RIT",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 13,
       name: "Assign Safety Officeer",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 14,
       name: "Assign Accountability Officer",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 15,
       name: "Utilities",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 16,
       name: "Gas",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 17,
       name: "Electric",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 18,
       name: "Water",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 19,
       name: "Rehab",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 20,
       name: "Salvage",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 21,
       name: "Overhaul",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 22,
       name: "Medical",
       border_color: "red",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 23,
       name: "Traffic Control",
       border_color: "yellow",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 24,
       name: "Police",
       border_color: "yellow",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 25,
       name: "PIO",
       border_color: "yellow",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 26,
       name: "Investigators",
       border_color: "yellow",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 27,
       name: "Fire Marhsal",
       border_color: "yellow",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 28,
       name: "State Fire Marhsal",
       border_color: "yellow",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 29,
       name: "Health Department",
       border_color: "yellow",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 30,
       name: "Occupant Services",
       border_color: "yellow",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 31,
       name: "Board Up",
       border_color: "yellow",
-      currentList: "task"
+      currentList: "task",
     },
     {
       id: 32,
       name: "Red Cross",
       border_color: "yellow",
-      currentList: "task"
+      currentList: "task",
     },
   ];
-  const FirstDoneItemList = [
+  const DoneList = [
     {
       id: 13,
       name: "M",
       border_color: "#ffaaff",
-      currentList: "done"
+      currentList: "done",
     },
     {
       id: 14,
       name: "N",
       border_color: "#ffaaff",
-      currentList: "done"
+      currentList: "done",
     },
     {
       id: 15,
       name: "O",
       border_color: "#ffaaff",
-      currentList: "done"
+      currentList: "done",
     },
     {
       id: 16,
       name: "P",
       border_color: "#ffaaff",
-      currentList: "done"
+      currentList: "done",
     },
   ];
 
-  const [receivingItemList, setReceivedItemList] = React.useState(
-    FirstDoneItemList
-  );
-  const [dragItemMiddleList, setDragItemListMiddle] =
-    React.useState(draggableItemList);
+  const [dragDoneList, setDragDoneList] = React.useState(DoneList);
+  const [dragTaskList, setDragTaskList] = React.useState(TaskList);
 
-  const [receivingTaskList, setReceivedTaskList] = React.useState([{}]);
+  // const [currentTaskList, setCurrentTaskList] = React.useState([""]);
 
-  const DragUIComponent = ({ item, index }) => {
+  const DragTaskComponent = ({ item, index }) => {
     return (
       <DraxView
         style={[styles.task, { borderColor: item.border_color }]}
@@ -253,10 +250,49 @@ function PracticeBottom(props) {
         hoverDraggingStyle={styles.hoverDragging}
         dragPayload={[index, item.currentList]}
         longPressDelay={150}
+        receivingStyle={styles.receiving}
+        renderContent={({ viewState }) => {
+          const receivingDrag = viewState && viewState.receivingDrag;
+          const payload = receivingDrag && receivingDrag.payload;
+          return (
+            <View>
+              <Text style={styles.textStyle}>{item.name}</Text>
+            </View>
+          );
+        }}
         key={index}
-      >
-        <Text style={styles.textStyle}>{item.name}</Text>
-      </DraxView>
+        onReceiveDragDrop={(event) => {
+          if (event.dragged.payload[1] === "done") {
+            let selected_item = dragDoneList[event.dragged.payload[0]];
+
+            selected_item.currentList = "task"; //set current task to current task
+
+            let newDragTaskList = [...dragTaskList];
+
+            newDragTaskList.push(selected_item);
+            setDragTaskList(newDragTaskList);
+
+            let newDragDoneList = [...dragDoneList];
+            newDragDoneList.splice(newDragDoneList.indexOf(selected_item), 1);
+
+            setDragDoneList(newDragDoneList);
+          } else if (event.dragged.payload[1] === "currentTask") {
+            let selected_item = currentTaskList[event.dragged.payload[0]];
+
+            selected_item.currentList = "task"; //set current task to current task
+
+            let newDragTaskList = [...dragTaskList];
+
+            newDragTaskList.push(selected_item);
+            setDragTaskList(newDragTaskList);
+
+            let newCurrentTaskList = [...currentTaskList];
+            newCurrentTaskList = [""];
+
+            setCurrentTaskList(newCurrentTaskList);
+          }
+        }}
+      />
     );
   };
 
@@ -281,86 +317,138 @@ function PracticeBottom(props) {
         }}
         key={index}
         onReceiveDragDrop={(event) => {
-          let selected_item = dragItemMiddleList[event.dragged.payload];
+          if (event.dragged.payload[1] === "task") {
+            let selected_item = dragTaskList[event.dragged.payload[0]];
 
-          let newReceivingItemList = [...receivingItemList];
+            selected_item.currentList = "done"; //set current task to current task
 
-          newReceivingItemList.push(selected_item);
-          setReceivedItemList(newReceivingItemList);
+            let newDragDoneList = [...dragDoneList];
 
-          let newDragItemMiddleList = [...dragItemMiddleList];
-          newDragItemMiddleList.splice(
-            newDragItemMiddleList.indexOf(selected_item),
-            1
-          );
+            newDragDoneList.push(selected_item);
+            setDragDoneList(newDragDoneList);
 
-          setDragItemListMiddle(newDragItemMiddleList);
-        }}
-      />
-    );
-  };
-  
-  //For task zone
-  const recievingTaskZone = ({ item, index }) => {
-    return (
-      <DraxView
-        style={[styles.tChartSection, { borderColor: item.border_color }]}
-        draggingStyle={styles.dragging}
-        dragReleasedStyle={styles.dragging}
-        hoverDraggingStyle={styles.hoverDragging}
-        dragPayload={index}
-        longPressDelay={150}
-        receivingStyle={styles.receiving}
-        renderContent={({ viewState }) => {
-          const receivingDrag = viewState && viewState.receivingDrag;
-          const payload = receivingDrag && receivingDrag.payload;
-          return (
-            <View>
-              <Text style={styles.textStyle}>{item.name}</Text>
-            </View>
-          );
-        }}
-        key={index}
-        onReceiveDragDrop={(event) => {
-          console.log(event.dragged.payload[0]);
-          console.log(event.dragged.payload[1]);
-          console.log("hello");
-          let fromList;
-          let receivingList;
-          if (event.dragged.payload[1] === "task") { // if from task list
-            fromList = [...dragItemMiddleList];
-            let selected_item = fromList[event.dragged.payload[0]]; //get index of dragged item
+            let newDragTaskList = [...dragTaskList];
+            newDragTaskList.splice(newDragTaskList.indexOf(selected_item), 1);
 
-            let newReceivingTaskList = [...receivingTaskList]; //set temp list to receiving list
-  
-            newReceivingTaskList[index] = selected_item; //replace receiving item with dragged item
-            setReceivedTaskList(newReceivingTaskList); //set actual list to temp list
-  
-            let newFromList = [...fromList]; //set temp list to
-            newFromList.splice(newFromList.indexOf(selected_item), 1); // removed dragged item from dragged list
-  
-            setDragItemListMiddle(newFromList);
-          }else if (event.dragged.payload[1] === "done") { //if from done list
-            fromList = [...receivingItemList];
-            let selected_item = fromList[event.dragged.payload[0]]; //get index of dragged item
+            setDragTaskList(newDragTaskList);
+          } else if (event.dragged.payload[1] === "currentTask") {
+            let selected_item = currentTaskList[event.dragged.payload[0]];
 
-            let newReceivingTaskList = [...receivingTaskList]; //set temp list to receiving list
-  
-            newReceivingTaskList[index] = selected_item; //replace receiving item with dragged item
-            setReceivedTaskList(newReceivingTaskList); //set actual list to temp list
-  
-            let newFromList = [...fromList]; //set temp list to
-            newFromList.splice(newFromList.indexOf(selected_item), 1); // removed dragged item from dragged list
-  
-            setReceivedItemList(newFromList);          }
-          if(fromList) {  //if fromList is set...
+            selected_item.currentList = "done"; //set current task to current task
 
+            let newDragDoneList = [...dragDoneList];
+
+            newDragDoneList.push(selected_item);
+            setDragDoneList(newDragDoneList);
+
+            let newCurrentTaskList = [...currentTaskList];
+            newCurrentTaskList = [""];
+
+            setCurrentTaskList(newCurrentTaskList);
           }
-
         }}
       />
     );
   };
+
+  //For task zone
+  // const recievingTaskZone = ({ item, index }) => {
+  //   return (
+  //     <DraxView
+  //       style={[styles.tChartSection, { borderColor: item.border_color }]}
+  //       draggingStyle={styles.dragging}
+  //       dragReleasedStyle={styles.dragging}
+  //       hoverDraggingStyle={styles.hoverDragging}
+  //       dragPayload={[index, item.currentList]}
+  //       longPressDelay={150}
+  //       receivingStyle={styles.receiving}
+  //       renderContent={({ viewState }) => {
+  //         const receivingDrag = viewState && viewState.receivingDrag;
+  //         const payload = receivingDrag && receivingDrag.payload;
+  //         return (
+  //           <View>
+  //             <Text style={styles.textStyle}>
+  //               {item.name}
+  //
+  //             </Text>
+  //           </View>
+  //         );
+  //       }}
+  //       key={index}
+  //       onReceiveDragDrop={(event) => {
+  //         let fromList;
+  //         if (event.dragged.payload[1] === "task") {
+  //           // if from task list
+  //           fromList = [...dragTaskList];
+
+  //           let selected_item = fromList[event.dragged.payload[0]]; //get index of dragged item
+  //           selected_item.currentList = "currentTask"; //set current task to current task
+
+  //           let newCurrentTaskList = [...currentTaskList]; //set temp list to receiving list
+
+  //           if (!newCurrentTaskList[0]) {
+  //             //if receiving list is empty... add to list
+
+  //             newCurrentTaskList[index] = selected_item; //replace receiving item with dragged item
+  //             setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
+
+  //             let newFromList = [...fromList]; //set temp from list
+  //             newFromList.splice(newFromList.indexOf(selected_item), 1); // removed dragged item from dragged list
+  //             setDragTaskList(newFromList); // set actual from list to temp list
+  //           } else {
+  //             // take current task and push it to done list, add dragged task
+  //             let pushDragDoneList = [...dragDoneList]; //set temp to dragDoneList
+  //             newCurrentTaskList[0].currentList = "done"; //set pushing task's current list to done
+  //             pushDragDoneList.push(newCurrentTaskList[0]); //push current task to temp dragDoneList
+  //             setDragDoneList(pushDragDoneList);
+
+  //             newCurrentTaskList[index] = selected_item; //replace receiving item with dragged item
+  //             setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
+
+  //             let newFromList = [...fromList]; //set temp from list
+  //             newFromList.splice(newFromList.indexOf(selected_item), 1); // removed dragged item from dragged list
+  //             setDragTaskList(newFromList); // set actual from list to temp list
+  //           }
+  //         } else if (event.dragged.payload[1] === "done") {
+  //           //if from done list
+  //           fromList = [...dragDoneList];
+
+  //           let selected_item = fromList[event.dragged.payload[0]]; //get index of dragged item
+  //           selected_item.currentList = "currentTask"; //set current task to current task
+
+  //           let newCurrentTaskList = [...currentTaskList]; //set temp list to receiving list
+
+  //           if (!newCurrentTaskList[0]) {
+  //             //if receiving list is empty... add to list
+
+  //             newCurrentTaskList[index] = selected_item; //replace receiving item with dragged item
+  //             setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
+
+  //             let newFromList = [...fromList]; //set temp from list
+  //             newFromList.splice(newFromList.indexOf(selected_item), 1); // removed dragged item from dragged list
+  //             setDragDoneList(newFromList); // set actual from list to temp list
+  //           } else {
+  //             // take current task and push it to done list, add dragged task
+  //             let pushDragDoneList = [...dragDoneList]; //set temp to dragDoneList
+  //             newCurrentTaskList[0].currentList = "done"; //set pushing task's current list to done
+  //             pushDragDoneList.push(newCurrentTaskList[0]); //push current task to temp dragDoneList
+  //             fromList = [...pushDragDoneList]; // update from list with temp list
+
+  //             newCurrentTaskList[index] = selected_item; //replace receiving item with dragged item
+  //             setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
+
+  //             let newFromList = [...fromList]; //set temp from list
+  //             newFromList.splice(newFromList.indexOf(selected_item), 1); // removed dragged item from dragged list
+  //             setDragDoneList(newFromList); // set actual from list to temp list
+  //           }
+  //         }
+  //         if (fromList) {
+  //           //if fromList is set...
+  //         }
+  //       }}
+  //     />
+  //   );
+  // };
 
   const FlatListItemSeparator = () => {
     return <View style={styles.itemSeparator} />;
@@ -371,47 +459,34 @@ function PracticeBottom(props) {
 
   return (
     <GestureHandlerRootView style={gestureRootViewStyle}>
-      <View style={styles.container}>
-        <DraxProvider style={styles.container}>
-          <DraxList
-            style={styles.todo}
-            data={dragItemMiddleList}
-            renderItemContent={DragUIComponent}
-            keyExtractor={(item, index) => index.toString()}
-            ItemSeparatorComponent={FlatListItemSeparator}
-            scrollEnabled={true}
-          />
-          <View style={styles.done}>
-            <ScrollView style={styles.scroll}>
-              <View style={styles.receivingContainer}>
-                {receivingItemList.map((item, index) =>
-                  ReceivingZoneUIComponent({ item, index })
-                )}
+      <DraxProvider style={styles.container}>
+        <View style={styles.todo}>
+          {dragTaskList.map((item, index) =>
+            DragTaskComponent({ item, index })
+          )}
+        </View>
+        <View style={styles.done}>
+          {dragDoneList.map((item, index) =>
+            ReceivingZoneUIComponent({ item, index })
+          )}
+        </View>
+        <View style={styles.rightBotom}>
+          <View style={styles.benchmarks}>
+            {/* Benchmarks */}
+            <TouchableOpacity
+              style={styles.check}
+              onPress={() =>
+                checkBench === true ? setCheckBench(false) : setCheckBench(true)
+              }
+            >
+              <View style={styles.outterCheck}>
+                {checkBench === true && <View style={styles.innerCheck} />}
               </View>
-            </ScrollView>
-          </View>
-          <View style={styles.rightBotom}>
-            <View style={styles.benchmarks}>
-              {/* Benchmarks */}
-              <TouchableOpacity
-                style={styles.check}
-                onPress={() =>
-                  checkBench === true
-                    ? setCheckBench(false)
-                    : setCheckBench(true)
-                }
-              >
-                <View style={styles.outterCheck}>
-                  {checkBench === true && <View style={styles.innerCheck} />}
-                </View>
-                <Text style={[styles.bold, styles.font]}>Benchmarks:</Text>
-              </TouchableOpacity>
+              <Text style={[styles.bold, styles.font]}>Benchmarks:</Text>
+            </TouchableOpacity>
 
-              {[
-                '"All Clear" Complete',
-                "Fire Under Control",
-                "Loss Stopped",
-              ].map((choice) => (
+            {['"All Clear" Complete', "Fire Under Control", "Loss Stopped"].map(
+              (choice) => (
                 <TouchableOpacity
                   key={choice}
                   style={styles.button}
@@ -429,38 +504,28 @@ function PracticeBottom(props) {
                     </Text>
                   </Text>
                 </TouchableOpacity>
-              ))}
-            </View>
-            <View style={styles.elapsed}>
-              <Timer></Timer>
-            </View>
-            <View style={styles.teamCharts}>
-              <View style={styles.tChart}>
-                {receivingTaskList.map((item, index) =>
-                  recievingTaskZone({ item, index })
-                )}
-                <View style={styles.tChartSection}>
-                  <Text>Team Name</Text>
-                </View>
-                <View style={styles.tChartTimer}>
-                  <Timer size={"smallTimer"}></Timer>
-                </View>
-              </View>
-              <View style={styles.tChart}></View>
-              <View style={styles.tChart}></View>
-              <View style={styles.tChart}></View>
-              <View style={styles.tChart}></View>
-              <View style={styles.tChart}></View>
-              <View style={styles.tChart}></View>
-              <View style={styles.tChart}></View>
-              <View style={styles.tChart}></View>
-              <View style={styles.tChart}></View>
-              <View style={styles.tChart}></View>
-              <View style={styles.tChart}></View>
-            </View>
+              )
+            )}
           </View>
-        </DraxProvider>
-      </View>
+          <View style={styles.elapsed}>
+            <Timer></Timer>
+          </View>
+          <View style={styles.teamCharts}>
+            <TChart style={styles.tChart} />
+            <View style={styles.tChart}></View>
+            <View style={styles.tChart}></View>
+            <View style={styles.tChart}></View>
+            <View style={styles.tChart}></View>
+            <View style={styles.tChart}></View>
+            <View style={styles.tChart}></View>
+            <View style={styles.tChart}></View>
+            <View style={styles.tChart}></View>
+            <View style={styles.tChart}></View>
+            <View style={styles.tChart}></View>
+            <View style={styles.tChart}></View>
+          </View>
+        </View>
+      </DraxProvider>
     </GestureHandlerRootView>
   );
 }
@@ -493,8 +558,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   done: {
+    flexDirection: "column",
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+    alignItems: "center",
     width: "20%",
-    height: "95%",
+    height: "100%",
     backgroundColor: "gray",
     borderWidth: 2,
   },
@@ -556,13 +625,16 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   task: {
+    width: "31%",
     fontSize: 20,
     flexDirection: "row",
     justifyContent: "center",
     borderWidth: 2,
     borderColor: "red",
-    margin: 10,
-    marginTop: 5,
+    borderRadius: 10,
+    margin: 2,
+    marginTop: 4,
+    marginBottom: 4,
     // shadowColor: "#171717",
     // shadowOffset: { width: -2, height: 4 },
     // shadowOpacity: 0.2,
@@ -621,8 +693,12 @@ const styles = StyleSheet.create({
   //   fontSize: 24,
   //   },
   todo: {
+    flexDirection: "column",
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+    alignItems: "center",
     width: "20%",
-    height: "95%",
+    height: "100%",
     backgroundColor: "gray",
     borderWidth: 2,
   },

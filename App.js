@@ -3,7 +3,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import MainScreen from './screens/MainScreen';
 import Practice from './screens/Practice';
 
+
 export default function App() {
+
+  
   return (
     <MainScreen/>
   );

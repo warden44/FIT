@@ -11,6 +11,7 @@ import Timer from "../../components/Timer";
 import TChart from "../../components/TChart";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
+import AppContext from "../../components/AppContext";
 
 const gestureRootViewStyle = { flex: 1 };
 
@@ -239,6 +240,13 @@ function PracticeBottom(props) {
   const [dragDoneList, setDragDoneList] = React.useState(DoneList);
   const [dragTaskList, setDragTaskList] = React.useState(TaskList);
 
+  const userSettings = {
+    doneList: dragDoneList,
+    taskList: dragTaskList,
+    setDragDoneList,
+    setDragTaskList,
+  };
+
   // const [currentTaskList, setCurrentTaskList] = React.useState([""]);
 
   const DragTaskComponent = ({ item, index }) => {
@@ -458,35 +466,41 @@ function PracticeBottom(props) {
   const [checkBench, setCheckBench] = React.useState(false);
 
   return (
-    <GestureHandlerRootView style={gestureRootViewStyle}>
-      <DraxProvider style={styles.container}>
-        <View style={styles.todo}>
-          {dragTaskList.map((item, index) =>
-            DragTaskComponent({ item, index })
-          )}
-        </View>
-        <View style={styles.done}>
-          {dragDoneList.map((item, index) =>
-            ReceivingZoneUIComponent({ item, index })
-          )}
-        </View>
-        <View style={styles.rightBotom}>
-          <View style={styles.benchmarks}>
-            {/* Benchmarks */}
-            <TouchableOpacity
-              style={styles.check}
-              onPress={() =>
-                checkBench === true ? setCheckBench(false) : setCheckBench(true)
-              }
-            >
-              <View style={styles.outterCheck}>
-                {checkBench === true && <View style={styles.innerCheck} />}
-              </View>
-              <Text style={[styles.bold, styles.font]}>Benchmarks:</Text>
-            </TouchableOpacity>
+    <AppContext.Provider value={userSettings}>
+      <GestureHandlerRootView style={gestureRootViewStyle}>
+        <DraxProvider style={styles.container}>
+          <View style={styles.todo}>
+            {dragTaskList.map((item, index) =>
+              DragTaskComponent({ item, index })
+            )}
+          </View>
+          <View style={styles.done}>
+            {dragDoneList.map((item, index) =>
+              ReceivingZoneUIComponent({ item, index })
+            )}
+          </View>
+          <View style={styles.rightBotom}>
+            <View style={styles.benchmarks}>
+              {/* Benchmarks */}
+              <TouchableOpacity
+                style={styles.check}
+                onPress={() =>
+                  checkBench === true
+                    ? setCheckBench(false)
+                    : setCheckBench(true)
+                }
+              >
+                <View style={styles.outterCheck}>
+                  {checkBench === true && <View style={styles.innerCheck} />}
+                </View>
+                <Text style={[styles.bold, styles.font]}>Benchmarks:</Text>
+              </TouchableOpacity>
 
-            {['"All Clear" Complete', "Fire Under Control", "Loss Stopped"].map(
-              (choice) => (
+              {[
+                '"All Clear" Complete',
+                "Fire Under Control",
+                "Loss Stopped",
+              ].map((choice) => (
                 <TouchableOpacity
                   key={choice}
                   style={styles.button}
@@ -504,29 +518,29 @@ function PracticeBottom(props) {
                     </Text>
                   </Text>
                 </TouchableOpacity>
-              )
-            )}
+              ))}
+            </View>
+            <View style={styles.elapsed}>
+              <Timer></Timer>
+            </View>
+            <View style={styles.teamCharts}>
+              <TChart style={styles.tChart} />
+              <TChart style={styles.tChart} />
+              <TChart style={styles.tChart} />
+              <TChart style={styles.tChart} />
+              <TChart style={styles.tChart} />
+              <TChart style={styles.tChart} />
+              <TChart style={styles.tChart} />
+              <TChart style={styles.tChart} />
+              <TChart style={styles.tChart} />
+              <TChart style={styles.tChart} />
+              <TChart style={styles.tChart} />
+              <TChart style={styles.tChart} />
+            </View>
           </View>
-          <View style={styles.elapsed}>
-            <Timer></Timer>
-          </View>
-          <View style={styles.teamCharts}>
-            <TChart style={styles.tChart} />
-            <View style={styles.tChart}></View>
-            <View style={styles.tChart}></View>
-            <View style={styles.tChart}></View>
-            <View style={styles.tChart}></View>
-            <View style={styles.tChart}></View>
-            <View style={styles.tChart}></View>
-            <View style={styles.tChart}></View>
-            <View style={styles.tChart}></View>
-            <View style={styles.tChart}></View>
-            <View style={styles.tChart}></View>
-            <View style={styles.tChart}></View>
-          </View>
-        </View>
-      </DraxProvider>
-    </GestureHandlerRootView>
+        </DraxProvider>
+      </GestureHandlerRootView>
+    </AppContext.Provider>
   );
 }
 
@@ -698,7 +712,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     width: "20%",
-    height: "100%",
+    height: "98%",
     backgroundColor: "gray",
     borderWidth: 2,
   },

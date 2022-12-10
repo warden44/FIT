@@ -105,6 +105,7 @@ export default function App() {
           styles.draggableBox,
           { backgroundColor: item.background_color },
         ]}
+        animateSnapback={false}
         draggingStyle={styles.dragging}
         dragReleasedStyle={styles.dragging}
         hoverDraggingStyle={styles.hoverDragging}

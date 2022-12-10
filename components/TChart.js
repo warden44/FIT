@@ -32,10 +32,11 @@ function TChart(props) {
     return (
       <DraxView
         style={[styles.tChartSection, { borderColor: item.border_color }]}
+        animateSnapback={false}
         draggingStyle={styles.dragging}
         dragReleasedStyle={styles.dragging}
         hoverDraggingStyle={styles.hoverDragging}
-        dragPayload={[item.currentList, item.tChart]}
+        dragPayload={[0, item.currentList, item.tChart]}
         longPressDelay={150}
         receivingStyle={styles.receiving}
         renderContent={({ viewState }) => {
@@ -44,7 +45,7 @@ function TChart(props) {
           return (
             <View>
               <Text style={styles.textStyle}>
-                {item.name}{tChartId}
+                {item.name}
               </Text>
             </View>
           );
@@ -58,24 +59,23 @@ function TChart(props) {
             let selected_item = fromList[event.dragged.payload[0]]; //get index of dragged item
             selected_item.currentList = "currentTask"; //set current task to current task
             selected_item.tChart = tChartId; //set chart id
-            console.log(selected_item);
 
             let newCurrentTaskList = [...myContext.currentList]; //set temp list to receiving list
 
-            if (!newCurrentTaskList[0]) {
+            if (!newCurrentTaskList[tChartId]) {
               //if receiving list is empty... add to list
 
               newCurrentTaskList[tChartId] = selected_item; //replace receiving item with dragged item
-              setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
+              myContext.setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
 
               let newFromList = [...fromList]; //set temp from list
-              newFromList.splice(newFromList.indexOf(selected_item), 1); // removed dragged item from dragged list
+              newFromList.splice(event.dragged.payload[0], 1); // removed dragged item from dragged list
               myContext.setDragTaskList(newFromList); // set actual from list to temp list
             } else {
               // take current task and push it to done list, add dragged task
               let pushDragDoneList = [...myContext.doneList]; //set temp to dragDoneList
-              newCurrentTaskList[0].currentList = "done"; //set pushing task's current list to done
-              pushDragDoneList.push(newCurrentTaskList[0]); //push current task to temp dragDoneList
+              newCurrentTaskList[tChartId].currentList = "done"; //set pushing task's current list to done
+              pushDragDoneList.push(newCurrentTaskList[tChartId]); //push current task to temp dragDoneList
               myContext.setDragDoneList(pushDragDoneList);
 
               newCurrentTaskList[tChartId] = selected_item; //replace receiving item with dragged item
@@ -91,27 +91,29 @@ function TChart(props) {
 
             let selected_item = fromList[event.dragged.payload[0]]; //get index of dragged item
             selected_item.currentList = "currentTask"; //set current task to current task
+            selected_item.tChart = tChartId; //set chart id
 
-            let newCurrentTaskList = [...currentTaskList]; //set temp list to receiving list
 
-            if (!newCurrentTaskList[0]) {
+            let newCurrentTaskList = [...myContext.currentList]; //set temp list to receiving list
+
+            if (!newCurrentTaskList[tChartId]) {
               //if receiving list is empty... add to list
 
               newCurrentTaskList[tChartId] = selected_item; //replace receiving item with dragged item
-              setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
+              myContext.setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
 
               let newFromList = [...fromList]; //set temp from list
-              newFromList.splice(newFromList.indexOf(selected_item), 1); // removed dragged item from dragged list
+              newFromList.splice(event.dragged.payload[0], 1); // removed dragged item from dragged list
               myContext.setDragDoneList(newFromList); // set actual from list to temp list
             } else {
               // take current task and push it to done list, add dragged task
               let pushDragDoneList = [...myContext.doneList]; //set temp to dragDoneList
-              newCurrentTaskList[0].currentList = "done"; //set pushing task's current list to done
-              pushDragDoneList.push(newCurrentTaskList[0]); //push current task to temp dragDoneList
+              newCurrentTaskList[tChartId].currentList = "done"; //set pushing task's current list to done
+              pushDragDoneList.push(newCurrentTaskList[tChartId]); //push current task to temp dragDoneList
               fromList = [...pushDragDoneList]; // update from list with temp list
 
               newCurrentTaskList[tChartId] = selected_item; //replace receiving item with dragged item
-              setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
+              myContext.setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
 
               let newFromList = [...fromList]; //set temp from list
               newFromList.splice(newFromList.indexOf(selected_item), 1); // removed dragged item from dragged list

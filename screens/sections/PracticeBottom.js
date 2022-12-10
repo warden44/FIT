@@ -13,11 +13,9 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 import AppContext from "../../components/AppContext";
 
-
 const gestureRootViewStyle = { flex: 1 };
 
 function PracticeBottom(props) {
-
   const myContext = React.useContext(AppContext);
 
   const TaskList = [
@@ -34,7 +32,6 @@ function PracticeBottom(props) {
       border_color: "red",
       currentList: "task",
       tChart: 12,
-
     },
     {
       id: 3,
@@ -277,9 +274,20 @@ function PracticeBottom(props) {
       tChart: 12,
     },
   ];
-  const [currentTaskList, setCurrentTaskList] = React.useState(["", "", "", "", "", "", "", "", "", "", "", ""]);
-
-
+  const [currentTaskList, setCurrentTaskList] = React.useState([
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+  ]);
 
   const [dragDoneList, setDragDoneList] = React.useState(DoneList);
   const [dragTaskList, setDragTaskList] = React.useState(TaskList);
@@ -299,6 +307,7 @@ function PracticeBottom(props) {
     return (
       <DraxView
         style={[styles.task, { borderColor: item.border_color }]}
+        animateSnapback={false}
         draggingStyle={styles.dragging}
         dragReleasedStyle={styles.dragging}
         hoverDraggingStyle={styles.hoverDragging}
@@ -334,9 +343,8 @@ function PracticeBottom(props) {
 
             let selected_item = currentTaskList[event.dragged.payload[2]];
 
-            console.log(selected_item.name);
-
             selected_item.currentList = "task"; //set current task to current task
+            selected_item.tChart = 12; //set chart id
 
             let newDragTaskList = [...dragTaskList];
 
@@ -344,8 +352,7 @@ function PracticeBottom(props) {
             setDragTaskList(newDragTaskList);
 
             let newCurrentTaskList = [...currentTaskList];
-            newCurrentTaskList = [""];
-
+            newCurrentTaskList[event.dragged.payload[2]] = "";
             setCurrentTaskList(newCurrentTaskList);
           }
         }}
@@ -357,6 +364,7 @@ function PracticeBottom(props) {
     return (
       <DraxView
         style={[styles.task, { borderColor: item.border_color }]}
+        animateSnapback={false}
         draggingStyle={styles.dragging}
         dragReleasedStyle={styles.dragging}
         hoverDraggingStyle={styles.hoverDragging}
@@ -389,9 +397,10 @@ function PracticeBottom(props) {
 
             setDragTaskList(newDragTaskList);
           } else if (event.dragged.payload[1] === "currentTask") {
-            let selected_item = currentTaskList[event.dragged.payload[0]];
+            let selected_item = currentTaskList[event.dragged.payload[2]];
 
             selected_item.currentList = "done"; //set current task to current task
+            selected_item.tChart = 12; //set chart id
 
             let newDragDoneList = [...dragDoneList];
 
@@ -399,7 +408,7 @@ function PracticeBottom(props) {
             setDragDoneList(newDragDoneList);
 
             let newCurrentTaskList = [...currentTaskList];
-            newCurrentTaskList = [""];
+            newCurrentTaskList[event.dragged.payload[2]] = "";
 
             setCurrentTaskList(newCurrentTaskList);
           }
@@ -408,104 +417,6 @@ function PracticeBottom(props) {
     );
   };
 
-  //For task zone
-  // const recievingTaskZone = ({ item, index }) => {
-  //   return (
-  //     <DraxView
-  //       style={[styles.tChartSection, { borderColor: item.border_color }]}
-  //       draggingStyle={styles.dragging}
-  //       dragReleasedStyle={styles.dragging}
-  //       hoverDraggingStyle={styles.hoverDragging}
-  //       dragPayload={[index, item.currentList]}
-  //       longPressDelay={150}
-  //       receivingStyle={styles.receiving}
-  //       renderContent={({ viewState }) => {
-  //         const receivingDrag = viewState && viewState.receivingDrag;
-  //         const payload = receivingDrag && receivingDrag.payload;
-  //         return (
-  //           <View>
-  //             <Text style={styles.textStyle}>
-  //               {item.name}
-  //
-  //             </Text>
-  //           </View>
-  //         );
-  //       }}
-  //       key={index}
-  //       onReceiveDragDrop={(event) => {
-  //         let fromList;
-  //         if (event.dragged.payload[1] === "task") {
-  //           // if from task list
-  //           fromList = [...dragTaskList];
-
-  //           let selected_item = fromList[event.dragged.payload[0]]; //get index of dragged item
-  //           selected_item.currentList = "currentTask"; //set current task to current task
-
-  //           let newCurrentTaskList = [...currentTaskList]; //set temp list to receiving list
-
-  //           if (!newCurrentTaskList[0]) {
-  //             //if receiving list is empty... add to list
-
-  //             newCurrentTaskList[index] = selected_item; //replace receiving item with dragged item
-  //             setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
-
-  //             let newFromList = [...fromList]; //set temp from list
-  //             newFromList.splice(newFromList.indexOf(selected_item), 1); // removed dragged item from dragged list
-  //             setDragTaskList(newFromList); // set actual from list to temp list
-  //           } else {
-  //             // take current task and push it to done list, add dragged task
-  //             let pushDragDoneList = [...dragDoneList]; //set temp to dragDoneList
-  //             newCurrentTaskList[0].currentList = "done"; //set pushing task's current list to done
-  //             pushDragDoneList.push(newCurrentTaskList[0]); //push current task to temp dragDoneList
-  //             setDragDoneList(pushDragDoneList);
-
-  //             newCurrentTaskList[index] = selected_item; //replace receiving item with dragged item
-  //             setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
-
-  //             let newFromList = [...fromList]; //set temp from list
-  //             newFromList.splice(newFromList.indexOf(selected_item), 1); // removed dragged item from dragged list
-  //             setDragTaskList(newFromList); // set actual from list to temp list
-  //           }
-  //         } else if (event.dragged.payload[1] === "done") {
-  //           //if from done list
-  //           fromList = [...dragDoneList];
-
-  //           let selected_item = fromList[event.dragged.payload[0]]; //get index of dragged item
-  //           selected_item.currentList = "currentTask"; //set current task to current task
-
-  //           let newCurrentTaskList = [...currentTaskList]; //set temp list to receiving list
-
-  //           if (!newCurrentTaskList[0]) {
-  //             //if receiving list is empty... add to list
-
-  //             newCurrentTaskList[index] = selected_item; //replace receiving item with dragged item
-  //             setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
-
-  //             let newFromList = [...fromList]; //set temp from list
-  //             newFromList.splice(newFromList.indexOf(selected_item), 1); // removed dragged item from dragged list
-  //             setDragDoneList(newFromList); // set actual from list to temp list
-  //           } else {
-  //             // take current task and push it to done list, add dragged task
-  //             let pushDragDoneList = [...dragDoneList]; //set temp to dragDoneList
-  //             newCurrentTaskList[0].currentList = "done"; //set pushing task's current list to done
-  //             pushDragDoneList.push(newCurrentTaskList[0]); //push current task to temp dragDoneList
-  //             fromList = [...pushDragDoneList]; // update from list with temp list
-
-  //             newCurrentTaskList[index] = selected_item; //replace receiving item with dragged item
-  //             setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
-
-  //             let newFromList = [...fromList]; //set temp from list
-  //             newFromList.splice(newFromList.indexOf(selected_item), 1); // removed dragged item from dragged list
-  //             setDragDoneList(newFromList); // set actual from list to temp list
-  //           }
-  //         }
-  //         if (fromList) {
-  //           //if fromList is set...
-  //         }
-  //       }}
-  //     />
-  //   );
-  // };
 
   const FlatListItemSeparator = () => {
     return <View style={styles.itemSeparator} />;
@@ -688,7 +599,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   task: {
-    width: "31%",
+    width: "31.5%",
     fontSize: 20,
     flexDirection: "row",
     justifyContent: "center",

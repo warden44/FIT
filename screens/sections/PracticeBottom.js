@@ -1,4 +1,4 @@
-//refactor draxview onReceiveDragDrop section into functions that : 
+//refactor draxview onReceiveDragDrop section into functions that :
 //1. Check where dragged item is coming from
 //2. Creates draggedItem from fromList based on payload... maybe move creating tempFrom and tempTo lists to top
 //2. Sets item's currentList of dragged item to receiving list || if from currentTask, also set item's tChartId to 12
@@ -10,8 +10,6 @@
 //8. set fromList to tempFromList
 // if setFunction cant be passed as param, have function return tempToList, and use setToList on the return
 // params... payload, toList, setToList, toListName
-
-
 
 import * as React from "react";
 import {
@@ -308,43 +306,76 @@ function PracticeBottom(props) {
   const [dragDoneList, setDragDoneList] = React.useState(DoneList);
   const [dragTaskList, setDragTaskList] = React.useState(TaskList);
 
-  function moveItem(ReceivingList, setRecevingList, payload, toListName) {
-    if (payload[1] != toListName) {
+  function moveItem(
+    ReceivingList,
+    setRecevingList,
+    payload,
+    toListName,
+    tChartId = 12,
+    pushReplace = false
+  ) {
+    if (payload[1] != toListName || toListName === "currentTask") {
+      //if it is not sending to itself. Allow for currentTask and currentTeam so items can be moved amongst tCharts
 
-      let tempSendingList;
-      let tempReceivingList = [...ReceivingList];
-      let setSendingList;
+      let tempSendingList; //initiate temporary copy sending list
+      let tempReceivingList = [...ReceivingList]; //declare temp receiving list to passed parameter
+      let setSendingList; //initiate method to set sending list
+      let pushItem = tempReceivingList[tChartId]; //set push item in case we are pushing old item to done
 
       if (payload[1] === "task") {
-        tempSendingList = [...dragTaskList];
-  
-        setSendingList = setDragTaskList;
-  
+        //if item is coming from task list
+        tempSendingList = [...dragTaskList]; //declare temp sending list to dragTaskList
+
+        setSendingList = setDragTaskList; //declare method to set sending list to setDragTaskList
       } else if (payload[1] === "done") {
-        tempSendingList = [...dragDoneList];
-  
-        setSendingList = setDragDoneList;
-  
+        //if item is coming from done list
+        tempSendingList = [...dragDoneList]; //declare temps ending list to dragDoneList
+
+        setSendingList = setDragDoneList; //declare method to se sending list to setDragDoneList
       } else if (payload[1] === "currentTask") {
-        tempSendingList = [...currentTaskList];
-  
-        setSendingList = setCurrentTaskList;
-  
-      }
-      sentItem = tempSendingList[payload[0]];
-  
-      sentItem.currentList = toListName;
-      sentItem.tChart = 12;
-      tempReceivingList.push(sentItem);
-      setRecevingList(tempReceivingList);
+        //if item is coming from current task list
+        tempSendingList = [...currentTaskList]; //declare temp sending list to currentTaskList
 
-      if(payload[1] === "currentTask") {
-        tempSendingList[payload[0]] = "";
+        setSendingList = setCurrentTaskList; //declare method to set sending list to setCurrentTaskList
+      }
+      let sentItem = tempSendingList[payload[0]]; //declare the item being sent by the index of the sending list
+
+      sentItem.currentList = toListName; //change sent item's current list to receiving list name
+
+      if (toListName === "currentTask") {
+        //if item is going to a tchart, it needs to be inserted instead of pushed
+        sentItem.tChart = tChartId; //declare sent item's tChart id to 12
+        tempReceivingList[tChartId] = sentItem; //insert item into receiving list
       } else {
-        tempSendingList.splice(payload[0], 1);
+        sentItem.tChart = 12; //declare sent item's tChart id to 12
+        tempReceivingList.push(sentItem); //push sent item to receiving list
       }
 
-      setSendingList(tempSendingList);
+      if (payload[1] === "currentTask" && toListName === "currentTask") {
+        //if swapping inside of currentList, just change the receiving list, or else idk just dont
+        tempReceivingList[payload[0]] = ""; //erase item at what was the index
+      } else if (payload[1] === "currentTask") {
+        //if coming from current task list
+        tempSendingList[payload[0]] = ""; //erase item at what was the index
+      } else {
+        tempSendingList.splice(payload[0], 1); //else splice sending list at what was the index
+      }
+
+      if (pushReplace) {  //if pushReplace param is set to true...
+        pushItem.currentList = "done";  //fix attributes of item that is going to be pushed
+        pushItem.tChart = 12;
+        if (payload[1] === "done") {  //if sending list is "done", push to tempSendingList
+          tempSendingList.push(pushItem);
+        } else {  //else create temp list from dragDoneList, push, and set
+          let tempPushList = [...dragDoneList];
+          tempPushList.push(pushItem);
+          setDragDoneList(tempPushList);
+        }
+      }
+
+      setSendingList(tempSendingList); //set actual sending list to temp sending list
+      setRecevingList(tempReceivingList); //set actual receiving list to temp list. Do this last incase swapping inside tCharts
+
     }
   }
 
@@ -355,8 +386,8 @@ function PracticeBottom(props) {
     setDragDoneList,
     setDragTaskList,
     setCurrentTaskList,
+    moveItem,
   };
-
 
   const DragTaskComponent = ({ item, index }) => {
     return (
@@ -380,9 +411,13 @@ function PracticeBottom(props) {
         }}
         key={index}
         onReceiveDragDrop={(event) => {
-
           // functs.default(dragTaskList, setDragTaskList, event.dragged.payload, "task")
-          moveItem(dragTaskList, setDragTaskList, event.dragged.payload, "task")
+          moveItem(
+            dragTaskList,
+            setDragTaskList,
+            event.dragged.payload,
+            "task"
+          );
           // if (event.dragged.payload[1] === "done") {
           //   let selected_item = dragDoneList[event.dragged.payload[0]];
 
@@ -441,8 +476,12 @@ function PracticeBottom(props) {
         key={index}
         onReceiveDragDrop={(event) => {
           // functs.default(dragDoneList, setDragDoneList, event.dragged.payload, "done");
-          moveItem(dragDoneList, setDragDoneList, event.dragged.payload, "done");
-
+          moveItem(
+            dragDoneList,
+            setDragDoneList,
+            event.dragged.payload,
+            "done"
+          );
 
           // if (event.dragged.payload[1] === "task") {
           //   let selected_item = dragTaskList[event.dragged.payload[0]];
@@ -478,7 +517,6 @@ function PracticeBottom(props) {
       />
     );
   };
-
 
   const FlatListItemSeparator = () => {
     return <View style={styles.itemSeparator} />;

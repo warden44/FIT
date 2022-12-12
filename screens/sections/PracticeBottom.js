@@ -389,7 +389,7 @@ function PracticeBottom(props) {
     moveItem,
   };
 
-  const DragTaskComponent = ({ item, index }) => {
+  const TodoTasks = ({ item, index }) => {
     return (
       <DraxView
         style={[styles.task, { borderColor: item.border_color }]}
@@ -411,49 +411,18 @@ function PracticeBottom(props) {
         }}
         key={index}
         onReceiveDragDrop={(event) => {
-          // functs.default(dragTaskList, setDragTaskList, event.dragged.payload, "task")
           moveItem(
             dragTaskList,
             setDragTaskList,
             event.dragged.payload,
             "task"
           );
-          // if (event.dragged.payload[1] === "done") {
-          //   let selected_item = dragDoneList[event.dragged.payload[0]];
-
-          //   selected_item.currentList = "task"; //set current task to current task
-
-          //   let newDragTaskList = [...dragTaskList];
-
-          //   newDragTaskList.push(selected_item);
-          //   setDragTaskList(newDragTaskList);
-
-          //   let newDragDoneList = [...dragDoneList];
-          //   newDragDoneList.splice(newDragDoneList.indexOf(selected_item), 1);
-
-          //   setDragDoneList(newDragDoneList);
-          // } else if (event.dragged.payload[1] === "currentTask") {
-
-          //   let selected_item = currentTaskList[event.dragged.payload[2]];
-
-          //   selected_item.currentList = "task"; //set current task to current task
-          //   selected_item.tChart = 12; //set chart id
-
-          //   let newDragTaskList = [...dragTaskList];
-
-          //   newDragTaskList.push(selected_item);
-          //   setDragTaskList(newDragTaskList);
-
-          //   let newCurrentTaskList = [...currentTaskList];
-          //   newCurrentTaskList[event.dragged.payload[2]] = "";
-          //   setCurrentTaskList(newCurrentTaskList);
-          // }
         }}
       />
     );
   };
 
-  const ReceivingZoneUIComponent = ({ item, index }) => {
+  const DoneTasks = ({ item, index }) => {
     return (
       <DraxView
         style={[styles.task, { borderColor: item.border_color }]}
@@ -475,44 +444,12 @@ function PracticeBottom(props) {
         }}
         key={index}
         onReceiveDragDrop={(event) => {
-          // functs.default(dragDoneList, setDragDoneList, event.dragged.payload, "done");
           moveItem(
             dragDoneList,
             setDragDoneList,
             event.dragged.payload,
             "done"
           );
-
-          // if (event.dragged.payload[1] === "task") {
-          //   let selected_item = dragTaskList[event.dragged.payload[0]];
-
-          //   selected_item.currentList = "done"; //set current task to current task
-
-          //   let newDragDoneList = [...dragDoneList];
-
-          //   newDragDoneList.push(selected_item);
-          //   setDragDoneList(newDragDoneList);
-
-          //   let newDragTaskList = [...dragTaskList];
-          //   newDragTaskList.splice(newDragTaskList.indexOf(selected_item), 1);
-
-          //   setDragTaskList(newDragTaskList);
-          // } else if (event.dragged.payload[1] === "currentTask") {
-          //   let selected_item = currentTaskList[event.dragged.payload[2]];
-
-          //   selected_item.currentList = "done"; //set current task to current task
-          //   selected_item.tChart = 12; //set chart id
-
-          //   let newDragDoneList = [...dragDoneList];
-
-          //   newDragDoneList.push(selected_item);
-          //   setDragDoneList(newDragDoneList);
-
-          //   let newCurrentTaskList = [...currentTaskList];
-          //   newCurrentTaskList[event.dragged.payload[2]] = "";
-
-          //   setCurrentTaskList(newCurrentTaskList);
-          // }
         }}
       />
     );
@@ -531,12 +468,12 @@ function PracticeBottom(props) {
         <DraxProvider style={styles.container}>
           <View style={styles.todo}>
             {dragTaskList.map((item, index) =>
-              DragTaskComponent({ item, index })
+              TodoTasks({ item, index })
             )}
           </View>
           <View style={styles.done}>
             {dragDoneList.map((item, index) =>
-              ReceivingZoneUIComponent({ item, index })
+              DoneTasks({ item, index })
             )}
           </View>
           <View style={styles.rightBotom}>
@@ -637,7 +574,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     width: "20%",
-    height: "100%",
+    height: "98%",
     backgroundColor: "gray",
     borderWidth: 2,
   },

@@ -1,4 +1,10 @@
-//react native paper
+//create internal teamList that only shows when the drop down is clicked
+//when item is selected in dropdown, use the index (value key) to push the team from teamList to dragTeamList
+//also remove team from teamList
+//dragTeamList should be mapped to drax view with a component similar to the lower half
+//Issues: how do we push an item back to the teamList from the dragTeamList if we are done with it?
+
+
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -23,7 +29,7 @@ function Top(props) {
       id: 14,
       label: "N",
       border_color: "#ffaaff",
-      value: 2,
+      value: 5,
     },
     {
       id: 15,
@@ -59,9 +65,10 @@ function Top(props) {
   /// drop down list ///
   const [checkLocation, setCheckLocation] = useState(false);
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
+  // const [value, setValue] = useState(null);
   const [items, setItems] = useState(TeamList);
   const [label, setLabel] = useState("team");
+  const [color, setColor] = useState();
   // { label: "Apple", value: "apple" },
   // { label: "Banana", value: "banana" },
   return (
@@ -289,19 +296,19 @@ function Top(props) {
           </Text>
           <DropDownPicker
             open={open}
-            value={value}
+            value={color}
             items={items}
             setOpen={setOpen}
-            setValue={setValue}
+            setValue={setColor}
             setItems={setItems}
             setlabel={label}
           />
           <View>
-            <Text style={styles.teamName}>{label}</Text>
+            <Text style={styles.teamName}>{color}</Text>
             {/* <Text style={styles.teamName}>Team Name</Text>
             <Text style={styles.teamName}>Team Name</Text>
             <Text style={styles.teamName}>Team Name</Text> */}
-            <Text style={styles.teamName}>{label}</Text>
+            {/* <Text style={styles.teamName}>{label}</Text> */}
           </View>
         </View>
         <View style={styles.ready}>

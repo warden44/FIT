@@ -1,3 +1,18 @@
+//refactor draxview onReceiveDragDrop section into functions that : 
+//1. Check where dragged item is coming from
+//2. Creates draggedItem from fromList based on payload... maybe move creating tempFrom and tempTo lists to top
+//2. Sets item's currentList of dragged item to receiving list || if from currentTask, also set item's tChartId to 12
+//3. Creates tempTo list
+//4. Pushes draggedItem to tempTo list
+//5. set toList to tempToList
+//6. set tempFrom list
+//7. splice payload's index from tempFromList || if from currentTask, instead set index to empty string
+//8. set fromList to tempFromList
+// if setFunction cant be passed as param, have function return tempToList, and use setToList on the return
+// params... payload, toList, setToList, toListName
+
+
+
 import * as React from "react";
 import {
   Dimensions,
@@ -12,6 +27,7 @@ import TChart from "../../components/TChart";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 import AppContext from "../../components/AppContext";
+import * as functs from "../../utils/MoveItem";
 
 const gestureRootViewStyle = { flex: 1 };
 
@@ -292,16 +308,55 @@ function PracticeBottom(props) {
   const [dragDoneList, setDragDoneList] = React.useState(DoneList);
   const [dragTaskList, setDragTaskList] = React.useState(TaskList);
 
+  function moveItem(ReceivingList, setRecevingList, payload, toListName) {
+    if (payload[1] != toListName) {
+
+      let tempSendingList;
+      let tempReceivingList = [...ReceivingList];
+      let setSendingList;
+
+      if (payload[1] === "task") {
+        tempSendingList = [...dragTaskList];
+  
+        setSendingList = setDragTaskList;
+  
+      } else if (payload[1] === "done") {
+        tempSendingList = [...dragDoneList];
+  
+        setSendingList = setDragDoneList;
+  
+      } else if (payload[1] === "currentTask") {
+        tempSendingList = [...currentTaskList];
+  
+        setSendingList = setCurrentTaskList;
+  
+      }
+      sentItem = tempSendingList[payload[0]];
+  
+      sentItem.currentList = toListName;
+      sentItem.tChart = 12;
+      tempReceivingList.push(sentItem);
+      setRecevingList(tempReceivingList);
+
+      if(payload[1] === "currentTask") {
+        tempSendingList[payload[0]] = "";
+      } else {
+        tempSendingList.splice(payload[0], 1);
+      }
+
+      setSendingList(tempSendingList);
+    }
+  }
+
   const userSettings = {
-    doneList: dragDoneList,
-    taskList: dragTaskList,
-    currentList: currentTaskList,
+    dragDoneList,
+    dragTaskList,
+    currentTaskList,
     setDragDoneList,
     setDragTaskList,
     setCurrentTaskList,
   };
 
-  // const [currentTaskList, setCurrentTaskList] = React.useState([""]);
 
   const DragTaskComponent = ({ item, index }) => {
     return (
@@ -325,36 +380,39 @@ function PracticeBottom(props) {
         }}
         key={index}
         onReceiveDragDrop={(event) => {
-          if (event.dragged.payload[1] === "done") {
-            let selected_item = dragDoneList[event.dragged.payload[0]];
 
-            selected_item.currentList = "task"; //set current task to current task
+          // functs.default(dragTaskList, setDragTaskList, event.dragged.payload, "task")
+          moveItem(dragTaskList, setDragTaskList, event.dragged.payload, "task")
+          // if (event.dragged.payload[1] === "done") {
+          //   let selected_item = dragDoneList[event.dragged.payload[0]];
 
-            let newDragTaskList = [...dragTaskList];
+          //   selected_item.currentList = "task"; //set current task to current task
 
-            newDragTaskList.push(selected_item);
-            setDragTaskList(newDragTaskList);
+          //   let newDragTaskList = [...dragTaskList];
 
-            let newDragDoneList = [...dragDoneList];
-            newDragDoneList.splice(newDragDoneList.indexOf(selected_item), 1);
+          //   newDragTaskList.push(selected_item);
+          //   setDragTaskList(newDragTaskList);
 
-            setDragDoneList(newDragDoneList);
-          } else if (event.dragged.payload[1] === "currentTask") {
+          //   let newDragDoneList = [...dragDoneList];
+          //   newDragDoneList.splice(newDragDoneList.indexOf(selected_item), 1);
 
-            let selected_item = currentTaskList[event.dragged.payload[2]];
+          //   setDragDoneList(newDragDoneList);
+          // } else if (event.dragged.payload[1] === "currentTask") {
 
-            selected_item.currentList = "task"; //set current task to current task
-            selected_item.tChart = 12; //set chart id
+          //   let selected_item = currentTaskList[event.dragged.payload[2]];
 
-            let newDragTaskList = [...dragTaskList];
+          //   selected_item.currentList = "task"; //set current task to current task
+          //   selected_item.tChart = 12; //set chart id
 
-            newDragTaskList.push(selected_item);
-            setDragTaskList(newDragTaskList);
+          //   let newDragTaskList = [...dragTaskList];
 
-            let newCurrentTaskList = [...currentTaskList];
-            newCurrentTaskList[event.dragged.payload[2]] = "";
-            setCurrentTaskList(newCurrentTaskList);
-          }
+          //   newDragTaskList.push(selected_item);
+          //   setDragTaskList(newDragTaskList);
+
+          //   let newCurrentTaskList = [...currentTaskList];
+          //   newCurrentTaskList[event.dragged.payload[2]] = "";
+          //   setCurrentTaskList(newCurrentTaskList);
+          // }
         }}
       />
     );
@@ -382,36 +440,40 @@ function PracticeBottom(props) {
         }}
         key={index}
         onReceiveDragDrop={(event) => {
-          if (event.dragged.payload[1] === "task") {
-            let selected_item = dragTaskList[event.dragged.payload[0]];
+          // functs.default(dragDoneList, setDragDoneList, event.dragged.payload, "done");
+          moveItem(dragDoneList, setDragDoneList, event.dragged.payload, "done");
 
-            selected_item.currentList = "done"; //set current task to current task
 
-            let newDragDoneList = [...dragDoneList];
+          // if (event.dragged.payload[1] === "task") {
+          //   let selected_item = dragTaskList[event.dragged.payload[0]];
 
-            newDragDoneList.push(selected_item);
-            setDragDoneList(newDragDoneList);
+          //   selected_item.currentList = "done"; //set current task to current task
 
-            let newDragTaskList = [...dragTaskList];
-            newDragTaskList.splice(newDragTaskList.indexOf(selected_item), 1);
+          //   let newDragDoneList = [...dragDoneList];
 
-            setDragTaskList(newDragTaskList);
-          } else if (event.dragged.payload[1] === "currentTask") {
-            let selected_item = currentTaskList[event.dragged.payload[2]];
+          //   newDragDoneList.push(selected_item);
+          //   setDragDoneList(newDragDoneList);
 
-            selected_item.currentList = "done"; //set current task to current task
-            selected_item.tChart = 12; //set chart id
+          //   let newDragTaskList = [...dragTaskList];
+          //   newDragTaskList.splice(newDragTaskList.indexOf(selected_item), 1);
 
-            let newDragDoneList = [...dragDoneList];
+          //   setDragTaskList(newDragTaskList);
+          // } else if (event.dragged.payload[1] === "currentTask") {
+          //   let selected_item = currentTaskList[event.dragged.payload[2]];
 
-            newDragDoneList.push(selected_item);
-            setDragDoneList(newDragDoneList);
+          //   selected_item.currentList = "done"; //set current task to current task
+          //   selected_item.tChart = 12; //set chart id
 
-            let newCurrentTaskList = [...currentTaskList];
-            newCurrentTaskList[event.dragged.payload[2]] = "";
+          //   let newDragDoneList = [...dragDoneList];
 
-            setCurrentTaskList(newCurrentTaskList);
-          }
+          //   newDragDoneList.push(selected_item);
+          //   setDragDoneList(newDragDoneList);
+
+          //   let newCurrentTaskList = [...currentTaskList];
+          //   newCurrentTaskList[event.dragged.payload[2]] = "";
+
+          //   setCurrentTaskList(newCurrentTaskList);
+          // }
         }}
       />
     );

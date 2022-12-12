@@ -4,6 +4,9 @@ make text of radio button clickable, not just the button itself
 make setting a bubble option also check off the corresponding check box
 make bubbles bigger
 match existing colors of white board
+set opacity of tcharts to low if not being used
+currentList of todo list needs to be todo, not task
+fix snapback animation when pushing to done? idk this sounds hard af
 
 Issues with drag and drop
 When dropping, receiving container doesnt know which container is sending, just assumes the task list.

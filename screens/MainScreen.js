@@ -10,10 +10,10 @@ function MainScreen(props) {
   return (
     <View style={styles.container}>
       <View style={styles.top}>
-        <Top></Top>
+        <Top/>
       </View>
       <View style={styles.bottom}>
-        <PracticeBottom></PracticeBottom>
+        <PracticeBottom/>
       </View>
     </View>
   );

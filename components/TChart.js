@@ -26,7 +26,7 @@ function TChart(props) {
   const [currentTaskList, setCurrentTaskList] = React.useState([""]);
 
   var tChartId = props.tChartId;
-  let item = myContext.currentList[tChartId];
+  let item = myContext.currentTaskList[tChartId]; //this is basically the index
 
   const recievingTaskZone = () => {
     return (
@@ -36,7 +36,7 @@ function TChart(props) {
         draggingStyle={styles.dragging}
         dragReleasedStyle={styles.dragging}
         hoverDraggingStyle={styles.hoverDragging}
-        dragPayload={[0, item.currentList, item.tChart]}
+        dragPayload={[ item.tChart, item.currentTaskList]}
         longPressDelay={150}
         receivingStyle={styles.receiving}
         renderContent={({ viewState }) => {
@@ -54,13 +54,13 @@ function TChart(props) {
           let fromList;
           if (event.dragged.payload[1] === "task") {
             // if from task list
-            fromList = [...myContext.taskList];
+            fromList = [...myContext.dragTaskList];
 
             let selected_item = fromList[event.dragged.payload[0]]; //get index of dragged item
-            selected_item.currentList = "currentTask"; //set current task to current task
+            selected_item.currentTaskList = "currentTask"; //set current task to current task
             selected_item.tChart = tChartId; //set chart id
 
-            let newCurrentTaskList = [...myContext.currentList]; //set temp list to receiving list
+            let newCurrentTaskList = [...myContext.currentTaskList]; //set temp list to receiving list
 
             if (!newCurrentTaskList[tChartId]) {
               //if receiving list is empty... add to list
@@ -73,8 +73,8 @@ function TChart(props) {
               myContext.setDragTaskList(newFromList); // set actual from list to temp list
             } else {
               // take current task and push it to done list, add dragged task
-              let pushDragDoneList = [...myContext.doneList]; //set temp to dragDoneList
-              newCurrentTaskList[tChartId].currentList = "done"; //set pushing task's current list to done
+              let pushDragDoneList = [...myContext.dragDoneList]; //set temp to dragDoneList
+              newCurrentTaskList[tChartId].currentTaskList = "done"; //set pushing task's current list to done
               pushDragDoneList.push(newCurrentTaskList[tChartId]); //push current task to temp dragDoneList
               myContext.setDragDoneList(pushDragDoneList);
 
@@ -87,14 +87,14 @@ function TChart(props) {
             }
           } else if (event.dragged.payload[1] === "done") {
             //if from done list
-            fromList = [...myContext.doneList];
+            fromList = [...myContext.dragDoneList];
 
             let selected_item = fromList[event.dragged.payload[0]]; //get index of dragged item
-            selected_item.currentList = "currentTask"; //set current task to current task
+            selected_item.currentTaskList = "currentTask"; //set current task to current task
             selected_item.tChart = tChartId; //set chart id
 
 
-            let newCurrentTaskList = [...myContext.currentList]; //set temp list to receiving list
+            let newCurrentTaskList = [...myContext.currentTaskList]; //set temp list to receiving list
 
             if (!newCurrentTaskList[tChartId]) {
               //if receiving list is empty... add to list
@@ -107,8 +107,8 @@ function TChart(props) {
               myContext.setDragDoneList(newFromList); // set actual from list to temp list
             } else {
               // take current task and push it to done list, add dragged task
-              let pushDragDoneList = [...myContext.doneList]; //set temp to dragDoneList
-              newCurrentTaskList[tChartId].currentList = "done"; //set pushing task's current list to done
+              let pushDragDoneList = [...myContext.dragDoneList]; //set temp to dragDoneList
+              newCurrentTaskList[tChartId].currentTaskList = "done"; //set pushing task's current list to done
               pushDragDoneList.push(newCurrentTaskList[tChartId]); //push current task to temp dragDoneList
               fromList = [...pushDragDoneList]; // update from list with temp list
 

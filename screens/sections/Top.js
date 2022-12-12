@@ -1,10 +1,43 @@
 //react native paper
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View, Dimensions } from "react-native";
-import Draggable from "react-native-draggable";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Dimensions,
+} from "react-native";
+import DropDownPicker from "react-native-dropdown-picker";
 
 function Top(props) {
   //const [checked, setChecked] = React.useState("first");
+
+  const TeamList = [
+    {
+      id: 13,
+      label: "M",
+      border_color: "#ffaaff",
+      value: 1,
+    },
+    {
+      id: 14,
+      label: "N",
+      border_color: "#ffaaff",
+      value: 2,
+    },
+    {
+      id: 15,
+      label: "O",
+      border_color: "#ffaaff",
+      value: 3,
+    },
+    {
+      id: 16,
+      label: "P",
+      border_color: "#ffaaff",
+      value: 4,
+    },
+  ];
 
   const [alarm, setAlarm] = useState("");
   const [checkAlarm, SetAlarmCheck] = useState(false);
@@ -22,8 +55,15 @@ function Top(props) {
   const [checkCommand, setCheckCommand] = useState(false);
 
   const [location, setLocation] = useState("");
-  const [checkLocation, setCheckLocation] = useState(false);
 
+  /// drop down list ///
+  const [checkLocation, setCheckLocation] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState(TeamList);
+  const [label, setLabel] = useState("team");
+  // { label: "Apple", value: "apple" },
+  // { label: "Banana", value: "banana" },
   return (
     //header
     <View style={styles.container}>
@@ -247,12 +287,21 @@ function Top(props) {
           >
             Enroute
           </Text>
+          <DropDownPicker
+            open={open}
+            value={value}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+            setlabel={label}
+          />
           <View>
+            <Text style={styles.teamName}>{label}</Text>
+            {/* <Text style={styles.teamName}>Team Name</Text>
             <Text style={styles.teamName}>Team Name</Text>
-            <Text style={styles.teamName}>Team Name</Text>
-            <Text style={styles.teamName}>Team Name</Text>
-            <Text style={styles.teamName}>Team Name</Text>
-            <Text style={styles.teamName}>Team Name</Text>
+            <Text style={styles.teamName}>Team Name</Text> */}
+            <Text style={styles.teamName}>{label}</Text>
           </View>
         </View>
         <View style={styles.ready}>
@@ -299,6 +348,7 @@ function Top(props) {
       </View>
     </View>
   );
+  console.log(name);
 }
 
 const styles = StyleSheet.create({

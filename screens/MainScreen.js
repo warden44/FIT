@@ -5,7 +5,6 @@ import Bottom from "./sections/Bottom";
 import PracticeBottom from './sections/PracticeBottom'
 
 function MainScreen(props) {
-  //const [checked, setChecked] = React.useState("first");
 
   return (
     <View style={styles.container}>

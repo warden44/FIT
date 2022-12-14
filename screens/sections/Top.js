@@ -4,7 +4,6 @@
 //dragTeamList should be mapped to drax view with a component similar to the lower half
 //Issues: how do we push an item back to the teamList from the dragTeamList if we are done with it?
 
-
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -13,37 +12,65 @@ import {
   View,
   Dimensions,
 } from "react-native";
+import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 import DropDownPicker from "react-native-dropdown-picker";
+import AppContext from "../../components/AppContext";
 
 function Top(props) {
-  //const [checked, setChecked] = React.useState("first");
+  const myContext = React.useContext(AppContext);
 
-  const TeamList = [
-    {
-      id: 13,
-      label: "M",
-      border_color: "#ffaaff",
-      value: 1,
-    },
-    {
-      id: 14,
-      label: "N",
-      border_color: "#ffaaff",
-      value: 5,
-    },
-    {
-      id: 15,
-      label: "O",
-      border_color: "#ffaaff",
-      value: 3,
-    },
-    {
-      id: 16,
-      label: "P",
-      border_color: "#ffaaff",
-      value: 4,
-    },
-  ];
+  // const TeamList = [
+  //   {
+  //     id: 13,
+  //     label: "M",
+  //     name: "M",
+  //     border_color: "#ffaaff",
+  //     value: 1,
+  //     currentList: "team",
+  //   },
+  //   {
+  //     id: 14,
+  //     label: "N",
+  //     name: "N",
+  //     border_color: "#ffaaff",
+  //     value: 5,
+  //     currentList: "team",
+  //   },
+  //   {
+  //     id: 15,
+  //     label: "O",
+  //     name: "O",
+  //     border_color: "#ffaaff",
+  //     value: 3,
+  //     currentList: "team",
+  //   },
+  //   {
+  //     id: 16,
+  //     label: "P",
+  //     name: "P",
+  //     border_color: "#ffaaff",
+  //     value: 4,
+  //     currentList: "team",
+  //   },
+  // ];
+  // const ReadyList = [
+  //   {
+  //     id: 13,
+  //     label: "M",
+  //     name: "M",
+  //     border_color: "#ffaaff",
+  //     value: 1,
+  //     currentList: "team",
+  //   },
+  //   {
+  //     id: 14,
+  //     label: "N",
+  //     name: "N",
+  //     border_color: "#ffaaff",
+  //     value: 5,
+  //     currentList: "team",
+  //   },
+  // ];
 
   const [alarm, setAlarm] = useState("");
   const [checkAlarm, SetAlarmCheck] = useState(false);
@@ -62,15 +89,83 @@ function Top(props) {
 
   const [location, setLocation] = useState("");
 
-  /// drop down list ///
   const [checkLocation, setCheckLocation] = useState(false);
+
+  /// drop down list ///
+  let something = false
   const [open, setOpen] = useState(false);
   // const [value, setValue] = useState(null);
-  const [items, setItems] = useState(TeamList);
+  const [items, setItems] = useState(myContext.dropTeamList);
   const [label, setLabel] = useState("team");
-  const [color, setColor] = useState();
+  const [index, setIndex] = useState();
   // { label: "Apple", value: "apple" },
   // { label: "Banana", value: "banana" },
+
+  const EnrouteTeams = ({ item, index }) => {
+    return (
+      <DraxView
+        style={[styles.team, { borderColor: item.border_color }]}
+        animateSnapback={false}
+        draggingStyle={styles.dragging}
+        dragReleasedStyle={styles.dragging}
+        hoverDraggingStyle={styles.hoverDragging}
+        dragPayload={[index, item.currentList]}
+        longPressDelay={150}
+        receivingStyle={styles.receiving}
+        renderContent={({ viewState }) => {
+          const receivingDrag = viewState && viewState.receivingDrag;
+          const payload = receivingDrag && receivingDrag.payload;
+          return (
+            <View>
+              <Text style={styles.textStyle}>{item.name}</Text>
+            </View>
+          );
+        }}
+        key={index}
+        onReceiveDragDrop={(event) => {
+          myContext.moveTeam(
+            myContext.dragEnrouteList,
+            myContext.setDragEnrouteList,
+            event.dragged.payload,
+            "enroute"
+          );
+        }}
+      />
+    );
+  };
+  const ReadyTeams = ({ item, index }) => {
+    return (
+      <DraxView
+        style={[styles.team, { borderColor: item.border_color }]}
+        animateSnapback={false}
+        draggingStyle={styles.dragging}
+        dragReleasedStyle={styles.dragging}
+        hoverDraggingStyle={styles.hoverDragging}
+        dragPayload={[index, item.currentList]}
+        longPressDelay={150}
+        receivingStyle={styles.receiving}
+        renderContent={({ viewState }) => {
+          const receivingDrag = viewState && viewState.receivingDrag;
+          const payload = receivingDrag && receivingDrag.payload;
+          return (
+            <View>
+              <Text style={styles.textStyle}>{item.name}</Text>
+            </View>
+          );
+        }}
+        key={index}
+        onReceiveDragDrop={(event) => {
+          myContext.moveTeam(
+            myContext.dragReadyList,
+            myContext.setDragReadyList,
+            event.dragged.payload,
+            "ready"
+          );
+        }}
+      />
+    );
+  };
+
   return (
     //header
     <View style={styles.container}>
@@ -294,22 +389,23 @@ function Top(props) {
           >
             Enroute
           </Text>
-          <DropDownPicker
+          {/* <DropDownPicker
+            style={styles.dropdown}
             open={open}
-            value={color}
+            value={index}
             items={items}
             setOpen={setOpen}
-            setValue={setColor}
+            setValue={setIndex}
             setItems={setItems}
             setlabel={label}
-          />
-          <View>
-            <Text style={styles.teamName}>{color}</Text>
-            {/* <Text style={styles.teamName}>Team Name</Text>
-            <Text style={styles.teamName}>Team Name</Text>
-            <Text style={styles.teamName}>Team Name</Text> */}
-            {/* <Text style={styles.teamName}>{label}</Text> */}
-          </View>
+          >
+            
+            { index > -1 && (myContext.moveTeam(myContext.dragEnrouteList, myContext.setDragEnrouteList, [index, "team"], "enroute"), setIndex(-1))}
+            { index > -1 && (console.log(index), setIndex(-1))}
+          </DropDownPicker> */}
+          {myContext.dragEnrouteList.map((item, index) =>
+            EnrouteTeams({ item, index })
+          )}
         </View>
         <View style={styles.ready}>
           <Text
@@ -317,12 +413,9 @@ function Top(props) {
           >
             Ready For Assignment
           </Text>
-          <View>
-            <Text style={styles.teamName}>Team Name</Text>
-            <Text style={styles.teamName}>Team Name</Text>
-            <Text style={styles.teamName}>Team Name</Text>
-            <Text style={styles.teamName}>Team Name</Text>
-          </View>
+          {myContext.dragReadyList.map((item, index) =>
+            ReadyTeams({ item, index })
+          )}
         </View>
         <View style={styles.mayday}>
           <Text style={styles.maydayHeader}>
@@ -359,6 +452,27 @@ function Top(props) {
 }
 
 const styles = StyleSheet.create({
+  todo: {
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    width: "20%",
+    height: "98%",
+    backgroundColor: "gray",
+    borderWidth: 2,
+  },
+  task: {
+    width: "95%",
+    fontSize: 20,
+    flexDirection: "row",
+    justifyContent: "center",
+    borderWidth: 2,
+    borderColor: "red",
+    borderRadius: 10,
+    margin: 2,
+    marginTop: 4,
+    marginBottom: 4,
+  },
   bold: {
     fontWeight: "bold",
   },
@@ -381,9 +495,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   enroute: {
-    width: "15%",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    width: "20%",
     height: "95%",
-    backgroundColor: "green",
+    backgroundColor: "gray",
     borderWidth: 2,
   },
   font: {
@@ -417,6 +534,14 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     backgroundColor: "red",
+  },
+  list: {
+    backgroundColor: "blue",
+    width: "100%",
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    alignContent: "flex-end",
+    textAlign: "center",
   },
   mayday: {
     width: "25%",
@@ -458,6 +583,18 @@ const styles = StyleSheet.create({
     height: "95%",
     backgroundColor: "cyan",
     borderWidth: 2,
+  },
+  team: {
+    width: "95%",
+    fontSize: 20,
+    flexDirection: "row",
+    justifyContent: "center",
+    borderWidth: 2,
+    borderColor: "red",
+    borderRadius: 10,
+    margin: 2,
+    marginTop: 4,
+    marginBottom: 4,
   },
   teamName: {
     borderTopWidth: 2,

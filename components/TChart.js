@@ -21,10 +21,11 @@ import AppContext from "./AppContext";
 function TChart(props) {
   const myContext = React.useContext(AppContext);
 
-  const [currentTaskList, setCurrentTaskList] = React.useState([""]);
-
   var tChartId = props.tChartId;
   let item = myContext.currentTaskList[tChartId]; //this is basically the index
+
+  let team = myContext.currentTeamList[tChartId];
+
 
   const recievingTaskZone = () => {
     return (
@@ -47,106 +48,129 @@ function TChart(props) {
           );
         }}
         onReceiveDragDrop={(event) => {
-          if (!myContext.currentTaskList[tChartId]) {
-            myContext.moveItem(
-              myContext.currentTaskList,
-              myContext.setCurrentTaskList,
-              event.dragged.payload,
-              "currentTask",
-              tChartId
-            );
+          if (
+            event.dragged.payload[1] === "task" ||
+            event.dragged.payload[1] === "done" ||
+            event.dragged.payload[1] === "currentTask"
+          ) {
+            if (!myContext.currentTaskList[tChartId]) {
+              myContext.moveItem(
+                myContext.currentTaskList,
+                myContext.setCurrentTaskList,
+                event.dragged.payload,
+                "currentTask",
+                tChartId
+              );
+            } else {
+              myContext.moveItem(
+                myContext.currentTaskList,
+                myContext.setCurrentTaskList,
+                event.dragged.payload,
+                "currentTask",
+                tChartId,
+                "pushReplace"
+              );
+            }
           } else {
-            myContext.moveItem(
-              myContext.currentTaskList,
-              myContext.setCurrentTaskList,
-              event.dragged.payload,
-              "currentTask",
-              tChartId,
-              "pushReplace"
-            );
+            if (!myContext.currentTeamList[tChartId]) {
+              myContext.moveTeam(
+                myContext.currentTeamList,
+                myContext.setCurrentTeamList,
+                event.dragged.payload,
+                "currentTeam",
+                tChartId
+              );
+            } else {
+              myContext.moveTeam(
+                myContext.currentTeamList,
+                myContext.setCurrentTeamList,
+                event.dragged.payload,
+                "currentTeam",
+                tChartId,
+                "pushReplace"
+              );
+            }
           }
-          // let fromList;
-          // if (event.dragged.payload[1] === "task") {
-          //   // if from task list
-          //   fromList = [...myContext.dragTaskList];
-
-          //   let selected_item = fromList[event.dragged.payload[0]]; //get index of dragged item
-          //   selected_item.currentTaskList = "currentTask"; //set current task to current task
-          //   selected_item.tChart = tChartId; //set chart id
-
-          //   let newCurrentTaskList = [...myContext.currentTaskList]; //set temp list to receiving list
-
-          //   if (!newCurrentTaskList[tChartId]) {
-          //     //if receiving list is empty... add to list
-
-          //     newCurrentTaskList[tChartId] = selected_item; //replace receiving item with dragged item
-          //     myContext.setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
-
-          //     let newFromList = [...fromList]; //set temp from list
-          //     newFromList.splice(event.dragged.payload[0], 1); // removed dragged item from dragged list
-          //     myContext.setDragTaskList(newFromList); // set actual from list to temp list
-          //   } else {
-          //     // take current task and push it to done list, add dragged task
-          //     let pushDragDoneList = [...myContext.dragDoneList]; //set temp to dragDoneList
-          //     newCurrentTaskList[tChartId].currentTaskList = "done"; //set pushing task's current list to done
-          //     pushDragDoneList.push(newCurrentTaskList[tChartId]); //push current task to temp dragDoneList
-          //     myContext.setDragDoneList(pushDragDoneList);
-
-          //     newCurrentTaskList[tChartId] = selected_item; //replace receiving item with dragged item
-          //     myContext.setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
-
-          //     let newFromList = [...fromList]; //set temp from list
-          //     newFromList.splice(newFromList.indexOf(selected_item), 1); // removed dragged item from dragged list
-          //     myContext.setDragTaskList(newFromList); // set actual from list to temp list
-          //   }
-          // } else if (event.dragged.payload[1] === "done") {
-          //   //if from done list
-          //   fromList = [...myContext.dragDoneList];
-
-          //   let selected_item = fromList[event.dragged.payload[0]]; //get index of dragged item
-          //   selected_item.currentTaskList = "currentTask"; //set current task to current task
-          //   selected_item.tChart = tChartId; //set chart id
-
-          //   let newCurrentTaskList = [...myContext.currentTaskList]; //set temp list to receiving list
-
-          //   if (!newCurrentTaskList[tChartId]) {
-          //     //if receiving list is empty... add to list
-
-          //     newCurrentTaskList[tChartId] = selected_item; //replace receiving item with dragged item
-          //     myContext.setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
-
-          //     let newFromList = [...fromList]; //set temp from list
-          //     newFromList.splice(event.dragged.payload[0], 1); // removed dragged item from dragged list
-          //     myContext.setDragDoneList(newFromList); // set actual from list to temp list
-          //   } else {
-          //     // take current task and push it to done list, add dragged task
-          //     let pushDragDoneList = [...myContext.dragDoneList]; //set temp to dragDoneList
-          //     newCurrentTaskList[tChartId].currentTaskList = "done"; //set pushing task's current list to done
-          //     pushDragDoneList.push(newCurrentTaskList[tChartId]); //push current task to temp dragDoneList
-          //     fromList = [...pushDragDoneList]; // update from list with temp list
-
-          //     newCurrentTaskList[tChartId] = selected_item; //replace receiving item with dragged item
-          //     myContext.setCurrentTaskList(newCurrentTaskList); //set actual list to temp list
-
-          //     let newFromList = [...fromList]; //set temp from list
-          //     newFromList.splice(newFromList.indexOf(selected_item), 1); // removed dragged item from dragged list
-          //     myContext.setDragDoneList(newFromList); // set actual from list to temp list
-          //   }
-          // }
-          // if (fromList) {
-          //   //if fromList is set...
-          // }
         }}
       />
     );
   };
 
+  const receivingTeamZone = () => {
+    return (
+      <DraxView
+        style={[styles.tChartSection, { borderColor: team.border_color }]}
+        animateSnapback={false}
+        draggingStyle={styles.dragging}
+        dragReleasedStyle={styles.dragging}
+        hoverDraggingStyle={styles.hoverDragging}
+        dragPayload={[team.tChart, team.currentList]}
+        longPressDelay={150}
+        receivingStyle={styles.receiving}
+        renderContent={({ viewState }) => {
+          const receivingDrag = viewState && viewState.receivingDrag;
+          const payload = receivingDrag && receivingDrag.payload;
+          return (
+            <View>
+              <Text style={styles.textStyle}>{team.name}</Text>
+            </View>
+          );
+        }}
+        onReceiveDragDrop={(event) => {
+          if (
+            event.dragged.payload[1] === "task" ||
+            event.dragged.payload[1] === "done" ||
+            event.dragged.payload[1] === "currentTask"
+          ) {
+            if (!myContext.currentTaskList[tChartId]) {
+              myContext.moveItem(
+                myContext.currentTaskList,
+                myContext.setCurrentTaskList,
+                event.dragged.payload,
+                "currentTask",
+                tChartId
+              );
+            } else {
+              myContext.moveItem(
+                myContext.currentTaskList,
+                myContext.setCurrentTaskList,
+                event.dragged.payload,
+                "currentTask",
+                tChartId,
+                "pushReplace"
+              );
+            }
+          } else {
+            if (!myContext.currentTeamList[tChartId]) {
+              myContext.moveTeam(
+                myContext.currentTeamList,
+                myContext.setCurrentTeamList,
+                event.dragged.payload,
+                "currentTeam",
+                tChartId
+              );
+            } else {
+              myContext.moveTeam(
+                myContext.currentTeamList,
+                myContext.setCurrentTeamList,
+                event.dragged.payload,
+                "currentTeam",
+                tChartId,
+                "pushReplace"
+              );
+            }
+          }
+        }}
+      />
+    );
+  };
+
+
   return (
     <View style={styles.tChart}>
       {recievingTaskZone()}
-      <View style={styles.tChartSection}>
-        <Text>Team Name cock</Text>
-      </View>
+      {receivingTeamZone()}
+
       <View style={styles.tChartTimer}>
         <Timer size={"smallTimer"}></Timer>
       </View>

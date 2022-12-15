@@ -19,59 +19,9 @@ import AppContext from "../../components/AppContext";
 function Top(props) {
   const myContext = React.useContext(AppContext);
 
-  // const TeamList = [
-  //   {
-  //     id: 13,
-  //     label: "M",
-  //     name: "M",
-  //     border_color: "#ffaaff",
-  //     value: 1,
-  //     currentList: "team",
-  //   },
-  //   {
-  //     id: 14,
-  //     label: "N",
-  //     name: "N",
-  //     border_color: "#ffaaff",
-  //     value: 5,
-  //     currentList: "team",
-  //   },
-  //   {
-  //     id: 15,
-  //     label: "O",
-  //     name: "O",
-  //     border_color: "#ffaaff",
-  //     value: 3,
-  //     currentList: "team",
-  //   },
-  //   {
-  //     id: 16,
-  //     label: "P",
-  //     name: "P",
-  //     border_color: "#ffaaff",
-  //     value: 4,
-  //     currentList: "team",
-  //   },
-  // ];
-  // const ReadyList = [
-  //   {
-  //     id: 13,
-  //     label: "M",
-  //     name: "M",
-  //     border_color: "#ffaaff",
-  //     value: 1,
-  //     currentList: "team",
-  //   },
-  //   {
-  //     id: 14,
-  //     label: "N",
-  //     name: "N",
-  //     border_color: "#ffaaff",
-  //     value: 5,
-  //     currentList: "team",
-  //   },
-  // ];
-
+  function indexify() {
+    myContext.dropTeamList.map((team, index) => (team.value = index));
+  }
   const [alarm, setAlarm] = useState("");
   const [checkAlarm, SetAlarmCheck] = useState(false);
 
@@ -92,7 +42,7 @@ function Top(props) {
   const [checkLocation, setCheckLocation] = useState(false);
 
   /// drop down list ///
-  let something = false
+  let something = false;
   const [open, setOpen] = useState(false);
   // const [value, setValue] = useState(null);
   const [items, setItems] = useState(myContext.dropTeamList);
@@ -389,20 +339,29 @@ function Top(props) {
           >
             Enroute
           </Text>
-          {/* <DropDownPicker
+          <DropDownPicker
             style={styles.dropdown}
             open={open}
             value={index}
-            items={items}
+            items={myContext.dropTeamList}
             setOpen={setOpen}
             setValue={setIndex}
-            setItems={setItems}
+            setItems={myContext.setDropTeamList}
             setlabel={label}
           >
-            
-            { index > -1 && (myContext.moveTeam(myContext.dragEnrouteList, myContext.setDragEnrouteList, [index, "team"], "enroute"), setIndex(-1))}
-            { index > -1 && (console.log(index), setIndex(-1))}
-          </DropDownPicker> */}
+            {index > -1 &&
+              (console.log(index),
+              console.log(myContext.dropTeamList),
+              myContext.moveTeam(
+                myContext.dragEnrouteList,
+                myContext.setDragEnrouteList,
+                [index, "team"],
+                "enroute"
+              ),
+              setIndex(-1),
+              console.log(myContext.dropTeamList))}
+            {/* { index > -1 && (console.log(myContext.dropTeamList))} */}
+          </DropDownPicker>
           {myContext.dragEnrouteList.map((item, index) =>
             EnrouteTeams({ item, index })
           )}
@@ -448,7 +407,6 @@ function Top(props) {
       </View>
     </View>
   );
-  console.log(name);
 }
 
 const styles = StyleSheet.create({

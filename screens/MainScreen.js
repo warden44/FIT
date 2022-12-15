@@ -363,8 +363,12 @@ function MainScreen(props) {
   const [dragDoneList, setDragDoneList] = React.useState(DoneList);
   const [dragTaskList, setDragTaskList] = React.useState(TaskList);
   const [dropTeamList, setDropTeamList] = React.useState(TeamList);
-  const [dragEnrouteList, setDragEnrouteList] = React.useState(TeamList);
+  const [dragEnrouteList, setDragEnrouteList] = React.useState([]);
   const [dragReadyList, setDragReadyList] = React.useState(ReadyList)
+
+  function indexify() {
+    dropTeamList.map((team, index) => (team.value = index));
+  }
 
   function moveItem(
     ReceivingList,
@@ -479,7 +483,6 @@ function MainScreen(props) {
       }
       let sentItem = tempSendingList[payload[0]]; //declare the item being sent by the index of the sending list
       sentItem.currentList = toListName; //change sent item's current list to receiving list name
-      console.log(sentItem.name);
 
       if (toListName === "currentTeam") {
         //if item is going to a tchart, it needs to be inserted instead of pushed
@@ -517,6 +520,9 @@ function MainScreen(props) {
 
       setSendingList(tempSendingList); //set actual sending list to temp sending list
       setRecevingList(tempReceivingList); //set actual receiving list to temp list. Do this last incase swapping inside tCharts
+      if(payload[1] === "team") {
+        indexify();
+      }
     }
   }
 

@@ -4,7 +4,7 @@
 //dragTeamList should be mapped to drax view with a component similar to the lower half
 //Issues: how do we push an item back to the teamList from the dragTeamList if we are done with it?
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -48,6 +48,10 @@ function Top(props) {
   const [items, setItems] = useState(myContext.dropTeamList);
   const [label, setLabel] = useState("team");
   const [index, setIndex] = useState();
+
+  // useEffect(() => {
+  //   setIndex(-1);
+  // }, [index])
   // { label: "Apple", value: "apple" },
   // { label: "Banana", value: "banana" },
 
@@ -451,6 +455,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+  },
+  dropdown: {
+    position: "relative",
   },
   enroute: {
     flexDirection: "column",

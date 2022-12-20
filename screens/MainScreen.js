@@ -331,7 +331,8 @@ function MainScreen(props) {
       border_color: "#ffaaff",
       value: 3,
       currentList: "enroute",
-    },    {
+    },
+    {
       id: 17,
       label: "Q",
       name: "Q",
@@ -340,7 +341,7 @@ function MainScreen(props) {
       currentList: "enroute",
     },
   ];
-  
+
   const ReadyList = [
     {
       id: 13,
@@ -364,11 +365,11 @@ function MainScreen(props) {
   const [dragTaskList, setDragTaskList] = React.useState(TaskList);
   const [dropTeamList, setDropTeamList] = React.useState(TeamList);
   const [dragEnrouteList, setDragEnrouteList] = React.useState([]);
-  const [dragReadyList, setDragReadyList] = React.useState(ReadyList)
+  const [dragReadyList, setDragReadyList] = React.useState(ReadyList);
 
-  function indexify() {
+  React.useEffect(() => {
     dropTeamList.map((team, index) => (team.value = index));
-  }
+  }, [dropTeamList]);
 
   function moveItem(
     ReceivingList,
@@ -460,12 +461,11 @@ function MainScreen(props) {
       let setSendingList; //initiate method to set sending list
       let pushItem = tempReceivingList[tChartId]; //set push item in case we are pushing old item to done
 
-      if(payload[1] === "team") {
+      if (payload[1] === "team") {
         tempSendingList = [...dropTeamList]; //declare temp sending list to dragEnrouteList
 
         setSendingList = setDropTeamList; //declare method to set sending list to setDragEnrouteList
-      }
-      else if(payload[1] === "enroute") {
+      } else if (payload[1] === "enroute") {
         //if item is coming from task list
         tempSendingList = [...dragEnrouteList]; //declare temp sending list to dragEnrouteList
 
@@ -520,9 +520,9 @@ function MainScreen(props) {
 
       setSendingList(tempSendingList); //set actual sending list to temp sending list
       setRecevingList(tempReceivingList); //set actual receiving list to temp list. Do this last incase swapping inside tCharts
-      if(payload[1] === "team") {
-        indexify();
-      }
+      // if (payload[1] === "team") {
+      //   indexify();
+      // }
     }
   }
 
@@ -572,6 +572,7 @@ const styles = StyleSheet.create({
   },
   top: {
     flex: 5,
+    zIndex: 1,
   },
 });
 

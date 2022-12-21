@@ -210,7 +210,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "green",
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -224,7 +223,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "20%",
     height: "98%",
-    backgroundColor: "gray",
+    backgroundColor: "lightgreen",
     borderWidth: 2,
   },
   elapsed: {
@@ -269,8 +268,9 @@ const styles = StyleSheet.create({
   },
   rightBotom: {
     width: "55%",
-    height: "95%",
+    height: "98%",
     backgroundColor: "gray",
+    borderWidth: 2,
   },
   smallFont: {
     fontSize: 10,
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "20%",
     height: "98%",
-    backgroundColor: "gray",
+    backgroundColor: "lightblue",
     borderWidth: 2,
   },
   tSection: {

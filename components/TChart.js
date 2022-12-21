@@ -50,7 +50,7 @@ function TChart(props) {
           const payload = receivingDrag && receivingDrag.payload;
           return (
             <View>
-              <Text style={styles.textStyle}>{item.name}</Text>
+              <Text style={styles.textStyle} adjustsFontSizeToFit>{item.name}</Text>
             </View>
           );
         }}
@@ -112,7 +112,7 @@ function TChart(props) {
           const payload = receivingDrag && receivingDrag.payload;
           return (
             <View>
-              <Text style={styles.textStyle}>{team.name}</Text>
+              <Text style={styles.textStyle} adjustsFontSizeToFit>{team.name}</Text>
             </View>
           );
         }}
@@ -191,6 +191,10 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     paddingRight: 5,
   },
+  textStyle: {
+    textAlign: 'center',
+    margin: 0,
+  }
 });
 
 export default TChart;

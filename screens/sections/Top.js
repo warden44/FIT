@@ -481,7 +481,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "15%",
     height: "99%",
-    backgroundColor: "gray",
+    backgroundColor: "lightblue",
     borderWidth: 2,
   },
   font: {
@@ -563,7 +563,7 @@ const styles = StyleSheet.create({
     width: "15%",
     height: "99%",
     alignItems: "center",
-    backgroundColor: "cyan",
+    backgroundColor: "lightgreen",
     borderWidth: 2,
   },
   team: {

@@ -102,7 +102,7 @@ function MainScreen(props) {
     },
     {
       id: 13,
-      name: "Assign Safety Officeer",
+      name: "Assign Safety Officer",
       border_color: "red",
       currentList: "task",
       tChart: 12,
@@ -887,6 +887,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-around",
+    backgroundColor: "#FFBEBE",
   },
   top: {
     flex: 5,

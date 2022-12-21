@@ -882,6 +882,7 @@ function MainScreen(props) {
 const styles = StyleSheet.create({
   bottom: {
     flex: 9,
+    zIndex: -1,
   },
   container: {
     flex: 1,
@@ -891,7 +892,7 @@ const styles = StyleSheet.create({
   },
   top: {
     flex: 5,
-    zIndex: 1,
+    zIndex: 0,
   },
 });
 

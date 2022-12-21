@@ -472,6 +472,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  dragging: {
+    borderWidth: 10,
+  },
+  hoverDragging: {
+  },
   dropdown: {
     position: "relative",
   },

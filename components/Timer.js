@@ -23,8 +23,20 @@ function Timer(props) {
   const [markMin, setMarkMin] = useState(min);
   const [markSec, setMarkSec] = useState(sec);
 
-  //reset date
+  function resetTimer() {
+    setSeconds(0);
+    setMinutes(0);
+    setHours(0);
+    setIncrement(0);
+  }
+
   function resetDate() {
+    date = new Date().getDate(); //To get the Current Date
+    month = new Date().getMonth() + 1; //To get the Current Month
+    year = new Date().getFullYear(); //To get the Current Year
+    hour = new Date().getHours(); //To get the Current Hours
+    min = new Date().getMinutes(); //To get the Current Minutes
+    sec = new Date().getSeconds(); //To get the Current Seconds
     setMarkDate(date);
     setMarkMonth(month);
     setMarkYear(year);
@@ -85,27 +97,21 @@ function Timer(props) {
           <TouchableOpacity
             style={styles.smallTimer}
             onLongPress={() => {
-              //reset timer
-              setSeconds(0);
-              setMinutes(0);
-              setHours(0);
-              setIncrement(0);
+              //reset timer and date
+              resetTimer();
 
-              console.log(min);
               resetDate();
-              console.log(min);
             }}
             onPress={() => {
-              //if timer is not running and is clicked, reset date
+              //if timer is not running and is clicked, if timer is set to zero, reset date, else stop timer
               if (increment === 0) {
-
-                console.log(min);
-                resetDate();
-                console.log(min);
-
-
                 //start timer
                 setIncrement(1);
+                if (hours + minutes + seconds === 0) {
+                  resetDate();
+                }
+              } else {
+                setIncrement(0);
               }
             }}
           >
@@ -136,28 +142,21 @@ function Timer(props) {
           <TouchableOpacity
             style={styles.bigTimer}
             onLongPress={() => {
-              //reset timer
-              setSeconds(0);
-              setMinutes(0);
-              setHours(0);
-              setIncrement(0);
+              //reset timer and date
+              resetTimer();
 
-              console.log(min);
               resetDate();
-              console.log(min);
-
             }}
             onPress={() => {
-              //if timer is not running and is clicked, reset date
+              //if timer is not running and is clicked, if timer is set to zero, reset date, else stop timer
               if (increment === 0) {
-
-                console.log(min);
-                resetDate();
-                console.log(min);
-
-
                 //start timer
                 setIncrement(1);
+                if (hours + minutes + seconds === 0) {
+                  resetDate();
+                }
+              } else {
+                setIncrement(0);
               }
             }}
           >

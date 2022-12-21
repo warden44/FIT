@@ -299,49 +299,348 @@ function MainScreen(props) {
     "",
     "",
   ]);
-  const TeamList = [
+  const RosterList = [
     {
       id: 13,
-      label: "M",
-      name: "M",
-      border_color: "#ffaaff",
       value: 0,
-      currentList: "enroute",
+      name: "E1",
+      border_color: "#ffaaff",
+      currentList: "roster",
     },
     {
       id: 14,
-      label: "N",
-      name: "N",
+      name: "M1",
       border_color: "#ffaaff",
       value: 1,
-      currentList: "enroute",
+      currentList: "roster",
     },
     {
       id: 15,
-      label: "O",
-      name: "O",
+      name: "A1",
       border_color: "#ffaaff",
       value: 2,
-      currentList: "enroute",
+      currentList: "roster",
+    },
+    {
+      id: 13,
+      value: 0,
+      name: "A21",
+      border_color: "#ffaaff",
+      currentList: "roster",
+    },
+    {
+      id: 14,
+      name: "E21",
+      border_color: "#ffaaff",
+      value: 1,
+      currentList: "roster",
+    },
+    {
+      id: 15,
+      name: "T21",
+      border_color: "#ffaaff",
+      value: 2,
+      currentList: "roster",
     },
     {
       id: 16,
-      label: "P",
-      name: "P",
+      name: "M21",
       border_color: "#ffaaff",
       value: 3,
-      currentList: "enroute",
+      currentList: "roster",
     },
     {
       id: 17,
-      label: "Q",
-      name: "Q",
+      name: "F201",
       border_color: "#ffaaff",
       value: 4,
-      currentList: "enroute",
+      currentList: "roster",
     },
-  ];
+    {
+      id: 18,
+      name: "F202",
+      border_color: "#ffaaff",
+      value: 5,
+      currentList: "roster",
+    },
 
+
+    {
+      id: 13,
+      value: 0,
+      name: "E31",
+      border_color: "#ffaaff",
+      currentList: "roster",
+    },
+    {
+      id: 14,
+      name: "E32",
+      border_color: "#ffaaff",
+      value: 1,
+      currentList: "roster",
+    },
+    {
+      id: 15,
+      name: "T31",
+      border_color: "#ffaaff",
+      value: 2,
+      currentList: "roster",
+    },
+    {
+      id: 13,
+      value: 0,
+      name: "A31",
+      border_color: "#ffaaff",
+      currentList: "roster",
+    },
+    {
+      id: 14,
+      name: "A32",
+      border_color: "#ffaaff",
+      value: 1,
+      currentList: "roster",
+    },
+    {
+      id: 15,
+      name: "M31",
+      border_color: "#ffaaff",
+      value: 2,
+      currentList: "roster",
+    },
+    {
+      id: 16,
+      name: "BC31",
+      border_color: "#ffaaff",
+      value: 3,
+      currentList: "roster",
+    },
+    {
+      id: 17,
+      name: "F301",
+      border_color: "#ffaaff",
+      value: 4,
+      currentList: "roster",
+    },
+    {
+      id: 18,
+      name: "F302",
+      border_color: "#ffaaff",
+      value: 5,
+      currentList: "roster",
+    },
+    {
+      id: 18,
+      name: "F313",
+      border_color: "#ffaaff",
+      value: 5,
+      currentList: "roster",
+    },
+    {
+      id: 15,
+      name: "A41",
+      border_color: "#ffaaff",
+      value: 2,
+      currentList: "roster",
+    },
+    {
+      id: 13,
+      value: 0,
+      name: "A42",
+      border_color: "#ffaaff",
+      currentList: "roster",
+    },
+    {
+      id: 14,
+      name: "E41",
+      border_color: "#ffaaff",
+      value: 1,
+      currentList: "roster",
+    },
+    {
+      id: 15,
+      name: "E42",
+      border_color: "#ffaaff",
+      value: 2,
+      currentList: "roster",
+    },
+    {
+      id: 16,
+      name: "T42",
+      border_color: "#ffaaff",
+      value: 3,
+      currentList: "roster",
+    },
+    {
+      id: 17,
+      name: "M42",
+      border_color: "#ffaaff",
+      value: 4,
+      currentList: "roster",
+    },
+    {
+      id: 18,
+      name: "F401",
+      border_color: "#ffaaff",
+      value: 5,
+      currentList: "roster",
+    },
+    {
+      id: 18,
+      name: "F402",
+      border_color: "#ffaaff",
+      value: 5,
+      currentList: "roster",
+    },
+    {
+      id: 13,
+      value: 0,
+      name: "A51",
+      border_color: "#ffaaff",
+      currentList: "roster",
+    },
+    {
+      id: 14,
+      name: "A52",
+      border_color: "#ffaaff",
+      value: 1,
+      currentList: "roster",
+    },
+    {
+      id: 15,
+      name: "A53",
+      border_color: "#ffaaff",
+      value: 2,
+      currentList: "roster",
+    },
+    {
+      id: 16,
+      name: "A54",
+      border_color: "#ffaaff",
+      value: 3,
+      currentList: "roster",
+    },
+    {
+      id: 17,
+      name: "ME51",
+      border_color: "#ffaaff",
+      value: 4,
+      currentList: "roster",
+    },
+    {
+      id: 18,
+      name: "ME52",
+      border_color: "#ffaaff",
+      value: 5,
+      currentList: "roster",
+    },
+    {
+      id: 18,
+      name: "ME53",
+      border_color: "#ffaaff",
+      value: 5,
+      currentList: "roster",
+    },
+    {
+      id: 18,
+      name: "E54",
+      border_color: "#ffaaff",
+      value: 5,
+      currentList: "roster",
+    },
+    {
+      id: 18,
+      name: "BC51",
+      border_color: "#ffaaff",
+      value: 5,
+      currentList: "roster",
+    },
+    {
+      id: 17,
+      name: "E61",
+      border_color: "#ffaaff",
+      value: 4,
+      currentList: "roster",
+    },
+    {
+      id: 18,
+      name: "T61",
+      border_color: "#ffaaff",
+      value: 5,
+      currentList: "roster",
+    },
+    {
+      id: 18,
+      name: "A61",
+      border_color: "#ffaaff",
+      value: 5,
+      currentList: "roster",
+    },
+    {
+      id: 18,
+      name: "M61",
+      border_color: "#ffaaff",
+      value: 5,
+      currentList: "roster",
+    },
+    {
+      id: 18,
+      name: "F601",
+      border_color: "#ffaaff",
+      value: 5,
+      currentList: "roster",
+    },
+    {
+      id: 18,
+      name: "E71",
+      border_color: "#ffaaff",
+      value: 5,
+      currentList: "roster",
+    },
+    {
+      id: 17,
+      name: "T71",
+      border_color: "#ffaaff",
+      value: 4,
+      currentList: "roster",
+    },
+    {
+      id: 18,
+      name: "A71",
+      border_color: "#ffaaff",
+      value: 5,
+      currentList: "roster",
+    },
+    {
+      id: 18,
+      name: "M71",
+      border_color: "#ffaaff",
+      value: 5,
+      currentList: "roster",
+    },
+    {
+      id: 18,
+      name: "F701",
+      border_color: "#ffaaff",
+      value: 5,
+      currentList: "roster",
+    },
+    {
+      id: 18,
+      name: "T101",
+      border_color: "#ffaaff",
+      value: 5,
+      currentList: "roster",
+    },
+    {
+      id: 18,
+      name: "BC111",
+      border_color: "#ffaaff",
+      value: 5,
+      currentList: "roster",
+    },
+    
+  ];
+  console.log(RosterList.length);
   const ReadyList = [
     {
       id: 13,
@@ -363,7 +662,7 @@ function MainScreen(props) {
 
   const [dragDoneList, setDragDoneList] = React.useState(DoneList);
   const [dragTaskList, setDragTaskList] = React.useState(TaskList);
-  const [dropTeamList, setDropTeamList] = React.useState(TeamList);
+  const [dropTeamList, setDropTeamList] = React.useState(RosterList);
   const [dragEnrouteList, setDragEnrouteList] = React.useState([]);
   const [dragReadyList, setDragReadyList] = React.useState(ReadyList);
 
@@ -379,7 +678,12 @@ function MainScreen(props) {
     tChartId = 12,
     pushReplace = false
   ) {
-    if (payload[1] != toListName || toListName === "currentTask") {
+    if (
+      (payload[1] != toListName || toListName === "currentTask") &&
+      (payload[1] === "task" ||
+        payload[1] === "done" ||
+        payload[1] === "currentTask")
+    ) {
       //if it is not sending to itself. Allow for currentTask and currentTeam so items can be moved amongst tCharts
 
       let tempSendingList; //initiate temporary copy sending list
@@ -453,7 +757,12 @@ function MainScreen(props) {
     tChartId = 12,
     pushReplace = false
   ) {
-    if (payload[1] != toListName || toListName === "currentTeam") {
+    if (
+      (payload[1] != toListName || toListName === "currentTeam") &&
+      (payload[1] === "enroute" ||
+        payload[1] === "ready" ||
+        payload[1] === "roster")
+    ) {
       //if it is not sending to itself. Allow for currentTask and currentTeam so items can be moved amongst tCharts
 
       let tempSendingList; //initiate temporary copy sending list
@@ -461,12 +770,13 @@ function MainScreen(props) {
       let setSendingList; //initiate method to set sending list
       let pushItem = tempReceivingList[tChartId]; //set push item in case we are pushing old item to done
 
-      if (payload[1] === "team") {
+      if (payload[1] === "roster") {
         tempSendingList = [...dropTeamList]; //declare temp sending list to dragEnrouteList
 
         setSendingList = setDropTeamList; //declare method to set sending list to setDragEnrouteList
       } else if (payload[1] === "enroute") {
         //if item is coming from task list
+
         tempSendingList = [...dragEnrouteList]; //declare temp sending list to dragEnrouteList
 
         setSendingList = setDragEnrouteList; //declare method to set sending list to setDragEnrouteList
@@ -483,6 +793,14 @@ function MainScreen(props) {
       }
       let sentItem = tempSendingList[payload[0]]; //declare the item being sent by the index of the sending list
       sentItem.currentList = toListName; //change sent item's current list to receiving list name
+
+      if (toListName === "enroute" && dragEnrouteList.length >= 5) {
+        return;
+      }
+
+      if (toListName === "ready" && dragReadyList.length >= 6) {
+        return;
+      }
 
       if (toListName === "currentTeam") {
         //if item is going to a tchart, it needs to be inserted instead of pushed
@@ -520,7 +838,7 @@ function MainScreen(props) {
 
       setSendingList(tempSendingList); //set actual sending list to temp sending list
       setRecevingList(tempReceivingList); //set actual receiving list to temp list. Do this last incase swapping inside tCharts
-      // if (payload[1] === "team") {
+      // if (payload[1] === "roster") {
       //   indexify();
       // }
     }

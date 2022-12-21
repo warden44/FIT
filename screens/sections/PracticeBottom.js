@@ -54,14 +54,12 @@ function PracticeBottom(props) {
         }}
         key={index}
         onReceiveDragDrop={(event) => {
-          if(event.dragged.payload[1] === "done" || event.dragged.payload[1] === "currentTask") {
-            myContext.moveItem(
-              myContext.dragTaskList,
-              myContext.setDragTaskList,
-              event.dragged.payload,
-              "task"
-            );
-          }
+          myContext.moveItem(
+            myContext.dragTaskList,
+            myContext.setDragTaskList,
+            event.dragged.payload,
+            "task"
+          );
         }}
       />
     );
@@ -89,14 +87,12 @@ function PracticeBottom(props) {
         }}
         key={index}
         onReceiveDragDrop={(event) => {
-          if(event.dragged.payload[1] === "task" || event.dragged.payload[1] === "currentTask") {
-            myContext.moveItem(
-              myContext.dragDoneList,
-              myContext.setDragDoneList,
-              event.dragged.payload,
-              "done"
-            );
-          }
+          myContext.moveItem(
+            myContext.dragDoneList,
+            myContext.setDragDoneList,
+            event.dragged.payload,
+            "done"
+          );
         }}
       />
     );
@@ -107,12 +103,36 @@ function PracticeBottom(props) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.todo}>
-        {myContext.dragTaskList.map((item, index) => TodoTasks({ item, index }))}
-      </View>
-      <View style={styles.done}>
-        {myContext.dragDoneList.map((item, index) => DoneTasks({ item, index }))}
-      </View>
+      <DraxView
+        style={styles.todo}
+        onReceiveDragDrop={(event) => {
+          myContext.moveItem(
+            myContext.dragTaskList,
+            myContext.setDragTaskList,
+            event.dragged.payload,
+            "task"
+          );
+        }}
+      >
+        {myContext.dragTaskList.map((item, index) =>
+          TodoTasks({ item, index })
+        )}
+      </DraxView>
+      <DraxView
+        style={styles.done}
+        onReceiveDragDrop={(event) => {
+          myContext.moveItem(
+            myContext.dragDoneList,
+            myContext.setDragDoneList,
+            event.dragged.payload,
+            "done"
+          );
+        }}
+      >
+        {myContext.dragDoneList.map((item, index) =>
+          DoneTasks({ item, index })
+        )}
+      </DraxView>
       <View style={styles.rightBotom}>
         <View style={styles.benchmarks}>
           {/* Benchmarks */}

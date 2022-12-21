@@ -19,9 +19,6 @@ import AppContext from "../../components/AppContext";
 function Top(props) {
   const myContext = React.useContext(AppContext);
 
-  function indexify() {
-    myContext.dropTeamList.map((team, index) => (team.value = index));
-  }
   const [alarm, setAlarm] = useState("");
   const [checkAlarm, SetAlarmCheck] = useState(false);
 
@@ -46,12 +43,12 @@ function Top(props) {
   const [open, setOpen] = useState(false);
   // const [value, setValue] = useState(null);
   const [items, setItems] = useState(myContext.dropTeamList);
-  const [label, setLabel] = useState("team");
+  const [label, setLabel] = useState("roster");
   const [index, setIndex] = useState();
 
-  // useEffect(() => {
-  //   setIndex(-1);
-  // }, [index])
+  useEffect(() => {
+    setIndex(-1);
+  }, [index]);
   // { label: "Apple", value: "apple" },
   // { label: "Banana", value: "banana" },
 
@@ -337,14 +334,27 @@ function Top(props) {
             ))}
           </View>
         </View>
-        <View style={styles.enroute}>
-          <Text
+        <DraxView
+          style={styles.enroute}
+          onReceiveDragDrop={(event) => {
+            myContext.moveTeam(
+              myContext.dragEnrouteList,
+              myContext.setDragEnrouteList,
+              event.dragged.payload,
+              "enroute"
+            );
+          }}
+        >
+          {/* <Text
             style={{ fontSize: 20, fontWeight: "bold", alignSelf: "center" }}
           >
             Enroute
-          </Text>
+          </Text> */}
           <DropDownPicker
             style={styles.dropdown}
+            schema={{
+              label: 'name',
+            }}
             open={open}
             value={index}
             items={myContext.dropTeamList}
@@ -352,34 +362,40 @@ function Top(props) {
             setValue={setIndex}
             setItems={myContext.setDropTeamList}
             setlabel={label}
+            maxHeight={500}
           >
             {index > -1 &&
-              (console.log(index),
-              console.log(myContext.dropTeamList),
               myContext.moveTeam(
                 myContext.dragEnrouteList,
                 myContext.setDragEnrouteList,
-                [index, "team"],
+                [index, "roster"],
                 "enroute"
-              ),
-              setIndex(-1),
-              console.log(myContext.dropTeamList))}
-            {/* { index > -1 && (console.log(myContext.dropTeamList))} */}
+              )}
           </DropDownPicker>
           {myContext.dragEnrouteList.map((item, index) =>
             EnrouteTeams({ item, index })
           )}
-        </View>
-        <View style={styles.ready}>
-          <Text
+        </DraxView>
+        <DraxView
+          style={styles.ready}
+          onReceiveDragDrop={(event) => {
+            myContext.moveTeam(
+              myContext.dragReadyList,
+              myContext.setDragReadyList,
+              event.dragged.payload,
+              "ready"
+            );
+          }}
+        >
+          {/* <Text
             style={{ fontSize: 20, fontWeight: "bold", alignSelf: "center" }}
           >
             Ready For Assignment
-          </Text>
+          </Text> */}
           {myContext.dragReadyList.map((item, index) =>
             ReadyTeams({ item, index })
           )}
-        </View>
+        </DraxView>
         <View style={styles.mayday}>
           <Text style={styles.maydayHeader}>
             "MAYDAY" Lost or Trapped FireFighters
@@ -463,8 +479,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    width: "20%",
-    height: "95%",
+    width: "15%",
+    height: "99%",
     backgroundColor: "gray",
     borderWidth: 2,
   },
@@ -510,7 +526,7 @@ const styles = StyleSheet.create({
   },
   mayday: {
     width: "25%",
-    height: "95%",
+    height: "99%",
     backgroundColor: "yellow",
     borderWidth: 2,
   },
@@ -545,7 +561,8 @@ const styles = StyleSheet.create({
   },
   ready: {
     width: "15%",
-    height: "95%",
+    height: "99%",
+    alignItems: "center",
     backgroundColor: "cyan",
     borderWidth: 2,
   },

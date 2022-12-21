@@ -26,6 +26,13 @@ function TChart(props) {
 
   let team = myContext.currentTeamList[tChartId];
 
+  let opac = 0.25;
+
+  if (team || item) {
+    opac = 1;
+  } else {
+    opac = .25
+  }
 
   const recievingTaskZone = () => {
     return (
@@ -48,48 +55,41 @@ function TChart(props) {
           );
         }}
         onReceiveDragDrop={(event) => {
-          if (
-            event.dragged.payload[1] === "task" ||
-            event.dragged.payload[1] === "done" ||
-            event.dragged.payload[1] === "currentTask"
-          ) {
-            if (!myContext.currentTaskList[tChartId]) {
-              myContext.moveItem(
-                myContext.currentTaskList,
-                myContext.setCurrentTaskList,
-                event.dragged.payload,
-                "currentTask",
-                tChartId
-              );
-            } else {
-              myContext.moveItem(
-                myContext.currentTaskList,
-                myContext.setCurrentTaskList,
-                event.dragged.payload,
-                "currentTask",
-                tChartId,
-                "pushReplace"
-              );
-            }
+          if (!myContext.currentTaskList[tChartId]) {
+            myContext.moveItem(
+              myContext.currentTaskList,
+              myContext.setCurrentTaskList,
+              event.dragged.payload,
+              "currentTask",
+              tChartId
+            );
           } else {
-            if (!myContext.currentTeamList[tChartId]) {
-              myContext.moveTeam(
-                myContext.currentTeamList,
-                myContext.setCurrentTeamList,
-                event.dragged.payload,
-                "currentTeam",
-                tChartId
-              );
-            } else {
-              myContext.moveTeam(
-                myContext.currentTeamList,
-                myContext.setCurrentTeamList,
-                event.dragged.payload,
-                "currentTeam",
-                tChartId,
-                "pushReplace"
-              );
-            }
+            myContext.moveItem(
+              myContext.currentTaskList,
+              myContext.setCurrentTaskList,
+              event.dragged.payload,
+              "currentTask",
+              tChartId,
+              "pushReplace"
+            );
+          }
+          if (!myContext.currentTeamList[tChartId]) {
+            myContext.moveTeam(
+              myContext.currentTeamList,
+              myContext.setCurrentTeamList,
+              event.dragged.payload,
+              "currentTeam",
+              tChartId
+            );
+          } else {
+            myContext.moveTeam(
+              myContext.currentTeamList,
+              myContext.setCurrentTeamList,
+              event.dragged.payload,
+              "currentTeam",
+              tChartId,
+              "pushReplace"
+            );
           }
         }}
       />
@@ -117,11 +117,6 @@ function TChart(props) {
           );
         }}
         onReceiveDragDrop={(event) => {
-          if (
-            event.dragged.payload[1] === "task" ||
-            event.dragged.payload[1] === "done" ||
-            event.dragged.payload[1] === "currentTask"
-          ) {
             if (!myContext.currentTaskList[tChartId]) {
               myContext.moveItem(
                 myContext.currentTaskList,
@@ -140,7 +135,6 @@ function TChart(props) {
                 "pushReplace"
               );
             }
-          } else {
             if (!myContext.currentTeamList[tChartId]) {
               myContext.moveTeam(
                 myContext.currentTeamList,
@@ -159,15 +153,13 @@ function TChart(props) {
                 "pushReplace"
               );
             }
-          }
         }}
       />
     );
   };
 
-
   return (
-    <View style={styles.tChart}>
+    <View style={[styles.tChart, {opacity: opac}]}>
       {recievingTaskZone()}
       {receivingTeamZone()}
 

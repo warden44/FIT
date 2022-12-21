@@ -172,18 +172,9 @@ function PracticeBottom(props) {
           <Timer></Timer>
         </View>
         <View style={styles.teamCharts}>
-          <TChart style={styles.tChart} tChartId={0} />
-          <TChart style={styles.tChart} tChartId={1} />
-          <TChart style={styles.tChart} tChartId={2} />
-          <TChart style={styles.tChart} tChartId={3} />
-          <TChart style={styles.tChart} tChartId={4} />
-          <TChart style={styles.tChart} tChartId={5} />
-          <TChart style={styles.tChart} tChartId={6} />
-          <TChart style={styles.tChart} tChartId={7} />
-          <TChart style={styles.tChart} tChartId={8} />
-          <TChart style={styles.tChart} tChartId={9} />
-          <TChart style={styles.tChart} tChartId={10} />
-          <TChart style={styles.tChart} tChartId={11} />
+          {myContext.currentTaskList.map((task, index) => (
+            <TChart style={styles.tChart} key={index} tChartId={index} />
+          ))}
         </View>
       </View>
     </View>
@@ -269,7 +260,7 @@ const styles = StyleSheet.create({
   rightBotom: {
     width: "55%",
     height: "98%",
-    backgroundColor: "gray",
+    backgroundColor: "lightgray",
     borderWidth: 2,
   },
   smallFont: {

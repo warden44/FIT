@@ -364,7 +364,6 @@ function MainScreen(props) {
       currentList: "roster",
     },
 
-
     {
       id: 13,
       value: 0,
@@ -638,7 +637,6 @@ function MainScreen(props) {
       value: 5,
       currentList: "roster",
     },
-    
   ];
   console.log(RosterList.length);
   const ReadyList = [
@@ -761,7 +759,8 @@ function MainScreen(props) {
       (payload[1] != toListName || toListName === "currentTeam") &&
       (payload[1] === "enroute" ||
         payload[1] === "ready" ||
-        payload[1] === "roster")
+        payload[1] === "roster" ||
+        payload[1] === "currentTeam")
     ) {
       //if it is not sending to itself. Allow for currentTask and currentTeam so items can be moved amongst tCharts
 

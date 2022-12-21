@@ -22,22 +22,26 @@ function TChart(props) {
   const myContext = React.useContext(AppContext);
 
   var tChartId = props.tChartId;
-  let item = myContext.currentTaskList[tChartId]; //this is basically the index
+    let task = myContext.currentTaskList[tChartId]; //this is basically the index
 
-  let team = myContext.currentTeamList[tChartId];
+    let team = myContext.currentTeamList[tChartId];
 
   let opac = 0.25;
+  let glow = "black";
 
-  if (team || item) {
+  if (team || task) {
     opac = 1;
+    glow = "gold";
   } else {
-    opac = .25
+    opac = 0.25;
+    glow = "black";
+
   }
 
-  const recievingTaskZone = () => {
+  const TChartSlotDrax = (item, bottomBorder = 2, topBorder = 2) => {
     return (
       <DraxView
-        style={[styles.tChartSection, { borderColor: item.border_color }]}
+        style={[styles.tChartSection, { borderColor: item.border_color, borderBottomWidth: bottomBorder, borderTopWidth: topBorder }]}
         animateSnapback={false}
         draggingStyle={styles.dragging}
         dragReleasedStyle={styles.dragging}
@@ -50,123 +54,65 @@ function TChart(props) {
           const payload = receivingDrag && receivingDrag.payload;
           return (
             <View>
-              <Text style={styles.textStyle} adjustsFontSizeToFit>{item.name}</Text>
+              <Text style={styles.textStyle} adjustsFontSizeToFit>
+                {item.name}
+              </Text>
             </View>
           );
-        }}
-        onReceiveDragDrop={(event) => {
-          if (!myContext.currentTaskList[tChartId]) {
-            myContext.moveItem(
-              myContext.currentTaskList,
-              myContext.setCurrentTaskList,
-              event.dragged.payload,
-              "currentTask",
-              tChartId
-            );
-          } else {
-            myContext.moveItem(
-              myContext.currentTaskList,
-              myContext.setCurrentTaskList,
-              event.dragged.payload,
-              "currentTask",
-              tChartId,
-              "pushReplace"
-            );
-          }
-          if (!myContext.currentTeamList[tChartId]) {
-            myContext.moveTeam(
-              myContext.currentTeamList,
-              myContext.setCurrentTeamList,
-              event.dragged.payload,
-              "currentTeam",
-              tChartId
-            );
-          } else {
-            myContext.moveTeam(
-              myContext.currentTeamList,
-              myContext.setCurrentTeamList,
-              event.dragged.payload,
-              "currentTeam",
-              tChartId,
-              "pushReplace"
-            );
-          }
-        }}
-      />
-    );
-  };
-
-  const receivingTeamZone = () => {
-    return (
-      <DraxView
-        style={[styles.tChartSection, { borderColor: team.border_color }]}
-        animateSnapback={false}
-        draggingStyle={styles.dragging}
-        dragReleasedStyle={styles.dragging}
-        hoverDraggingStyle={styles.hoverDragging}
-        dragPayload={[team.tChart, team.currentList]}
-        longPressDelay={150}
-        receivingStyle={styles.receiving}
-        renderContent={({ viewState }) => {
-          const receivingDrag = viewState && viewState.receivingDrag;
-          const payload = receivingDrag && receivingDrag.payload;
-          return (
-            <View>
-              <Text style={styles.textStyle} adjustsFontSizeToFit>{team.name}</Text>
-            </View>
-          );
-        }}
-        onReceiveDragDrop={(event) => {
-            if (!myContext.currentTaskList[tChartId]) {
-              myContext.moveItem(
-                myContext.currentTaskList,
-                myContext.setCurrentTaskList,
-                event.dragged.payload,
-                "currentTask",
-                tChartId
-              );
-            } else {
-              myContext.moveItem(
-                myContext.currentTaskList,
-                myContext.setCurrentTaskList,
-                event.dragged.payload,
-                "currentTask",
-                tChartId,
-                "pushReplace"
-              );
-            }
-            if (!myContext.currentTeamList[tChartId]) {
-              myContext.moveTeam(
-                myContext.currentTeamList,
-                myContext.setCurrentTeamList,
-                event.dragged.payload,
-                "currentTeam",
-                tChartId
-              );
-            } else {
-              myContext.moveTeam(
-                myContext.currentTeamList,
-                myContext.setCurrentTeamList,
-                event.dragged.payload,
-                "currentTeam",
-                tChartId,
-                "pushReplace"
-              );
-            }
         }}
       />
     );
   };
 
   return (
-    <View style={[styles.tChart, {opacity: opac}]}>
-      {recievingTaskZone()}
-      {receivingTeamZone()}
+    <DraxView
+      style={[styles.tChart, { opacity: opac, borderColor: glow }]}
+      onReceiveDragDrop={(event) => {
+        if (!myContext.currentTaskList[tChartId]) {
+          myContext.moveItem(
+            myContext.currentTaskList,
+            myContext.setCurrentTaskList,
+            event.dragged.payload,
+            "currentTask",
+            tChartId
+          );
+        } else {
+          myContext.moveItem(
+            myContext.currentTaskList,
+            myContext.setCurrentTaskList,
+            event.dragged.payload,
+            "currentTask",
+            tChartId,
+            "pushReplace"
+          );
+        }
+        if (!myContext.currentTeamList[tChartId]) {
+          myContext.moveTeam(
+            myContext.currentTeamList,
+            myContext.setCurrentTeamList,
+            event.dragged.payload,
+            "currentTeam",
+            tChartId
+          );
+        } else {
+          myContext.moveTeam(
+            myContext.currentTeamList,
+            myContext.setCurrentTeamList,
+            event.dragged.payload,
+            "currentTeam",
+            tChartId,
+            "pushReplace"
+          );
+        }
+      }}
+    >
+      {TChartSlotDrax(task, 1, 2)}
+      {TChartSlotDrax(team, 2, 1)}
 
       <View style={styles.tChartTimer}>
         <Timer size={"smallTimer"}></Timer>
       </View>
-    </View>
+    </DraxView>
   );
 }
 
@@ -176,7 +122,8 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     width: "25%",
     height: "22%",
-    backgroundColor: "white",
+    backgroundColor: "gray",
+    borderWidth: 1,
     margin: 5,
     padding: 5,
     paddingBottom: 0,
@@ -192,9 +139,9 @@ const styles = StyleSheet.create({
     paddingRight: 5,
   },
   textStyle: {
-    textAlign: 'center',
+    textAlign: "center",
     margin: 0,
-  }
+  },
 });
 
 export default TChart;

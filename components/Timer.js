@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   bigTimer: {
-    backgroundColor: "lightgray",
+    backgroundColor: "white",
     borderWidth: 1,
     borderRadius: 8,
     borderColor: "red",

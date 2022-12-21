@@ -246,6 +246,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     marginLeft: 10,
     marginRight: 5,
+    backgroundColor: "white",
   },
   outterCheck: {
     width: 15,
@@ -256,6 +257,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginTop: 2,
     marginRight: 10,
+    backgroundColor: "white",
   },
   rightBotom: {
     width: "55%",

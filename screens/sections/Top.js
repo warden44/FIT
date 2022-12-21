@@ -554,6 +554,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginLeft: 10,
     marginRight: 5,
+    backgroundColor: "white",
   },
   outterCheck: {
     width: 15,
@@ -563,6 +564,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     marginRight: 10,
+    backgroundColor: "white",
   },
   ready: {
     width: "15%",

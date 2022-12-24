@@ -1,22 +1,10 @@
-//refactor draxview onReceiveDragDrop section into functions that :
-//1. Check where dragged item is coming from
-//2. Creates draggedItem from fromList based on payload... maybe move creating tempFrom and tempTo lists to top
-//2. Sets item's currentList of dragged item to receiving list || if from currentTask, also set item's tChartId to 12
-//3. Creates tempTo list
-//4. Pushes draggedItem to tempTo list
-//5. set toList to tempToList
-//6. set tempFrom list
-//7. splice payload's index from tempFromList || if from currentTask, instead set index to empty string
-//8. set fromList to tempFromList
-// if setFunction cant be passed as param, have function return tempToList, and use setToList on the return
-// params... payload, toList, setToList, toListName
-
 import * as React from "react";
 import {
   Dimensions,
   ScrollView,
   StyleSheet,
   Text,
+  Touchable,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -31,6 +19,8 @@ const gestureRootViewStyle = { flex: 1 };
 
 function PracticeBottom(props) {
   const myContext = React.useContext(AppContext);
+
+  const [filter, setFilter] = React.useState("red");
 
   const TodoTasks = ({ item, index }) => {
     return (
@@ -48,7 +38,7 @@ function PracticeBottom(props) {
           const payload = receivingDrag && receivingDrag.payload;
           return (
             <View>
-              <Text style={styles.textStyle}>{item.name}</Text>
+              <Text style={styles.itemFont}>{item.name}</Text>
             </View>
           );
         }}
@@ -81,7 +71,7 @@ function PracticeBottom(props) {
           const payload = receivingDrag && receivingDrag.payload;
           return (
             <View>
-              <Text style={styles.textStyle}>{item.name}</Text>
+              <Text style={styles.itemFont}>{item.name}</Text>
             </View>
           );
         }}
@@ -115,9 +105,19 @@ function PracticeBottom(props) {
         }}
       >
         {myContext.dragTaskList.map((item, index) =>
-          TodoTasks({ item, index })
+          item.border_color === filter ? TodoTasks({ item, index }) : []
         )}
       </DraxView>
+      <View style={[styles.switchTasks]}>
+        <TouchableOpacity
+          style={[styles.switchButton, { backgroundColor: filter }]}
+          onPress={() => {
+            filter === "red" ? setFilter("yellow") : setFilter("red");
+            console.log(filter);
+          }}
+        ></TouchableOpacity>
+      </View>
+
       <DraxView
         style={styles.done}
         onReceiveDragDrop={(event) => {
@@ -130,7 +130,7 @@ function PracticeBottom(props) {
         }}
       >
         {myContext.dragDoneList.map((item, index) =>
-          DoneTasks({ item, index })
+          item.border_color === filter ? DoneTasks({ item, index }) : []
         )}
       </DraxView>
       <View style={styles.rightBotom}>
@@ -212,6 +212,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "flex-start",
     alignItems: "center",
+    alignContent: "center",
     width: "20%",
     height: "98%",
     backgroundColor: "lightgreen",
@@ -234,6 +235,10 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     backgroundColor: "red",
+  },
+  itemFont: {
+    fontSize: 12.5,
+    textAlign: "center",
   },
   outterButton: {
     width: 15,
@@ -268,9 +273,19 @@ const styles = StyleSheet.create({
   smallFont: {
     fontSize: 10,
   },
+  switchButton: {
+    opacity: 0.75,
+    flex: 1,
+    borderRadius: 10,
+  },
+  switchTasks: {
+    width: "2%",
+    height: "98%",
+  },
   task: {
-    width: "31.5%",
-    fontSize: 20,
+    width: "48%",
+    height: "7.25%",
+    backgroundColor: "lightyellow",
     flexDirection: "row",
     justifyContent: "center",
     borderWidth: 2,
@@ -279,9 +294,6 @@ const styles = StyleSheet.create({
     margin: 2,
     marginTop: 4,
     marginBottom: 4,
-  },
-  taskAdditional: {
-    borderColor: "yellow",
   },
   teamCharts: {
     flex: 1,
@@ -314,6 +326,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "flex-start",
     alignItems: "center",
+    alignContent: "center",
     width: "20%",
     height: "98%",
     backgroundColor: "lightblue",

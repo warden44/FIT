@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     width: "25%",
     height: "22%",
-    backgroundColor: "gray",
+    backgroundColor: "lightyellow",
     borderWidth: 1,
     margin: 5,
     padding: 5,
@@ -141,6 +141,7 @@ const styles = StyleSheet.create({
   textStyle: {
     textAlign: "center",
     margin: 0,
+    fontSize: 12.5,
   },
 });
 

@@ -139,7 +139,9 @@ function PracticeBottom(props) {
           <TouchableOpacity
             style={styles.check}
             onPress={() =>
-              checkBench === true ? setCheckBench(false) : setCheckBench(true)
+              checkBench === true
+                ? (setCheckBench(false), setBench("none"))
+                : setCheckBench(true)
             }
           >
             <View style={styles.outterCheck}>
@@ -154,7 +156,9 @@ function PracticeBottom(props) {
                 key={choice}
                 style={styles.button}
                 onPress={() =>
-                  bench === choice ? setBench("none") : setBench(choice)
+                  bench === choice
+                    ? (setBench("none"), setCheckBench(false))
+                    : (setBench(choice), setCheckBench(true))
                 }
               >
                 <View style={styles.outterButton}>

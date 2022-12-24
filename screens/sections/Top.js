@@ -136,7 +136,9 @@ function Top(props) {
             <TouchableOpacity
               style={styles.check}
               onPress={() =>
-                checkAlarm === true ? SetAlarmCheck(false) : SetAlarmCheck(true)
+                checkAlarm === true
+                  ? (SetAlarmCheck(false), setAlarm("none"))
+                  : SetAlarmCheck(true)
               }
             >
               <View style={styles.outterCheck}>
@@ -152,7 +154,9 @@ function Top(props) {
                 key={alarms}
                 style={styles.button}
                 onPress={() =>
-                  alarm === alarms ? setAlarm("none") : setAlarm(alarms)
+                  alarm === alarms
+                    ? (setAlarm("none"), SetAlarmCheck(false))
+                    : (setAlarm(alarms), SetAlarmCheck(true))
                 }
               >
                 <View style={styles.outterButton}>
@@ -168,7 +172,7 @@ function Top(props) {
               style={styles.check}
               onPress={() =>
                 checkReport === true
-                  ? setReportCheck(false)
+                  ? (setReportCheck(false), setReport("none"))
                   : setReportCheck(true)
               }
             >
@@ -187,7 +191,9 @@ function Top(props) {
                 key={reports}
                 style={styles.button}
                 onPress={() =>
-                  report === reports ? setReport("none") : setReport(reports)
+                  report === reports
+                    ? (setReport("none"), setReportCheck(false))
+                    : (setReport(reports), setReportCheck(true))
                 }
               >
                 <View style={styles.outterButton}>
@@ -204,7 +210,7 @@ function Top(props) {
               style={styles.check}
               onPress={() =>
                 checkStrategy === true
-                  ? setStrategyCheck(false)
+                  ? (setStrategyCheck(false), setStrategy("none"))
                   : setStrategyCheck(true)
               }
             >
@@ -220,8 +226,8 @@ function Top(props) {
                 style={styles.button}
                 onPress={() =>
                   strategy === choice
-                    ? setStrategy("none")
-                    : setStrategy(choice)
+                    ? (setStrategy("none"), setStrategyCheck(false))
+                    : (setStrategy(choice), setStrategyCheck(true))
                 }
               >
                 <View style={styles.outterButton}>
@@ -237,7 +243,9 @@ function Top(props) {
             <TouchableOpacity
               style={styles.check}
               onPress={() =>
-                checkMode === true ? setCheckMode(false) : setCheckMode(true)
+                checkMode === true
+                  ? (setCheckMode(false), setMode("none"))
+                  : setCheckMode(true)
               }
             >
               <View style={styles.outterCheck}>
@@ -251,7 +259,9 @@ function Top(props) {
                 key={choice}
                 style={styles.button}
                 onPress={() =>
-                  mode === choice ? setMode("none") : setMode(choice)
+                  mode === choice
+                    ? (setMode("none"), setCheckMode(false))
+                    : (setMode(choice), setCheckMode(true))
                 }
               >
                 <View style={styles.outterButton}>
@@ -268,7 +278,7 @@ function Top(props) {
               style={styles.check}
               onPress={() =>
                 checkCommand === true
-                  ? setCheckCommand(false)
+                  ? (setCheckCommand(false), setCommand("none"))
                   : setCheckCommand(true)
               }
             >
@@ -286,7 +296,9 @@ function Top(props) {
                 key={choice}
                 style={styles.button}
                 onPress={() =>
-                  command === choice ? setCommand("none") : setCommand(choice)
+                  command === choice
+                    ? (setCommand("none"), setCheckCommand(false))
+                    : (setCommand(choice), setCheckCommand(true))
                 }
               >
                 <View style={styles.outterButton}>
@@ -303,7 +315,7 @@ function Top(props) {
               style={styles.check}
               onPress={() =>
                 checkLocation === true
-                  ? setCheckLocation(false)
+                  ? (setCheckLocation(false), setLocation("none"))
                   : setCheckLocation(true)
               }
             >
@@ -322,8 +334,8 @@ function Top(props) {
                 style={styles.button}
                 onPress={() =>
                   location === choice
-                    ? setLocation("none")
-                    : setLocation(choice)
+                    ? (setLocation("none"), setCheckLocation(false))
+                    : (setLocation(choice), setCheckLocation(true))
                 }
               >
                 <View style={styles.outterButton}>
@@ -353,7 +365,7 @@ function Top(props) {
           <DropDownPicker
             style={styles.dropdown}
             schema={{
-              label: 'name',
+              label: "name",
             }}
             open={open}
             value={index}
@@ -475,8 +487,7 @@ const styles = StyleSheet.create({
   dragging: {
     borderWidth: 10,
   },
-  hoverDragging: {
-  },
+  hoverDragging: {},
   dropdown: {
     position: "relative",
   },
@@ -580,7 +591,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderWidth: 2,
     borderColor: "red",
-    backgroundColor: "lightyellow",  
+    backgroundColor: "lightyellow",
     borderRadius: 10,
     margin: 2,
     marginTop: 4,

@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 function Timer(props) {
   const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(25);
+  const [minutes, setMinutes] = useState(0);
   const [hours, setHours] = useState(0);
   const [increment, setIncrement] = useState(0);
 

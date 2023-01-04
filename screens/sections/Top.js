@@ -58,8 +58,8 @@ function Top(props) {
         style={[styles.team, { borderColor: item.border_color }]}
         animateSnapback={false}
         draggingStyle={styles.dragging}
-        dragReleasedStyle={styles.dragging}
-        hoverDraggingStyle={styles.hoverDragging}
+        dragReleasedStyle={styles.dragReleased}
+        hoverDraggingStyle={styles.dragHover}
         dragPayload={[index, item.currentList]}
         longPressDelay={150}
         receivingStyle={styles.receiving}
@@ -90,8 +90,8 @@ function Top(props) {
         style={[styles.team, { borderColor: item.border_color }]}
         animateSnapback={false}
         draggingStyle={styles.dragging}
-        dragReleasedStyle={styles.dragging}
-        hoverDraggingStyle={styles.hoverDragging}
+        dragReleasedStyle={styles.dragReleased}
+        hoverDraggingStyle={styles.dragHover}
         dragPayload={[index, item.currentList]}
         longPressDelay={150}
         receivingStyle={styles.receiving}
@@ -485,9 +485,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   dragging: {
-    borderWidth: 10,
+    width: 0,
+    height: 0,
+    borderWidth: 0,
+    textAlign: "center",
   },
-  hoverDragging: {},
+  dragHover: {
+    width: "15%",
+    height: "auto",
+  },
   dropdown: {
     position: "relative",
   },
@@ -600,6 +606,10 @@ const styles = StyleSheet.create({
   teamName: {
     borderTopWidth: 2,
     margin: 5,
+    textAlign: "center",
+  },
+  textStyle: {
+    fontSize: 12.5,
     textAlign: "center",
   },
   top: {

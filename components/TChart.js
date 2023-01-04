@@ -44,8 +44,8 @@ function TChart(props) {
         style={[styles.tChartSection, { borderColor: item.border_color, borderBottomWidth: bottomBorder, borderTopWidth: topBorder }]}
         animateSnapback={false}
         draggingStyle={styles.dragging}
-        dragReleasedStyle={styles.dragging}
-        hoverDraggingStyle={styles.hoverDragging}
+        dragReleasedStyle={styles.dragReleased}
+        hoverDraggingStyle={styles.dragHover}
         dragPayload={[item.tChart, item.currentList]}
         longPressDelay={150}
         receivingStyle={styles.receiving}
@@ -117,6 +117,17 @@ function TChart(props) {
 }
 
 const styles = StyleSheet.create({
+  dragging: {
+    width: 0,
+    height: 0,
+    textAlign: "center",
+  },
+  dragHover: {
+    width: "15%",
+    height: "auto",
+    backgroundColor: "lightyellow",
+    borderWidth: 2,
+  },
   tChart: {
     // justifyContent: 'space-around',
     // alignItems: 'center',

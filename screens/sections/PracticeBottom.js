@@ -28,8 +28,8 @@ function PracticeBottom(props) {
         style={[styles.task, { borderColor: item.border_color }]}
         animateSnapback={false}
         draggingStyle={styles.dragging}
-        dragReleasedStyle={styles.dragging}
-        hoverDraggingStyle={styles.hoverDragging}
+        dragReleasedStyle={styles.dragReleased}
+        hoverDraggingStyle={styles.dragHover}
         dragPayload={[index, item.currentList]}
         longPressDelay={150}
         receivingStyle={styles.receiving}
@@ -61,8 +61,8 @@ function PracticeBottom(props) {
         style={[styles.task, { borderColor: item.border_color }]}
         animateSnapback={false}
         draggingStyle={styles.dragging}
-        dragReleasedStyle={styles.dragging}
-        hoverDraggingStyle={styles.hoverDragging}
+        dragReleasedStyle={styles.dragReleased}
+        hoverDraggingStyle={styles.dragHover}
         dragPayload={[index, item.currentList]}
         longPressDelay={150}
         receivingStyle={styles.receiving}
@@ -222,6 +222,16 @@ const styles = StyleSheet.create({
     backgroundColor: "lightgreen",
     borderWidth: 2,
   },
+  dragging: {
+    width: 0,
+    height: 0,
+    borderWidth: 0,
+    textAlign: "center",
+  },
+  dragHover: {
+    width: "15%",
+    height: "auto",
+  },
   elapsed: {
     width: "100%",
   },
@@ -281,6 +291,7 @@ const styles = StyleSheet.create({
     opacity: 0.75,
     flex: 1,
     borderRadius: 10,
+    borderWidth: 3,
   },
   switchTasks: {
     width: "2%",

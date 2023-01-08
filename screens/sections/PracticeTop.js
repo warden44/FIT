@@ -16,7 +16,7 @@ import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 import DropDownPicker from "react-native-dropdown-picker";
 import AppContext from "../../components/AppContext";
 
-function Top(props) {
+function PracticeTop(props) {
   const myContext = React.useContext(AppContext);
 
   const [alarm, setAlarm] = useState("");
@@ -51,6 +51,8 @@ function Top(props) {
   }, [index]);
   // { label: "Apple", value: "apple" },
   // { label: "Banana", value: "banana" },
+
+  const [department, setDepartment] = useState(3);
 
   const EnrouteTeams = ({ item, index }) => {
     return (
@@ -362,7 +364,7 @@ function Top(props) {
           >
             Enroute
           </Text> */}
-          <DropDownPicker
+          {/* <DropDownPicker
             style={styles.dropdown}
             schema={{
               label: "name",
@@ -383,11 +385,59 @@ function Top(props) {
                 [index, "roster"],
                 "enroute"
               )}
-          </DropDownPicker>
-          {myContext.dragEnrouteList.map((item, index) =>
-            EnrouteTeams({ item, index })
+          </DropDownPicker> */}
+          {myContext.RosterList.map((item, index) =>
+            item.name[1] === department.toString()
+              ? EnrouteTeams({ item, index })
+              : []
           )}
         </DraxView>
+        <View style={styles.departmentSelect}>
+          <TouchableOpacity
+            style={styles.departmentButton}
+            onPress={() => setDepartment(1)}
+          >
+            <Text>10</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.departmentButton}
+            onPress={() => setDepartment(2)}
+          >
+            <Text>20</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.departmentButton}
+            onPress={() => setDepartment(3)}
+          >
+            <Text>30</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.departmentButton}
+            onPress={() => setDepartment(4)}
+          >
+            <Text>40</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.departmentButton}
+            onPress={() => setDepartment(5)}
+          >
+            <Text>50</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.departmentButton}
+            onPress={() => setDepartment(6)}
+          >
+            <Text>60</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.departmentButton}
+            onPress={() => setDepartment(7)}
+          >
+            <Text>70 </Text>
+          </TouchableOpacity>
+
+          {console.log(department)}
+        </View>
         <DraxView
           style={styles.ready}
           onReceiveDragDrop={(event) => {
@@ -408,35 +458,6 @@ function Top(props) {
             ReadyTeams({ item, index })
           )}
         </DraxView>
-
-        <View style={styles.mayday}>
-          <Text style={styles.maydayHeader}>
-            "MAYDAY" Lost or Trapped FireFighters
-          </Text>
-          <Text style={styles.chartSection}>
-            <Text style={styles.highlight}>E</Text>mergency Traffic Declared
-          </Text>
-          <Text style={styles.chartSection}>
-            <Text style={styles.highlight}>R</Text>IT Deployed
-          </Text>
-          <Text style={styles.chartSection}>
-            <Text style={styles.highlight}>U</Text>pgrade the assignment
-          </Text>
-          <Text style={styles.chartSection}>
-            <Text style={styles.highlight}>P</Text>AR on ALL crews in the hazard
-            zone
-          </Text>
-          <Text style={styles.chartSection}>
-            <Text style={styles.highlight}>T</Text>actical Channel assigned for
-            the specific fire
-          </Text>
-          <Text style={styles.chartSection}>
-            <Text style={styles.highlight}>T</Text>ools needed
-          </Text>
-          <Text style={styles.chartSection}>
-            <Text style={styles.highlight}>T</Text>ime the MAYDAY was called
-          </Text>
-        </View>
       </View>
     </View>
   );
@@ -485,6 +506,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  departmentSelect: {
+    alignSelf: "flex-start",
+    flexDirection: "column",
+  },
+  departmentButton: {
+    flex: 1,
+    backgroundColor: "lightblue",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    width: 20,
+    height: 10,
+    margin: 2,
+  },
   dragging: {
     width: 0,
     height: 0,
@@ -500,10 +535,13 @@ const styles = StyleSheet.create({
   },
   enroute: {
     flexDirection: "column",
+    flexWrap: "wrap",
     justifyContent: "flex-start",
     alignItems: "center",
+    alignContent: "center",
     width: "15%",
     height: "99%",
+    maxHeight: "99%",
     backgroundColor: "lightblue",
     borderWidth: 2,
   },
@@ -592,7 +630,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   team: {
-    width: "95%",
+    width: "48%",
     fontSize: 20,
     flexDirection: "row",
     justifyContent: "center",
@@ -615,6 +653,7 @@ const styles = StyleSheet.create({
   },
   top: {
     width: "100%",
+    maxHeight: "100%",
     top: 10,
     borderTopColor: "black",
     borderTopWidth: 2,
@@ -637,4 +676,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Top;
+export default PracticeTop;

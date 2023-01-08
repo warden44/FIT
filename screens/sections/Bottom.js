@@ -1,86 +1,147 @@
-import React, { useState } from "react";
+import * as React from "react";
 import {
+  Dimensions,
   ScrollView,
   StyleSheet,
   Text,
+  Touchable,
   TouchableOpacity,
   View,
 } from "react-native";
 import Timer from "../../components/Timer";
+import TChart from "../../components/TChart";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { DraxProvider, DraxView, DraxList } from "react-native-drax";
+import AppContext from "../../components/AppContext";
+import * as functs from "../../utils/MoveItem";
 
+const gestureRootViewStyle = { flex: 1 };
 
 function Bottom(props) {
-  const [bench, setBench] = useState("");
-  const [checkBench, setCheckBench] = useState(false);
+  const myContext = React.useContext(AppContext);
+
+  const [filter, setFilter] = React.useState("red");
+
+  const TodoTasks = ({ item, index }) => {
+    return (
+      <DraxView
+        style={[styles.task, { borderColor: item.border_color }]}
+        animateSnapback={false}
+        draggingStyle={styles.dragging}
+        dragReleasedStyle={styles.dragReleased}
+        hoverDraggingStyle={styles.dragHover}
+        dragPayload={[index, item.currentList]}
+        longPressDelay={150}
+        receivingStyle={styles.receiving}
+        renderContent={({ viewState }) => {
+          const receivingDrag = viewState && viewState.receivingDrag;
+          const payload = receivingDrag && receivingDrag.payload;
+          return (
+            <View>
+              <Text style={styles.itemFont}>{item.name}</Text>
+            </View>
+          );
+        }}
+        key={index}
+        onReceiveDragDrop={(event) => {
+          myContext.moveItem(
+            myContext.dragTaskList,
+            myContext.setDragTaskList,
+            event.dragged.payload,
+            "task"
+          );
+        }}
+      />
+    );
+  };
+
+  const DoneTasks = ({ item, index }) => {
+    return (
+      <DraxView
+        style={[styles.task, { borderColor: item.border_color }]}
+        animateSnapback={false}
+        draggingStyle={styles.dragging}
+        dragReleasedStyle={styles.dragReleased}
+        hoverDraggingStyle={styles.dragHover}
+        dragPayload={[index, item.currentList]}
+        longPressDelay={150}
+        receivingStyle={styles.receiving}
+        renderContent={({ viewState }) => {
+          const receivingDrag = viewState && viewState.receivingDrag;
+          const payload = receivingDrag && receivingDrag.payload;
+          return (
+            <View>
+              <Text style={styles.itemFont}>{item.name}</Text>
+            </View>
+          );
+        }}
+        key={index}
+        onReceiveDragDrop={(event) => {
+          myContext.moveItem(
+            myContext.dragDoneList,
+            myContext.setDragDoneList,
+            event.dragged.payload,
+            "done"
+          );
+        }}
+      />
+    );
+  };
+
+  const [bench, setBench] = React.useState("");
+  const [checkBench, setCheckBench] = React.useState(false);
 
   return (
     <View style={styles.container}>
-      <View style={styles.todo}>
-        <ScrollView style={styles.scroll}>
-          <Text style={styles.exampleText}>ToDo Scroll List</Text>
-          {[
-            "Fire Attack",
-            "Support/Backup Lines",
-            "FDC Connection",
-            "Standpipe Connection",
-            "Exposure",
-            "Search/Rescue",
-            "Evacuation",
-            "Ventilation",
-            "Water Supply",
-            "Secondary Water Supply",
-            "IRIT",
-            "RIT",
-            "Assign Safety Officeer",
-            "Assign Accountability Officer",
-            "Utilities",
-            "Gas",
-            "Electric",
-            "Water",
-            "Rehab",
-            "Salvage",
-            "Overhaul",
-            "Medical",
-          ].map((task) => (
-            <View key={task} style={styles.task}>
-              <Text style={styles.taskText}>{task}</Text>
-            </View>
-          ))}
-          {[
-            "Traffic Control",
-            "Police",
-            "PIO",
-            "Investigators",
-            "Fire Marhsal",
-            "State Fire Marhsal",
-            "Health Department",
-            "Occupant Services",
-            "Red Cross",
-            "Board Up",
-          ].map((task) => (
-            <View key={task} style={[styles.task, styles.taskAdditional]}>
-              <Text style={styles.taskText}>{task}</Text>
-            </View>
-          ))}
-        </ScrollView>
+      <DraxView
+        style={styles.todo}
+        onReceiveDragDrop={(event) => {
+          myContext.moveItem(
+            myContext.dragTaskList,
+            myContext.setDragTaskList,
+            event.dragged.payload,
+            "task"
+          );
+        }}
+      >
+        {myContext.dragTaskList.map((item, index) =>
+          item.border_color === filter ? TodoTasks({ item, index }) : []
+        )}
+      </DraxView>
+      <View style={[styles.switchTasks]}>
+        <TouchableOpacity
+          style={[styles.switchButton, { backgroundColor: filter }]}
+          onPress={() => {
+            filter === "red" ? setFilter("yellow") : setFilter("red");
+            console.log(filter);
+          }}
+        ></TouchableOpacity>
       </View>
-      <View style={styles.done}>
-        <ScrollView style={styles.scroll}>
-          <Text style={styles.exampleText}>Done Scroll List</Text>
-          <Text style={{ textAlign: "center", fontSize: 20 }}>
-            {"\n"}a{"\n"}b{"\n"}c{"\n"}d{"\n"}e{"\n"}f{"\n"}g{"\n"}h{"\n"}i
-            {"\n"}j{"\n"}k{"\n"}l{"\n"}m{"\n"}n{"\n"}o{"\n"}p{"\n"}q{"\n"}r
-            {"\n"}s{"\n"}t{"\n"}u{"\n"}v{"\n"}w{"\n"}x{"\n"}y{"\n"}z
-          </Text>
-        </ScrollView>
-      </View>
+
+      <DraxView
+        style={styles.done}
+        onReceiveDragDrop={(event) => {
+          myContext.moveItem(
+            myContext.dragDoneList,
+            myContext.setDragDoneList,
+            event.dragged.payload,
+            "done"
+          );
+        }}
+      >
+        {myContext.dragDoneList.map((item, index) =>
+          item.border_color === filter ? DoneTasks({ item, index }) : []
+        )}
+      </DraxView>
       <View style={styles.rightBotom}>
         <View style={styles.benchmarks}>
           {/* Benchmarks */}
           <TouchableOpacity
             style={styles.check}
             onPress={() =>
-              checkBench === true ? setCheckBench(false) : setCheckBench(true)
+              checkBench === true
+                ? (setCheckBench(false), setBench("none"))
+                : setCheckBench(true)
             }
           >
             <View style={styles.outterCheck}>
@@ -95,7 +156,9 @@ function Bottom(props) {
                 key={choice}
                 style={styles.button}
                 onPress={() =>
-                  bench === choice ? setBench("none") : setBench(choice)
+                  bench === choice
+                    ? (setBench("none"), setCheckBench(false))
+                    : (setBench(choice), setCheckBench(true))
                 }
               >
                 <View style={styles.outterButton}>
@@ -113,28 +176,9 @@ function Bottom(props) {
           <Timer></Timer>
         </View>
         <View style={styles.teamCharts}>
-          <View style={styles.tChart}>
-            <View style={styles.tChartSection}>
-              <Text>Task</Text>
-            </View>
-            <View style={styles.tChartSection}>
-              <Text>Team Name</Text>
-            </View>
-            <View style={styles.tChartTimer}>
-              <Timer size={"smallTimer"}></Timer>
-            </View>
-          </View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
-          <View style={styles.tChart}></View>
+          {myContext.currentTaskList.map((task, index) => (
+            <TChart style={styles.tChart} key={index} tChartId={index} />
+          ))}
         </View>
       </View>
     </View>
@@ -161,7 +205,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: "green",
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -169,19 +212,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   done: {
+    flexDirection: "column",
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    alignContent: "center",
     width: "20%",
-    height: "95%",
-    backgroundColor: "brown",
+    height: "98%",
+    backgroundColor: "lightgreen",
     borderWidth: 2,
+  },
+  dragging: {
+    width: 0,
+    height: 0,
+    borderWidth: 0,
+    textAlign: "center",
+  },
+  dragHover: {
+    width: "15%",
+    height: "auto",
   },
   elapsed: {
     width: "100%",
-  },
-
-  exampleText: {
-    fontWeight: "bold",
-    fontSize: 24,
-    textAlign: "center",
   },
   font: {
     fontSize: 14,
@@ -198,6 +250,10 @@ const styles = StyleSheet.create({
     height: 10,
     backgroundColor: "red",
   },
+  itemFont: {
+    fontSize: 12.5,
+    textAlign: "center",
+  },
   outterButton: {
     width: 15,
     height: 15,
@@ -209,6 +265,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     marginLeft: 10,
     marginRight: 5,
+    backgroundColor: "white",
   },
   outterCheck: {
     width: 15,
@@ -219,38 +276,39 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginTop: 2,
     marginRight: 10,
+    backgroundColor: "white",
   },
   rightBotom: {
     width: "55%",
-    height: "95%",
-    backgroundColor: "gray",
-  },
-  scroll: {
-    //idk
+    height: "98%",
+    backgroundColor: "lightgray",
+    borderWidth: 2,
   },
   smallFont: {
     fontSize: 10,
   },
+  switchButton: {
+    opacity: 0.75,
+    flex: 1,
+    borderRadius: 10,
+    borderWidth: 3,
+  },
+  switchTasks: {
+    width: "2%",
+    height: "98%",
+  },
   task: {
-    fontSize: 20,
+    width: "48%",
+    height: "7.25%",
+    backgroundColor: "lightyellow",
     flexDirection: "row",
     justifyContent: "center",
     borderWidth: 2,
     borderColor: "red",
-    margin: 10,
-    marginTop: 5,
-    // shadowColor: "#171717",
-    // shadowOffset: { width: -2, height: 4 },
-    // shadowOpacity: 0.2,
-    // shadowRadius: 3,
-    // elevation: 15,
-    // shadowColor: 'white',
-  },
-  taskAdditional: {
-    borderColor: "yellow",
-  },
-  taskText: {
-    color: "blue",
+    borderRadius: 10,
+    margin: 2,
+    marginTop: 4,
+    marginBottom: 4,
   },
   teamCharts: {
     flex: 1,
@@ -271,35 +329,22 @@ const styles = StyleSheet.create({
   tChartSection: {
     textAlign: "center",
     flex: 1,
-    borderWidth: 1,
+    borderWidth: 2,
     paddingBottom: 0,
   },
   tChartTimer: {
     paddingLeft: 5,
     paddingRight: 5,
   },
-  // timer: {
-  //   flexDirection: "row",
-  //   justifyContent: "flex-start",
-  //   textAlign: 'center',
-  // },
-  // timerMain: {
-  //   width: 75,
-  //   height: 25,
-  //   backgroundColor: 'lightgray',
-  //   borderWidth: 1,
-  //   borderRadius: 8,
-  //   borderColor: 'red',
-  //   margin: 5,
-  //   paddingLeft: 5,
-  //   paddingRight: 5,
-  //   textAlign: 'center',
-  //   fontSize: 24,
-  //   },
   todo: {
+    flexDirection: "column",
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    alignContent: "center",
     width: "20%",
-    height: "95%",
-    backgroundColor: "gray",
+    height: "98%",
+    backgroundColor: "lightblue",
     borderWidth: 2,
   },
   tSection: {

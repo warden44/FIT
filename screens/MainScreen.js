@@ -8,7 +8,9 @@ import {
   View,
 } from "react-native";
 import Top from "./sections/Top";
+import PracticeTop from "./sections/PracticeTop";
 import PracticeBottom from "./sections/PracticeBottom";
+import Bottom from "./sections/Bottom";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 import AppContext from "../components/AppContext";
@@ -638,7 +640,6 @@ function MainScreen(props) {
       currentList: "roster",
     },
   ];
-  console.log(RosterList.length);
   const ReadyList = [
     {
       id: 13,
@@ -851,6 +852,7 @@ function MainScreen(props) {
     dragEnrouteList,
     dragReadyList,
     currentTeamList,
+    RosterList,
     setDragDoneList,
     setDragTaskList,
     setCurrentTaskList,
@@ -867,7 +869,7 @@ function MainScreen(props) {
       <GestureHandlerRootView style={gestureRootViewStyle}>
         <DraxProvider style={styles.container}>
           <View style={styles.top}>
-            <Top />
+            <PracticeTop />
           </View>
           <View style={styles.bottom}>
             <PracticeBottom />

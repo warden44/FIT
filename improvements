@@ -1,5 +1,29 @@
 //Things to improve
 
+
+//Reduction/Cleaning
+Implement redux to manage and clean lists so they can be in their own file
+reduce components into multiple functions that use redux to update state
+find way to make global functions that the different components can share
+Join sections into one main screen
+delete duplicate styles
+turn checkboxes into components
+turn mayday into component
+
+
+//As Requested by Chief
+Title components
+Find way to organize dropdown list
+allow multiple teams to be on a tChart
+Flashing benchmarks - flash one by one until tapped, checkable checks all
+Move timer top
+Time touchable, not automated
+two Fire attacks, rehabs
+two tasks per tChart? ask
+ability to free write a task
+
+
+
 make text of radio button clickable, not just the button itself
 make setting a bubble option also check off the corresponding check box
 make bubbles bigger

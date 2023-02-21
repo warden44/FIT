@@ -1,22 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import MainScreen from './screens/MainScreen';
-import Practice from './screens/Practice';
-
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+import MainScreen from "./screens/MainScreen";
+import Practice from "./screens/Practice";
+import { store } from "./src/store";
+import { Provider } from "react-redux";
 
 export default function App() {
-
-  
+  console.log(store);
   return (
-    <MainScreen/>
+    <Provider store={store}>
+      <MainScreen />
+    </Provider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

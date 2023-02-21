@@ -1,177 +1,177 @@
 function moveItem(
-    ReceivingList,
-    setRecevingList,
-    payload,
-    toListName,
-    tChartId = 12,
-    pushReplace = false
+  ReceivingList,
+  setRecevingList,
+  payload,
+  toListName,
+  tChartId = 12,
+  pushReplace = false
+) {
+  if (
+    (payload[1] != toListName || toListName === "currentTask") &&
+    (payload[1] === "task" ||
+      payload[1] === "done" ||
+      payload[1] === "currentTask")
   ) {
-    if (
-      (payload[1] != toListName || toListName === "currentTask") &&
-      (payload[1] === "task" ||
-        payload[1] === "done" ||
-        payload[1] === "currentTask")
-    ) {
-      //if it is not sending to itself. Allow for currentTask and currentTeam so items can be moved amongst tCharts
+    //if it is not sending to itself. Allow for currentTask and currentTeam so items can be moved amongst tCharts
 
-      let tempSendingList; //initiate temporary copy sending list
-      let tempReceivingList = [...ReceivingList]; //declare temp receiving list to passed parameter
-      let setSendingList; //initiate method to set sending list
-      let pushItem = tempReceivingList[tChartId]; //set push item in case we are pushing old item to done
+    let tempSendingList; //initiate temporary copy sending list
+    let tempReceivingList = [...ReceivingList]; //declare temp receiving list to passed parameter
+    let setSendingList; //initiate method to set sending list
+    let pushItem = tempReceivingList[tChartId]; //set push item in case we are pushing old item to done
 
-      if (payload[1] === "task") {
-        //if item is coming from task list
-        tempSendingList = [...dragTaskList]; //declare temp sending list to dragTaskList
+    if (payload[1] === "task") {
+      //if item is coming from task list
+      tempSendingList = [...dragTaskList]; //declare temp sending list to dragTaskList
 
-        setSendingList = setDragTaskList; //declare method to set sending list to setDragTaskList
-      } else if (payload[1] === "done") {
-        //if item is coming from done list
-        tempSendingList = [...dragDoneList]; //declare temps ending list to dragDoneList
+      setSendingList = setDragTaskList; //declare method to set sending list to setDragTaskList
+    } else if (payload[1] === "done") {
+      //if item is coming from done list
+      tempSendingList = [...dragDoneList]; //declare temps ending list to dragDoneList
 
-        setSendingList = setDragDoneList; //declare method to se sending list to setDragDoneList
-      } else if (payload[1] === "currentTask") {
-        //if item is coming from current task list
-        tempSendingList = [...currentTaskList]; //declare temp sending list to currentTaskList
+      setSendingList = setDragDoneList; //declare method to se sending list to setDragDoneList
+    } else if (payload[1] === "currentTask") {
+      //if item is coming from current task list
+      tempSendingList = [...currentTaskList]; //declare temp sending list to currentTaskList
 
-        setSendingList = setCurrentTaskList; //declare method to set sending list to setCurrentTaskList
-      }
-      let sentItem = tempSendingList[payload[0]]; //declare the item being sent by the index of the sending list
-
-      sentItem.currentList = toListName; //change sent item's current list to receiving list name
-
-      if (toListName === "currentTask") {
-        //if item is going to a tchart, it needs to be inserted instead of pushed
-        sentItem.tChart = tChartId; //declare sent item's tChart id to 12
-        tempReceivingList[tChartId] = sentItem; //insert item into receiving list
-      } else {
-        sentItem.tChart = 12; //declare sent item's tChart id to 12
-        tempReceivingList.push(sentItem); //push sent item to receiving list
-      }
-
-      if (payload[1] === "currentTask" && toListName === "currentTask") {
-        //if swapping inside of currentList, just change the receiving list, or else idk just dont
-        tempReceivingList[payload[0]] = ""; //erase item at what was the index
-      } else if (payload[1] === "currentTask") {
-        //if coming from current task list
-        tempSendingList[payload[0]] = ""; //erase item at what was the index
-      } else {
-        tempSendingList.splice(payload[0], 1); //else splice sending list at what was the index
-      }
-
-      if (pushReplace) {
-        //if pushReplace param is set to true...
-        pushItem.currentList = "done"; //fix attributes of item that is going to be pushed
-        pushItem.tChart = 12;
-        if (payload[1] === "done") {
-          //if sending list is "done", push to tempSendingList
-          tempSendingList.push(pushItem);
-        } else {
-          //else create temp list from dragDoneList, push, and set
-          let tempPushList = [...dragDoneList];
-          tempPushList.push(pushItem);
-          setDragDoneList(tempPushList);
-        }
-      }
-
-      setSendingList(tempSendingList); //set actual sending list to temp sending list
-      setRecevingList(tempReceivingList); //set actual receiving list to temp list. Do this last incase swapping inside tCharts
+      setSendingList = setCurrentTaskList; //declare method to set sending list to setCurrentTaskList
     }
+    let sentItem = tempSendingList[payload[0]]; //declare the item being sent by the index of the sending list
+
+    sentItem.currentList = toListName; //change sent item's current list to receiving list name
+
+    if (toListName === "currentTask") {
+      //if item is going to a tchart, it needs to be inserted instead of pushed
+      sentItem.tChart = tChartId; //declare sent item's tChart id to 12
+      tempReceivingList[tChartId] = sentItem; //insert item into receiving list
+    } else {
+      sentItem.tChart = 12; //declare sent item's tChart id to 12
+      tempReceivingList.push(sentItem); //push sent item to receiving list
+    }
+
+    if (payload[1] === "currentTask" && toListName === "currentTask") {
+      //if swapping inside of currentList, just change the receiving list, or else idk just dont
+      tempReceivingList[payload[0]] = ""; //erase item at what was the index
+    } else if (payload[1] === "currentTask") {
+      //if coming from current task list
+      tempSendingList[payload[0]] = ""; //erase item at what was the index
+    } else {
+      tempSendingList.splice(payload[0], 1); //else splice sending list at what was the index
+    }
+
+    if (pushReplace) {
+      //if pushReplace param is set to true...
+      pushItem.currentList = "done"; //fix attributes of item that is going to be pushed
+      pushItem.tChart = 12;
+      if (payload[1] === "done") {
+        //if sending list is "done", push to tempSendingList
+        tempSendingList.push(pushItem);
+      } else {
+        //else create temp list from dragDoneList, push, and set
+        let tempPushList = [...dragDoneList];
+        tempPushList.push(pushItem);
+        setDragDoneList(tempPushList);
+      }
+    }
+
+    setSendingList(tempSendingList); //set actual sending list to temp sending list
+    setRecevingList(tempReceivingList); //set actual receiving list to temp list. Do this last incase swapping inside tCharts
   }
-  function moveTeam(
-    ReceivingList,
-    setRecevingList,
-    payload,
-    toListName,
-    tChartId = 12,
-    pushReplace = false
+}
+function moveTeam(
+  ReceivingList,
+  setRecevingList,
+  payload,
+  toListName,
+  tChartId = 12,
+  pushReplace = false
+) {
+  if (
+    (payload[1] != toListName || toListName === "currentTeam") &&
+    (payload[1] === "enroute" ||
+      payload[1] === "ready" ||
+      payload[1] === "roster" ||
+      payload[1] === "currentTeam")
   ) {
-    if (
-      (payload[1] != toListName || toListName === "currentTeam") &&
-      (payload[1] === "enroute" ||
-        payload[1] === "ready" ||
-        payload[1] === "roster" ||
-        payload[1] === "currentTeam")
-    ) {
-      //if it is not sending to itself. Allow for currentTask and currentTeam so items can be moved amongst tCharts
+    //if it is not sending to itself. Allow for currentTask and currentTeam so items can be moved amongst tCharts
 
-      let tempSendingList; //initiate temporary copy sending list
-      let tempReceivingList = [...ReceivingList]; //declare temp receiving list to passed parameter
-      let setSendingList; //initiate method to set sending list
-      let pushItem = tempReceivingList[tChartId]; //set push item in case we are pushing old item to done
+    let tempSendingList; //initiate temporary copy sending list
+    let tempReceivingList = [...ReceivingList]; //declare temp receiving list to passed parameter
+    let setSendingList; //initiate method to set sending list
+    let pushItem = tempReceivingList[tChartId]; //set push item in case we are pushing old item to done
 
-      if (payload[1] === "roster") {
-        tempSendingList = [...dropTeamList]; //declare temp sending list to dragEnrouteList
+    if (payload[1] === "roster") {
+      tempSendingList = [...dropTeamList]; //declare temp sending list to dragEnrouteList
 
-        setSendingList = setDropTeamList; //declare method to set sending list to setDragEnrouteList
-      } else if (payload[1] === "enroute") {
-        //if item is coming from task list
+      setSendingList = setDropTeamList; //declare method to set sending list to setDragEnrouteList
+    } else if (payload[1] === "enroute") {
+      //if item is coming from task list
 
-        tempSendingList = [...dragEnrouteList]; //declare temp sending list to dragEnrouteList
+      tempSendingList = [...dragEnrouteList]; //declare temp sending list to dragEnrouteList
 
-        setSendingList = setDragEnrouteList; //declare method to set sending list to setDragEnrouteList
-      } else if (payload[1] === "ready") {
-        //if item is coming from done list
-        tempSendingList = [...dragReadyList]; //declare temps ending list to dragDoneList
+      setSendingList = setDragEnrouteList; //declare method to set sending list to setDragEnrouteList
+    } else if (payload[1] === "ready") {
+      //if item is coming from done list
+      tempSendingList = [...dragReadyList]; //declare temps ending list to dragDoneList
 
-        setSendingList = setDragReadyList; //declare method to se sending list to setDragDoneList
-      } else if (payload[1] === "currentTeam") {
-        //if item is coming from current task list
-        tempSendingList = [...currentTeamList]; //declare temp sending list to currentTaskList
+      setSendingList = setDragReadyList; //declare method to se sending list to setDragDoneList
+    } else if (payload[1] === "currentTeam") {
+      //if item is coming from current task list
+      tempSendingList = [...currentTeamList]; //declare temp sending list to currentTaskList
 
-        setSendingList = setCurrentTeamList; //declare method to set sending list to setCurrentTaskList
-      }
-      let sentItem = tempSendingList[payload[0]]; //declare the item being sent by the index of the sending list
-      sentItem.currentList = toListName; //change sent item's current list to receiving list name
-
-      if (toListName === "enroute" && dragEnrouteList.length >= 5) {
-        return;
-      }
-
-      if (toListName === "ready" && dragReadyList.length >= 6) {
-        return;
-      }
-
-      if (toListName === "currentTeam") {
-        //if item is going to a tchart, it needs to be inserted instead of pushed
-        sentItem.tChart = tChartId; //declare sent item's tChart id to 12
-        tempReceivingList[tChartId] = sentItem; //insert item into receiving list
-      } else {
-        sentItem.tChart = 12; //declare sent item's tChart id to 12
-        tempReceivingList.push(sentItem); //push sent item to receiving list
-      }
-
-      if (payload[1] === "currentTeam" && toListName === "currentTeam") {
-        //if swapping inside of currentList, just change the receiving list, or else idk just dont
-        tempReceivingList[payload[0]] = ""; //erase item at what was the index
-      } else if (payload[1] === "currentTeam") {
-        //if coming from current task list
-        tempSendingList[payload[0]] = ""; //erase item at what was the index
-      } else {
-        tempSendingList.splice(payload[0], 1); //else splice sending list at what was the index
-      }
-
-      if (pushReplace) {
-        //if pushReplace param is set to true...
-        pushItem.currentList = "ready"; //fix attributes of item that is going to be pushed
-        pushItem.tChart = 12;
-        if (payload[1] === "ready") {
-          //if sending list is "done", push to tempSendingList
-          tempSendingList.push(pushItem);
-        } else {
-          //else create temp list from dragDoneList, push, and set
-          let tempPushList = [...dragReadyList];
-          tempPushList.push(pushItem);
-          setDragReadyList(tempPushList);
-        }
-      }
-
-      setSendingList(tempSendingList); //set actual sending list to temp sending list
-      setRecevingList(tempReceivingList); //set actual receiving list to temp list. Do this last incase swapping inside tCharts
-      // if (payload[1] === "roster") {
-      //   indexify();
-      // }
+      setSendingList = setCurrentTeamList; //declare method to set sending list to setCurrentTaskList
     }
+    let sentItem = tempSendingList[payload[0]]; //declare the item being sent by the index of the sending list
+    sentItem.currentList = toListName; //change sent item's current list to receiving list name
+
+    if (toListName === "enroute" && dragEnrouteList.length >= 5) {
+      return;
+    }
+
+    if (toListName === "ready" && dragReadyList.length >= 6) {
+      return;
+    }
+
+    if (toListName === "currentTeam") {
+      //if item is going to a tchart, it needs to be inserted instead of pushed
+      sentItem.tChart = tChartId; //declare sent item's tChart id to 12
+      tempReceivingList[tChartId] = sentItem; //insert item into receiving list
+    } else {
+      sentItem.tChart = 12; //declare sent item's tChart id to 12
+      tempReceivingList.push(sentItem); //push sent item to receiving list
+    }
+
+    if (payload[1] === "currentTeam" && toListName === "currentTeam") {
+      //if swapping inside of currentList, just change the receiving list, or else idk just dont
+      tempReceivingList[payload[0]] = ""; //erase item at what was the index
+    } else if (payload[1] === "currentTeam") {
+      //if coming from current task list
+      tempSendingList[payload[0]] = ""; //erase item at what was the index
+    } else {
+      tempSendingList.splice(payload[0], 1); //else splice sending list at what was the index
+    }
+
+    if (pushReplace) {
+      //if pushReplace param is set to true...
+      pushItem.currentList = "ready"; //fix attributes of item that is going to be pushed
+      pushItem.tChart = 12;
+      if (payload[1] === "ready") {
+        //if sending list is "done", push to tempSendingList
+        tempSendingList.push(pushItem);
+      } else {
+        //else create temp list from dragDoneList, push, and set
+        let tempPushList = [...dragReadyList];
+        tempPushList.push(pushItem);
+        setDragReadyList(tempPushList);
+      }
+    }
+
+    setSendingList(tempSendingList); //set actual sending list to temp sending list
+    setRecevingList(tempReceivingList); //set actual receiving list to temp list. Do this last incase swapping inside tCharts
+    // if (payload[1] === "roster") {
+    //   indexify();
+    // }
   }
+}
 
 const initialState = {
   TaskList: [
@@ -791,8 +791,12 @@ const initialState = {
   ],
 };
 
-export default function appReducer(state = initialState, action) {
-    if (action.type === "TaskToTChart") {
-
-    }
+export default function reducer(state = initialState, action) {
+  if (action.type === "TaskToTChart") {
+    return {
+      ...state,
+      currentTaskList: state.currentTaskList[index] = state.TaskList[index],
+      TaskList: state.TaskList.splice(index),
+    };
+  }
 }

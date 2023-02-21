@@ -49,8 +49,6 @@ function PracticeTop(props) {
   useEffect(() => {
     setIndex(-1);
   }, [index]);
-  // { label: "Apple", value: "apple" },
-  // { label: "Banana", value: "banana" },
 
   const [department, setDepartment] = useState(3);
 
@@ -364,80 +362,36 @@ function PracticeTop(props) {
           >
             Enroute
           </Text> */}
-          {/* <DropDownPicker
-            style={styles.dropdown}
-            schema={{
-              label: "name",
-            }}
-            open={open}
-            value={index}
-            items={myContext.dropTeamList}
-            setOpen={setOpen}
-            setValue={setIndex}
-            setItems={myContext.setDropTeamList}
-            setlabel={label}
-            maxHeight={500}
-          >
-            {index > -1 &&
-              myContext.moveTeam(
-                myContext.dragEnrouteList,
-                myContext.setDragEnrouteList,
-                [index, "roster"],
-                "enroute"
-              )}
-          </DropDownPicker> */}
-          {myContext.RosterList.map((item, index) =>
-            item.name[1] === department.toString()
-              ? EnrouteTeams({ item, index })
-              : []
-          )}
-        </DraxView>
-        <View style={styles.departmentSelect}>
-          <TouchableOpacity
-            style={styles.departmentButton}
-            onPress={() => setDepartment(1)}
-          >
-            <Text>10</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.departmentButton}
-            onPress={() => setDepartment(2)}
-          >
-            <Text>20</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.departmentButton}
-            onPress={() => setDepartment(3)}
-          >
-            <Text>30</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.departmentButton}
-            onPress={() => setDepartment(4)}
-          >
-            <Text>40</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.departmentButton}
-            onPress={() => setDepartment(5)}
-          >
-            <Text>50</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.departmentButton}
-            onPress={() => setDepartment(6)}
-          >
-            <Text>60</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.departmentButton}
-            onPress={() => setDepartment(7)}
-          >
-            <Text>70 </Text>
-          </TouchableOpacity>
 
-          {console.log(department)}
-        </View>
+          <View style={styles.departmentSelect}>
+            <TouchableOpacity
+              style={styles.departmentButton}
+              onPress={() => setDepartment(department - 1)}
+            >
+              <Text>{"<"}</Text>
+            </TouchableOpacity>
+
+            <View style={styles.departmentButton}>
+              <Text>{department}</Text>
+            </View>
+            <TouchableOpacity
+              style={styles.departmentButton}
+              onPress={() => setDepartment(department + 1)}
+            >
+              <Text>{">"}</Text>
+            </TouchableOpacity>
+
+            {console.log(department)}
+          </View>
+          <View style={styles.enroutePagination}>
+            {myContext.RosterList.map((item, index) =>
+              item.name[1] === department.toString()
+                ? EnrouteTeams({ item, index })
+                : []
+            )}
+          </View>
+        </DraxView>
+
         <DraxView
           style={styles.ready}
           onReceiveDragDrop={(event) => {
@@ -507,8 +461,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   departmentSelect: {
-    alignSelf: "flex-start",
-    flexDirection: "column",
+    alignSelf: "center",
+    flexDirection: "row",
+    flex: 1
   },
   departmentButton: {
     flex: 1,
@@ -517,7 +472,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 1,
     width: 20,
-    height: 10,
+    height: 20,
     margin: 2,
   },
   dragging: {
@@ -544,6 +499,18 @@ const styles = StyleSheet.create({
     maxHeight: "99%",
     backgroundColor: "lightblue",
     borderWidth: 2,
+  },
+  enroutePagination: {
+    flexDirection: "column",
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    alignContent: "center",
+    width: "100%",
+    height: "75%",
+    maxHeight: "100%",
+    backgroundColor: "lightblue",
+    flex: 3
   },
   font: {
     fontSize: 13,

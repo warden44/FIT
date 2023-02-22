@@ -366,7 +366,7 @@ function PracticeTop(props) {
           <View style={styles.departmentSelect}>
             <TouchableOpacity
               style={styles.departmentButton}
-              onPress={() => setDepartment(department - 1)}
+              onPress={() => setDepartment(department === 1 ? myContext.numberOfTeams : department - 1)}
             >
               <Text>{"<"}</Text>
             </TouchableOpacity>
@@ -376,7 +376,7 @@ function PracticeTop(props) {
             </View>
             <TouchableOpacity
               style={styles.departmentButton}
-              onPress={() => setDepartment(department + 1)}
+              onPress={() => setDepartment(myContext.numberOfTeams === department ? 1 : department + 1)}
             >
               <Text>{">"}</Text>
             </TouchableOpacity>

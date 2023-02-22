@@ -640,6 +640,7 @@ function MainScreen(props) {
       currentList: "roster",
     },
   ];
+  const numberOfTeams = 7;
   const ReadyList = [
     {
       id: 13,
@@ -846,6 +847,7 @@ function MainScreen(props) {
 
   const userSettings = {
     dragDoneList,
+    numberOfTeams,
     dragTaskList,
     currentTaskList,
     dropTeamList,

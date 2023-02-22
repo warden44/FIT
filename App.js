@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import MainScreen from "./screens/MainScreen";
 import Practice from "./screens/Practice";
-import { store } from "./src/store";
+import { store } from "./src/app/store";
 import { Provider } from "react-redux";
 
 export default function App() {

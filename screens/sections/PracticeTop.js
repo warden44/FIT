@@ -15,6 +15,8 @@ import {
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 import DropDownPicker from "react-native-dropdown-picker";
 import AppContext from "../../components/AppContext";
+import Enroute from "../../src/app/features/enrouteTeams/Enroute";
+import Ready from "../../src/app/features/readyTeams/Ready";
 
 function PracticeTop(props) {
   const myContext = React.useContext(AppContext);
@@ -44,11 +46,11 @@ function PracticeTop(props) {
   // const [value, setValue] = useState(null);
   const [items, setItems] = useState(myContext.dropTeamList);
   const [label, setLabel] = useState("roster");
-  const [index, setIndex] = useState();
+  // const [index, setIndex] = useState();
 
-  useEffect(() => {
-    setIndex(-1);
-  }, [index]);
+  // useEffect(() => {
+  //   setIndex(-1);
+  // }, [index]);
 
   const [department, setDepartment] = useState(3);
 
@@ -366,7 +368,11 @@ function PracticeTop(props) {
           <View style={styles.departmentSelect}>
             <TouchableOpacity
               style={styles.departmentButton}
-              onPress={() => setDepartment(department === 1 ? myContext.numberOfTeams : department - 1)}
+              onPress={() =>
+                setDepartment(
+                  department === 1 ? myContext.numberOfTeams : department - 1
+                )
+              }
             >
               <Text>{"<"}</Text>
             </TouchableOpacity>
@@ -376,7 +382,11 @@ function PracticeTop(props) {
             </View>
             <TouchableOpacity
               style={styles.departmentButton}
-              onPress={() => setDepartment(myContext.numberOfTeams === department ? 1 : department + 1)}
+              onPress={() =>
+                setDepartment(
+                  myContext.numberOfTeams === department ? 1 : department + 1
+                )
+              }
             >
               <Text>{">"}</Text>
             </TouchableOpacity>
@@ -391,7 +401,8 @@ function PracticeTop(props) {
             )}
           </View>
         </DraxView>
-
+        <Enroute/>
+        <Ready/>
         <DraxView
           style={styles.ready}
           onReceiveDragDrop={(event) => {
@@ -463,7 +474,7 @@ const styles = StyleSheet.create({
   departmentSelect: {
     alignSelf: "center",
     flexDirection: "row",
-    flex: 1
+    flex: 1,
   },
   departmentButton: {
     flex: 1,
@@ -510,7 +521,7 @@ const styles = StyleSheet.create({
     height: "75%",
     maxHeight: "100%",
     backgroundColor: "lightblue",
-    flex: 3
+    flex: 3,
   },
   font: {
     fontSize: 13,

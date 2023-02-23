@@ -3,6 +3,8 @@
 //For using slices
 You can change everything from the moveItem and moveTeam functions into the reducers of the lists. The onRecieveDragDrop fucntion would need to know the from list and to list. The from list comes from payload, to list will be hard coded into the component or set as a parameter if its an actual component. Can we just put the reducer function to remove item from the from list in the payload?
 
+steps Create slices, create reducer, use redux state in enroute loadout, call reducer in the ondragdrop
+
 
 //Reduction/Cleaning
 Implement redux to manage and clean lists so they can be in their own file

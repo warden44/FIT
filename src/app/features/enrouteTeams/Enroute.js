@@ -1,14 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
-import {
-  spliceEnroute,
-  pushEnroute,
-  changeToEnroute,
-} from "./enrouteTeamsSlice";
-import {
-  spliceReady,
-  pushReady,
-  changeToReady,
-} from "../readyTeams/readyTeamsSlice";
+import { spliceRoster, pushRoster } from "../rosterTeams/rosterTeamsSlice";
+import { spliceEnroute, pushEnroute } from "./enrouteTeamsSlice";
+import { spliceReady, pushReady } from "../readyTeams/readyTeamsSlice";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
@@ -17,9 +10,10 @@ import React from "react";
 export default function Enroute() {
   const readyTeams = useSelector((state) => state.readyTeams.teams);
   const enrouteTeams = useSelector((state) => state.enrouteTeams.teams);
+  const rosterTeams = useSelector((state) => state.rosterTeams.teams);
   const dispatch = useDispatch();
 
-  const EnrouteTeams = ({ item, index }) => {
+  const EnrouteDrax = ({ item, index }) => {
     return (
       <DraxView
         style={[styles.team, { borderColor: item.border_color }]}
@@ -43,10 +37,12 @@ export default function Enroute() {
         onReceiveDragDrop={(event) => {
           let payload = event.dragged.payload;
           if (payload[1] === "enroute") {
+          } else if (payload[1] === "roster") {
+            dispatch(pushEnroute(rosterTeams[payload[0]]));
+            dispatch(spliceRoster(payload[0]));
           } else if (payload[1] === "ready") {
             dispatch(pushEnroute(readyTeams[payload[0]]));
             dispatch(spliceReady(payload[0]));
-            dispatch(changeToEnroute());
           }
         }}
       />
@@ -58,10 +54,12 @@ export default function Enroute() {
       onReceiveDragDrop={(event) => {
         let payload = event.dragged.payload;
         if (payload[1] === "enroute") {
+        } else if (payload[1] === "roster") {
+          dispatch(pushEnroute(rosterTeams[payload[0]]));
+          dispatch(spliceRoster(payload[0]));
         } else if (payload[1] === "ready") {
           dispatch(pushEnroute(readyTeams[payload[0]]));
           dispatch(spliceReady(payload[0]));
-          dispatch(changeToEnroute());
         }
       }}
     >
@@ -71,9 +69,7 @@ export default function Enroute() {
             Enroute
           </Text> */}
 
-      <View style={styles.enroutePagination}>
-        {enrouteTeams.map((item, index) => EnrouteTeams({ item, index }))}
-      </View>
+      {enrouteTeams.map((item, index) => EnrouteDrax({ item, index }))}
     </DraxView>
   );
 }
@@ -90,5 +86,18 @@ const styles = StyleSheet.create({
     maxHeight: "99%",
     backgroundColor: "lightblue",
     borderWidth: 2,
+  },
+  team: {
+    width: "30%",
+    height: "15%",
+    fontSize: 20,
+    flexDirection: "row",
+    justifyContent: "center",
+    ali: "center",
+    borderWidth: 2,
+    borderColor: "red",
+    backgroundColor: "lightyellow",
+    borderRadius: 10,
+    margin: 2,
   },
 });

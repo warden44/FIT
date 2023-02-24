@@ -25,19 +25,25 @@ const enrouteTeamsSlice = createSlice({
   name: "enrouteTeams",
   initialState,
   reducers: {
-    spliceEnroute: (state, {payload}) => {
-      state.teams.splice(payload, 1);
+    spliceEnroute: (state, action) => {
+      state.teams.splice(action.payload, 1);
     },
-    pushEnroute: (state, { payload }) => {
-      payload.currentList = "enroute";
-      state.teams.push(payload);
+    pushEnroute: {
+      reducer: (state, action) => {
+        state.teams.push(action.payload);
+      },
+      prepare: (value) => {
+        return {
+          payload: {
+            ...value,
+            currentList: "enroute",
+          },
+        };
+      },
     },
-    changeToEnroute: (state) => {
-      state.teams[state.teams.length - 1].currentList = "ready";
-  }
   },
 });
 
-export const { spliceEnroute, pushEnroute,changeToEnroute } = enrouteTeamsSlice.actions;
+export const { spliceEnroute, pushEnroute } = enrouteTeamsSlice.actions;
 
 export default enrouteTeamsSlice.reducer;

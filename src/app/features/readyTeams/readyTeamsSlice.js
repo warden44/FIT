@@ -33,18 +33,26 @@ const readyTeamsSlice = createSlice({
   name: "readyTeams",
   initialState,
   reducers: {
-    spliceReady: (state, { payload }) => {
-      state.teams.splice(payload, 1);
+    spliceReady: (state, action) => {
+      state.teams.splice(action.payload, 1);
     },
-    pushReady: (state, { payload }) => {
-      state.teams.push(payload);
+    pushReady: {
+      reducer: (state, action) => {
+        state.teams.push(action.payload);
+      },
+      prepare: (value) => {
+        return {
+          payload: {
+            ...value,
+            currentList: "ready",
+          },
+        };
+      },
     },
-    changeToReady: (state) => {
-        state.teams[state.teams.length - 1].currentList = "ready";
-    }
   },
 });
 
-export const { spliceReady, pushReady, changeToReady } = readyTeamsSlice.actions;
+export const { spliceReady, pushReady } =
+  readyTeamsSlice.actions;
 
 export default readyTeamsSlice.reducer;

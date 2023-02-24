@@ -15,8 +15,9 @@ import {
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 import DropDownPicker from "react-native-dropdown-picker";
 import AppContext from "../../components/AppContext";
-import Enroute from "../../src/app/features/enrouteTeams/Enroute";
 import Ready from "../../src/app/features/readyTeams/Ready";
+import Enroute from "../../src/app/features/enrouteTeams/Enroute";
+import Roster from "../../src/app/features/rosterTeams/Roster";
 
 function PracticeTop(props) {
   const myContext = React.useContext(AppContext);
@@ -86,38 +87,7 @@ function PracticeTop(props) {
       />
     );
   };
-  const ReadyTeams = ({ item, index }) => {
-    return (
-      <DraxView
-        style={[styles.team, { borderColor: item.border_color }]}
-        animateSnapback={false}
-        draggingStyle={styles.dragging}
-        dragReleasedStyle={styles.dragReleased}
-        hoverDraggingStyle={styles.dragHover}
-        dragPayload={[index, item.currentList]}
-        longPressDelay={150}
-        receivingStyle={styles.receiving}
-        renderContent={({ viewState }) => {
-          const receivingDrag = viewState && viewState.receivingDrag;
-          const payload = receivingDrag && receivingDrag.payload;
-          return (
-            <View>
-              <Text style={styles.textStyle}>{item.name}</Text>
-            </View>
-          );
-        }}
-        key={index}
-        onReceiveDragDrop={(event) => {
-          myContext.moveTeam(
-            myContext.dragReadyList,
-            myContext.setDragReadyList,
-            event.dragged.payload,
-            "ready"
-          );
-        }}
-      />
-    );
-  };
+
 
   return (
     //header
@@ -348,7 +318,7 @@ function PracticeTop(props) {
             ))}
           </View>
         </View>
-        <DraxView
+        {/* <DraxView
           style={styles.enroute}
           onReceiveDragDrop={(event) => {
             myContext.moveTeam(
@@ -359,12 +329,6 @@ function PracticeTop(props) {
             );
           }}
         >
-          {/* <Text
-            style={{ fontSize: 20, fontWeight: "bold", alignSelf: "center" }}
-          >
-            Enroute
-          </Text> */}
-
           <View style={styles.departmentSelect}>
             <TouchableOpacity
               style={styles.departmentButton}
@@ -400,29 +364,11 @@ function PracticeTop(props) {
                 : []
             )}
           </View>
-        </DraxView>
+        </DraxView> */}
+        <Roster/>
         <Enroute/>
         <Ready/>
-        <DraxView
-          style={styles.ready}
-          onReceiveDragDrop={(event) => {
-            myContext.moveTeam(
-              myContext.dragReadyList,
-              myContext.setDragReadyList,
-              event.dragged.payload,
-              "ready"
-            );
-          }}
-        >
-          {/* <Text
-            style={{ fontSize: 20, fontWeight: "bold", alignSelf: "center" }}
-          >
-            Ready For Assignment
-          </Text> */}
-          {myContext.dragReadyList.map((item, index) =>
-            ReadyTeams({ item, index })
-          )}
-        </DraxView>
+
       </View>
     </View>
   );

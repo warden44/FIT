@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { spliceRoster, pushRoster } from "../rosterTeams/rosterTeamsSlice";
+import { spliceRoster, insertRoster } from "../rosterTeams/rosterTeamsSlice";
 import { spliceEnroute, pushEnroute } from "../enrouteTeams/enrouteTeamsSlice";
 import { spliceReady, pushReady } from "./readyTeamsSlice";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";

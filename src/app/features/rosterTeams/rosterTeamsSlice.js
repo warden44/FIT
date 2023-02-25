@@ -349,7 +349,7 @@ const rosterTeamsSlice = createSlice({
     spliceRoster: (state, action) => {
       state.teams.splice(action.payload, 1);
     },
-    pushRoster: {
+    insertRoster: {
       reducer: (state, action) => {
         state.teams.push(action.payload);
       },
@@ -365,6 +365,6 @@ const rosterTeamsSlice = createSlice({
   },
 });
 
-export const {spliceRoster, pushRoster } = rosterTeamsSlice.actions;
+export const {spliceRoster, insertRoster } = rosterTeamsSlice.actions;
 
 export default rosterTeamsSlice.reducer;

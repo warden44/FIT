@@ -177,7 +177,7 @@ function PracticeBottom(props) {
           <Timer></Timer>
         </View>
         <View style={styles.teamCharts}>
-          {Array(12).fill("").map((task, index) => (
+          {Array(12).fill().map((task, index) => (
             <TChart style={styles.tChart} key={index} tChartID={index} />
           ))}
         </View>

@@ -10,23 +10,30 @@ const tChartSlice = createSlice({
   initialState,
   reducers: {
     spliceTChart: (state, action) => {
-      state.teams.splice(action.payload);
+      state.teams.splice(action.payload, 1, "");
     },
     insertTChart: {
       reducer: (state, action) => {
-        state.teams.splice(action.payload[0], 1, action.payload[1]);
+        state.teams.splice(action.payload.toIndex, 1, action.payload.team);
       },
       prepare: (value) => {
         return {
           payload: {
             ...value,
-            currentList: "tChart",
+            team: {
+              ...value.team,
+              currentList: "tChartTeams",
+            },
           },
         };
       },
     },
+    moveTChart: (state, action) => {
+      state.teams.splice(action.payload.toIndex, 1, action.payload.team);
+      state.teams.splice(action.payload.fromIndex, 1, "")
+    },
   },
 });
 
-export const { spliceTChart, insertTChart } = tChartSlice.actions;
+export const { spliceTChart, insertTChart, moveTChart } = tChartSlice.actions;
 export default tChartSlice.reducer;

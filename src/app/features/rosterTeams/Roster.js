@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
-import { spliceRoster, pushRoster } from "./rosterTeamsSlice";
+import { spliceRoster, insertRoster } from "./rosterTeamsSlice";
 import { spliceEnroute, pushEnroute } from "../enrouteTeams/enrouteTeamsSlice";
 import { spliceReady, pushReady } from "../readyTeams/readyTeamsSlice";
+import { spliceTChart, insertTChart, moveTChart } from "../tChart/tChartSlice";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
@@ -11,6 +12,7 @@ export default function Roster() {
   const readyTeams = useSelector((state) => state.readyTeams.teams);
   const enrouteTeams = useSelector((state) => state.enrouteTeams.teams);
   const rosterTeams = useSelector((state) => state.rosterTeams.teams);
+  const tChartTeams = useSelector((state) => state.tChart.teams);
   const dispatch = useDispatch();
 
   const [department, setDepartment] = React.useState(3);
@@ -37,17 +39,6 @@ export default function Roster() {
           );
         }}
         key={index}
-        onReceiveDragDrop={(event) => {
-          let payload = event.dragged.payload;
-          if (payload[1] === "roster") {
-          } else if (payload[1] === "enroute") {
-            dispatch(pushRoster(enrouteTeams[payload[0]]));
-            dispatch(spliceRoster(payload[0]));
-          } else if (payload[1] === "ready") {
-            dispatch(pushRoster(readyTeams[payload[0]]));
-            dispatch(spliceRoster(payload[0]));
-          }
-        }}
       />
     );
   };
@@ -58,11 +49,14 @@ export default function Roster() {
         let payload = event.dragged.payload;
         if (payload[1] === "roster") {
         } else if (payload[1] === "enroute") {
-          dispatch(pushRoster(enrouteTeams[payload[0]]));
+          dispatch(insertRoster(enrouteTeams[payload[0]]));
           dispatch(spliceEnroute(payload[0]));
         } else if (payload[1] === "ready") {
-          dispatch(pushRoster(readyTeams[payload[0]]));
+          dispatch(insertRoster(readyTeams[payload[0]]));
           dispatch(spliceReady(payload[0]));
+        } else if (payload[1] === "tChartTeams") {
+          dispatch(insertRoster(tChartTeams[payload[0]]));
+          dispatch(spliceTChart(payload[0]));
         }
       }}
     >
@@ -70,9 +64,7 @@ export default function Roster() {
         <TouchableOpacity
           style={styles.departmentButton}
           onPress={() =>
-            setDepartment(
-              department === 1 ? numberOfTeams : department - 1
-            )
+            setDepartment(department === 1 ? numberOfTeams : department - 1)
           }
         >
           <Text>{"<"}</Text>
@@ -84,9 +76,7 @@ export default function Roster() {
         <TouchableOpacity
           style={styles.departmentButton}
           onPress={() =>
-            setDepartment(
-              numberOfTeams === department ? 1 : department + 1
-            )
+            setDepartment(numberOfTeams === department ? 1 : department + 1)
           }
         >
           <Text>{">"}</Text>

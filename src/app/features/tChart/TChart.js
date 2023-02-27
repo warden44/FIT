@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { spliceRoster, insertRoster } from "../rosterTeams/rosterTeamsSlice";
 import { spliceEnroute, pushEnroute } from "../enrouteTeams/enrouteTeamsSlice";
 import { spliceReady, pushReady } from "../readyTeams/readyTeamsSlice";
-import { spliceTChart, insertTChart } from "./tChartSlice";
+import { spliceTChart, insertTChart, moveTChart } from "./tChartSlice";
 
 import * as React from "react";
 import {
@@ -85,19 +85,33 @@ function TChart(props) {
       style={[styles.tChart, { opacity: opac, borderColor: glow }]}
       onReceiveDragDrop={(event) => {
         let payload = event.dragged.payload;
-        if (payload[1] === "roster") {
-          dispatch(insertTChart([tChartID, rosterTeams[payload[0]]]));
+
+        if (tChartTeams[tChartID]) {
+        } else if (payload[1] === "roster") {
+          dispatch(
+            insertTChart({ toIndex: tChartID, team: rosterTeams[payload[0]] })
+          );
           dispatch(spliceRoster(payload[0]));
         } else if (payload[1] === "enroute") {
-          dispatch(insertTChart([tChartID, enrouteTeams[payload[0]]]));
+          dispatch(
+            insertTChart({ toIndex: tChartID, team: enrouteTeams[payload[0]] })
+          );
           dispatch(spliceEnroute(payload[0]));
         } else if (payload[1] === "ready") {
-          dispatch(insertTChart([tChartID, readyTeams[payload[0]]]));
+          dispatch(
+            insertTChart({ toIndex: tChartID, team: readyTeams[payload[0]] })
+          );
           dispatch(spliceReady(payload[0]));
-        } else if (payload[1] === "tChart" && tChartTeams[tChartID]) {
-          dispatch(insertTChart([tChartID, tChartTeams[payload[0]]]));
-          dispatch(spliceTChart(payload[0]));
+        } else if (payload[1] === "tChartTeams" && !tChartTeams[tChartID]) {
+          dispatch(
+            moveTChart({
+              toIndex: tChartID,
+              fromIndex: payload[0],
+              team: tChartTeams[payload[0]],
+            })
+          );
         }
+        console.log("These are the teams" + JSON.stringify(team));
       }}
     >
       {TChartSlotDrax(task, 1, 2)}

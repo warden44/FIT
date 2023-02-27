@@ -2,8 +2,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { spliceRoster, insertRoster } from "../rosterTeams/rosterTeamsSlice";
 import { spliceEnroute, pushEnroute } from "./enrouteTeamsSlice";
 import { spliceReady, pushReady } from "../readyTeams/readyTeamsSlice";
-import { DraxProvider, DraxView, DraxList } from "react-native-drax";
+import { spliceTChart, insertTChart, moveTChart } from "../tChart/tChartSlice";
 
+import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 
@@ -11,6 +12,7 @@ export default function Enroute() {
   const readyTeams = useSelector((state) => state.readyTeams.teams);
   const enrouteTeams = useSelector((state) => state.enrouteTeams.teams);
   const rosterTeams = useSelector((state) => state.rosterTeams.teams);
+  const tChartTeams = useSelector((state) => state.tChart.teams)
   const dispatch = useDispatch();
 
   const EnrouteDrax = ({ item, index }) => {
@@ -34,17 +36,6 @@ export default function Enroute() {
           );
         }}
         key={index}
-        onReceiveDragDrop={(event) => {
-          let payload = event.dragged.payload;
-          if (payload[1] === "enroute") {
-          } else if (payload[1] === "roster") {
-            dispatch(pushEnroute(rosterTeams[payload[0]]));
-            dispatch(spliceRoster(payload[0]));
-          } else if (payload[1] === "ready") {
-            dispatch(pushEnroute(readyTeams[payload[0]]));
-            dispatch(spliceReady(payload[0]));
-          }
-        }}
       />
     );
   };
@@ -53,6 +44,7 @@ export default function Enroute() {
       style={styles.enroute}
       onReceiveDragDrop={(event) => {
         let payload = event.dragged.payload;
+
         if (payload[1] === "enroute") {
         } else if (payload[1] === "roster") {
           dispatch(pushEnroute(rosterTeams[payload[0]]));
@@ -60,6 +52,9 @@ export default function Enroute() {
         } else if (payload[1] === "ready") {
           dispatch(pushEnroute(readyTeams[payload[0]]));
           dispatch(spliceReady(payload[0]));
+        } else if (payload[1] === "tChartTeams") {
+          dispatch(pushEnroute(tChartTeams[payload[0]]));
+          dispatch(spliceTChart(payload[0]));
         }
       }}
     >

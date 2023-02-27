@@ -9,7 +9,8 @@ import {
   View,
 } from "react-native";
 import Timer from "../../components/Timer";
-import TChart from "../../components/TChart";
+// import TChart from "../../components/TChart";
+import TChart from "../../src/app/features/tChart/TChart";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 import AppContext from "../../components/AppContext";
@@ -176,8 +177,8 @@ function PracticeBottom(props) {
           <Timer></Timer>
         </View>
         <View style={styles.teamCharts}>
-          {myContext.currentTaskList.map((task, index) => (
-            <TChart style={styles.tChart} key={index} tChartId={index} />
+          {Array(12).fill("").map((task, index) => (
+            <TChart style={styles.tChart} key={index} tChartID={index} />
           ))}
         </View>
       </View>

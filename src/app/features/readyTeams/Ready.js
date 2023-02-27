@@ -35,7 +35,6 @@ export default function Ready() {
         }}
         key={index}
         onReceiveDragDrop={(event) => {
-          let payload = event.dragged.payload;
           if (payload[1] === "ready") {
           } else if (payload[1] === "roster") {
             dispatch(pushReady(rosterTeams[payload[0]]));

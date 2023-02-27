@@ -4,6 +4,12 @@
 //when adding task to tchart, set new task attribute "currentTChart" equal to tChartID
 //when receiving task from tChart, remove task from list index of the tChart or currentTChart, and set currentTChart to 12
 
+import { useSelector, useDispatch } from "react-redux";
+import { spliceRoster, insertRoster } from "../rosterTeams/rosterTeamsSlice";
+import { spliceEnroute, pushEnroute } from "../enrouteTeams/enrouteTeamsSlice";
+import { spliceReady, pushReady } from "../readyTeams/readyTeamsSlice";
+import { spliceTChart, insertTChart } from "./tChartSlice";
+
 import * as React from "react";
 import {
   Dimensions,
@@ -13,14 +19,19 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Timer from "./Timer";
+import Timer from "../../../../components/Timer";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
-import AppContext from "./AppContext";
 
 function TChart(props) {
-
   var tChartID = props.tChartID;
+  const rosterTeams = useSelector((state) => state.rosterTeams.teams);
+  const enrouteTeams = useSelector((state) => state.enrouteTeams.teams);
+  const readyTeams = useSelector((state) => state.readyTeams.teams);
+  const tChartTeams = useSelector((state) => state.tChart.teams);
+  const tChartTasks = useSelector((state) => state.tChart.tasks);
+  const dispatch = useDispatch();
+
   let task = tChartTasks[tChartID]; //this is basically the index
 
   let team = tChartTeams[tChartID];
@@ -51,7 +62,7 @@ function TChart(props) {
         draggingStyle={styles.dragging}
         dragReleasedStyle={styles.dragReleased}
         hoverDraggingStyle={styles.dragHover}
-        dragPayload={[item.tChart, item.currentList]}
+        dragPayload={[tChartID, item.currentList]}
         longPressDelay={150}
         receivingStyle={styles.receiving}
         renderContent={({ viewState }) => {
@@ -73,41 +84,19 @@ function TChart(props) {
     <DraxView
       style={[styles.tChart, { opacity: opac, borderColor: glow }]}
       onReceiveDragDrop={(event) => {
-        if (!myContext.currentTeamList[tChartID]) {
-          myContext.moveItem(
-            myContext.currentTaskList,
-            myContext.setCurrentTaskList,
-            event.dragged.payload,
-            "currentTask",
-            tChartID
-          );
-        } else {
-          myContext.moveItem(
-            myContext.currentTaskList,
-            myContext.setCurrentTaskList,
-            event.dragged.payload,
-            "currentTask",
-            tChartID,
-            "pushReplace"
-          );
-        }
-        if (!myContext.currentTeamList[tChartID]) {
-          myContext.moveTeam(
-            myContext.currentTeamList,
-            myContext.setCurrentTeamList,
-            event.dragged.payload,
-            "currentTeam",
-            tChartID
-          );
-        } else {
-          myContext.moveTeam(
-            myContext.currentTeamList,
-            myContext.setCurrentTeamList,
-            event.dragged.payload,
-            "currentTeam",
-            tChartID,
-            "pushReplace"
-          );
+        let payload = event.dragged.payload;
+        if (payload[1] === "roster") {
+          dispatch(insertTChart([tChartID, rosterTeams[payload[0]]]));
+          dispatch(spliceRoster(payload[0]));
+        } else if (payload[1] === "enroute") {
+          dispatch(insertTChart([tChartID, enrouteTeams[payload[0]]]));
+          dispatch(spliceEnroute(payload[0]));
+        } else if (payload[1] === "ready") {
+          dispatch(insertTChart([tChartID, readyTeams[payload[0]]]));
+          dispatch(spliceReady(payload[0]));
+        } else if (payload[1] === "tChart" && tChartTeams[tChartID]) {
+          dispatch(insertTChart([tChartID, tChartTeams[payload[0]]]));
+          dispatch(spliceTChart(payload[0]));
         }
       }}
     >

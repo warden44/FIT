@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  items: [],
+  teams: ["", "", "", "", "", "", "", "", "", "", "", ""],
+  tasks: ["", "", "", "", "", "", "", "", "", "", "", ""],
 };
 
 const tChartSlice = createSlice({
@@ -9,23 +10,23 @@ const tChartSlice = createSlice({
   initialState,
   reducers: {
     spliceTChart: (state, action) => {
-      state.items.splice(action.payload);
+      state.teams.splice(action.payload);
     },
     insertTChart: {
       reducer: (state, action) => {
-        state.items.splice(action.payload.tChartID, 0, action.payload);
+        state.teams.splice(action.payload[0], 1, action.payload[1]);
       },
       prepare: (value) => {
         return {
-            payload: {
-                ...value,
-                currentList: "tChart",
-            }
-        }
-      }
+          payload: {
+            ...value,
+            currentList: "tChart",
+          },
+        };
+      },
     },
   },
 });
 
-export const {} = tChartSlice.actions;
+export const { spliceTChart, insertTChart } = tChartSlice.actions;
 export default tChartSlice.reducer;

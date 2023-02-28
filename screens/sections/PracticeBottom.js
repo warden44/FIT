@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 import Timer from "../../components/Timer";
-// import TChart from "../../components/TChart";
+import Tasks from "../../src/app/features/tasks/Tasks";
 import TChart from "../../src/app/features/tChart/TChart";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
@@ -94,7 +94,7 @@ function PracticeBottom(props) {
 
   return (
     <View style={styles.container}>
-      <DraxView
+      {/* <DraxView
         style={styles.todo}
         onReceiveDragDrop={(event) => {
           myContext.moveItem(
@@ -108,7 +108,8 @@ function PracticeBottom(props) {
         {myContext.dragTaskList.map((item, index) =>
           item.border_color === filter ? TodoTasks({ item, index }) : []
         )}
-      </DraxView>
+      </DraxView> */}
+      <Tasks/>
       <View style={[styles.switchTasks]}>
         <TouchableOpacity
           style={[styles.switchButton, { backgroundColor: filter }]}

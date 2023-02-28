@@ -1,14 +1,16 @@
-//How to get tchart components to work
-//differentiate each tchart component through props.tChartID
-//create global list of lists corresponding to the tcharts
-//when adding task to tchart, set new task attribute "currentTChart" equal to tChartID
-//when receiving task from tChart, remove task from list index of the tChart or currentTChart, and set currentTChart to 12
-
 import { useSelector, useDispatch } from "react-redux";
 import { spliceRoster, insertRoster } from "../rosterTeams/rosterTeamsSlice";
 import { spliceEnroute, pushEnroute } from "../enrouteTeams/enrouteTeamsSlice";
 import { spliceReady, pushReady } from "../readyTeams/readyTeamsSlice";
-import { spliceTChart, insertTChart, moveTChart } from "./tChartSlice";
+import { spliceTask, pushTask } from "../tasks/tasksSlice";
+import {
+  spliceTChartTeam,
+  spliceTChartTask,
+  insertTChartTeam,
+  insertTChartTask,
+  moveTChartTeam,
+  moveTChartTask,
+} from "./tChartSlice";
 
 import * as React from "react";
 import {
@@ -28,6 +30,7 @@ function TChart(props) {
   const rosterTeams = useSelector((state) => state.rosterTeams.teams);
   const enrouteTeams = useSelector((state) => state.enrouteTeams.teams);
   const readyTeams = useSelector((state) => state.readyTeams.teams);
+  const tasks = useSelector((state) => state.tasks.tasks);
   const tChartTeams = useSelector((state) => state.tChart.teams);
   const tChartTasks = useSelector((state) => state.tChart.tasks);
   const dispatch = useDispatch();
@@ -89,29 +92,38 @@ function TChart(props) {
         if (tChartTeams[tChartID]) {
         } else if (payload[1] === "roster") {
           dispatch(
-            insertTChart({ toIndex: tChartID, team: rosterTeams[payload[0]] })
+            insertTChartTeam({ toIndex: tChartID, team: rosterTeams[payload[0]] })
           );
           dispatch(spliceRoster(payload[0]));
         } else if (payload[1] === "enroute") {
           dispatch(
-            insertTChart({ toIndex: tChartID, team: enrouteTeams[payload[0]] })
+            insertTChartTeam({ toIndex: tChartID, team: enrouteTeams[payload[0]] })
           );
           dispatch(spliceEnroute(payload[0]));
         } else if (payload[1] === "ready") {
           dispatch(
-            insertTChart({ toIndex: tChartID, team: readyTeams[payload[0]] })
+            insertTChartTeam({ toIndex: tChartID, team: readyTeams[payload[0]] })
           );
           dispatch(spliceReady(payload[0]));
+        } else if (payload[1] === "task") {
+          dispatch(
+            insertTChartTask({ toIndex: tChartID, task: tasks[payload[0]] })
+          );
+          dispatch(spliceTask(payload[0]));
         } else if (payload[1] === "tChartTeams" && !tChartTeams[tChartID]) {
           dispatch(
-            moveTChart({
+            moveTChartTeam({
               toIndex: tChartID,
               fromIndex: payload[0],
               team: tChartTeams[payload[0]],
             })
           );
         }
-        console.log("These are the teams" + JSON.stringify(team));
+        console.log("tasks 0 " + JSON.stringify(tasks[0]));
+        console.log("tasks 1 " + JSON.stringify(tasks[1]));
+        console.log("tChartTask 0" + JSON.stringify(tChartTasks[0]));
+        console.log("team 0" + JSON.stringify(tChartTeams[0]));
+
       }}
     >
       {TChartSlotDrax(task, 1, 2)}

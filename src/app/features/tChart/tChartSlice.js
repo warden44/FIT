@@ -51,7 +51,7 @@ const tChartSlice = createSlice({
       state.teams.splice(action.payload.toIndex, 1, action.payload.team);
       state.teams.splice(action.payload.fromIndex, 1, "")
     },
-    moveTChartTasks: (state, action) => {
+    moveTChartTask: (state, action) => {
       state.tasks.splice(action.payload.toIndex, 1, action.payload.task);
       state.tasks.splice(action.payload.fromIndex, 1, "")
     },

@@ -1,8 +1,14 @@
 import { useSelector, useDispatch } from "react-redux";
 import { spliceTask, pushTask } from "./tasksSlice";
 import { spliceReady, pushReady } from "../readyTeams/readyTeamsSlice";
-import { spliceTChart, insertTChart, moveTChart } from "../tChart/tChartSlice";
-
+import {
+  spliceTChartTeam,
+  spliceTChartTask,
+  insertTChartTeam,
+  insertTChartTask,
+  moveTChartTeam,
+  moveTChartTasks,
+} from "../tChart/tChartSlice";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
@@ -39,6 +45,20 @@ const Tasks = () => {
       />
     );
   };
+
+  const checkDoubleTasks = (id) => {
+    let count = 0;
+    tChartTasks.forEach((task) => {
+      if (task.id === id) {
+        count++;
+      }
+    });
+    if (count > 1) {
+      return true;
+    } else {
+      return false;
+    }
+  };
   return (
     <DraxView
       style={styles.tasksContainer}
@@ -46,8 +66,13 @@ const Tasks = () => {
         let payload = event.dragged.payload;
 
         if (payload[1] === "task") {
-        } else if (payload[1] === "TChartTasks") {
-          dispatch(pushTask(tChartTasks - payload[0]));
+        } else if (payload[1] === "tChartTasks") {
+            console.log(checkDoubleTasks(tChartTasks[payload[0]].id));
+            console.log(tChartTasks[payload[0]].id);
+            if (!checkDoubleTasks(tChartTasks[payload[0]].id)) {
+            dispatch(pushTask(tChartTasks[payload[0]]));
+          }
+          dispatch(spliceTChartTask(payload[0]));
         }
       }}
     >

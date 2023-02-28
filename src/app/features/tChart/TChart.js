@@ -56,10 +56,16 @@ function TChart(props) {
         style={[
           styles.tChartSection,
           {
-            borderColor: item.border_color,
             borderBottomWidth: bottomBorder,
             borderTopWidth: topBorder,
           },
+          { borderColor: "black" },
+
+          item.currentList === "tChartTasks"
+            ? { borderColor: "red" }
+            : item.currentList === "tChartTeams"
+            ? { borderColor: "green" }
+            : { borderColor: "black" },
         ]}
         animateSnapback={false}
         draggingStyle={styles.dragging}
@@ -92,24 +98,28 @@ function TChart(props) {
         if (tChartTeams[tChartID]) {
         } else if (payload[1] === "roster") {
           dispatch(
-            insertTChartTeam({ toIndex: tChartID, team: rosterTeams[payload[0]] })
+            insertTChartTeam({
+              toIndex: tChartID,
+              team: rosterTeams[payload[0]],
+            })
           );
           dispatch(spliceRoster(payload[0]));
         } else if (payload[1] === "enroute") {
           dispatch(
-            insertTChartTeam({ toIndex: tChartID, team: enrouteTeams[payload[0]] })
+            insertTChartTeam({
+              toIndex: tChartID,
+              team: enrouteTeams[payload[0]],
+            })
           );
           dispatch(spliceEnroute(payload[0]));
         } else if (payload[1] === "ready") {
           dispatch(
-            insertTChartTeam({ toIndex: tChartID, team: readyTeams[payload[0]] })
+            insertTChartTeam({
+              toIndex: tChartID,
+              team: readyTeams[payload[0]],
+            })
           );
           dispatch(spliceReady(payload[0]));
-        } else if (payload[1] === "task") {
-          dispatch(
-            insertTChartTask({ toIndex: tChartID, task: tasks[payload[0]] })
-          );
-          dispatch(spliceTask(payload[0]));
         } else if (payload[1] === "tChartTeams" && !tChartTeams[tChartID]) {
           dispatch(
             moveTChartTeam({
@@ -119,11 +129,21 @@ function TChart(props) {
             })
           );
         }
-        console.log("tasks 0 " + JSON.stringify(tasks[0]));
-        console.log("tasks 1 " + JSON.stringify(tasks[1]));
-        console.log("tChartTask 0" + JSON.stringify(tChartTasks[0]));
-        console.log("team 0" + JSON.stringify(tChartTeams[0]));
-
+        if (tChartTasks[tChartID]) {
+        } else if (payload[1] === "task") {
+          dispatch(
+            insertTChartTask({ toIndex: tChartID, task: tasks[payload[0]] })
+          );
+          dispatch(spliceTask(payload[0]));
+        } else if (payload[1] === "tChartTasks" && !tChartTasks[tChartID]) {
+          dispatch(
+            moveTChartTask({
+              toIndex: tChartID,
+              fromIndex: payload[0],
+              task: tChartTasks[payload[0]],
+            })
+          );
+        }
       }}
     >
       {TChartSlotDrax(task, 1, 2)}

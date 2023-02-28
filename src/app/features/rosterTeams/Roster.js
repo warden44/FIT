@@ -2,9 +2,16 @@ import { useSelector, useDispatch } from "react-redux";
 import { spliceRoster, insertRoster } from "./rosterTeamsSlice";
 import { spliceEnroute, pushEnroute } from "../enrouteTeams/enrouteTeamsSlice";
 import { spliceReady, pushReady } from "../readyTeams/readyTeamsSlice";
-import { spliceTChart, insertTChart, moveTChart } from "../tChart/tChartSlice";
-import { DraxProvider, DraxView, DraxList } from "react-native-drax";
+import {
+  spliceTChartTeam,
+  spliceTChartTask,
+  insertTChartTeam,
+  insertTChartTask,
+  moveTChartTeam,
+  moveTChartTask,
+} from "../tChart/tChartSlice";
 
+import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 
@@ -56,7 +63,7 @@ export default function Roster() {
           dispatch(spliceReady(payload[0]));
         } else if (payload[1] === "tChartTeams") {
           dispatch(insertRoster(tChartTeams[payload[0]]));
-          dispatch(spliceTChart(payload[0]));
+          dispatch(spliceTChartTeam(payload[0]));
         }
       }}
     >

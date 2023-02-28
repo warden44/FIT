@@ -243,7 +243,7 @@ const tasksSlice = createSlice({
       state.tasks[action.payload].border_color = "yellow";
     },
     pushTask: (state, action) => {
-      state.tasks[action.payload].border_color = "gray";
+      state.tasks[action.payload.id - 1].border_color = "gray";
     },
   },
 });

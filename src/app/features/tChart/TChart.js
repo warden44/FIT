@@ -22,7 +22,8 @@ import {
   View,
 } from "react-native";
 import Timer from "../../../../components/Timer";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import TChartEmptySlot from "../../../../components/TChartEmptySlot";
+import { GestureHandlerRootView, TextInput } from "react-native-gesture-handler";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 
 function TChart(props) {
@@ -50,15 +51,11 @@ function TChart(props) {
     glow = "black";
   }
 
-  const TChartSlotDrax = (item, bottomBorder = 2, topBorder = 2) => {
+  const TChartSlotDrax = (item) => {
     return (
       <DraxView
         style={[
           styles.tChartSection,
-          {
-            borderBottomWidth: bottomBorder,
-            borderTopWidth: topBorder,
-          },
           { borderColor: "black" },
 
           item.currentList === "tChartTasks"
@@ -88,6 +85,7 @@ function TChart(props) {
       />
     );
   };
+
 
   return (
     <DraxView
@@ -146,8 +144,10 @@ function TChart(props) {
         }
       }}
     >
-      {TChartSlotDrax(task, 1, 2)}
-      {TChartSlotDrax(team, 2, 1)}
+      {/* {team ? TChartSlotDrax(team) : TChartEmptySlot()}
+      {task ? TChartSlotDrax(task) : TChartEmptySlot()} */}
+      {TChartSlotDrax(team)}
+      {TChartSlotDrax(task)}
 
       <View style={styles.tChartTimer}>
         <Timer size={"smallTimer"}></Timer>
@@ -176,14 +176,13 @@ const styles = StyleSheet.create({
     backgroundColor: "lightyellow",
     borderWidth: 1,
     margin: 5,
-    padding: 5,
-    paddingBottom: 0,
+    padding: 2,
   },
   tChartSection: {
     textAlign: "center",
     flex: 1,
     borderWidth: 2,
-    paddingBottom: 0,
+    margin: 1,
   },
   tChartTimer: {
     paddingLeft: 5,

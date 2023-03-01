@@ -67,8 +67,6 @@ const Tasks = () => {
 
         if (payload[1] === "task") {
         } else if (payload[1] === "tChartTasks") {
-            console.log(checkDoubleTasks(tChartTasks[payload[0]].id));
-            console.log(tChartTasks[payload[0]].id);
             if (!checkDoubleTasks(tChartTasks[payload[0]].id)) {
             dispatch(pushTask(tChartTasks[payload[0]]));
           }

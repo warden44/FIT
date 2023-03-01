@@ -5,7 +5,7 @@ function Timer(props) {
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [hours, setHours] = useState(0);
-  const [increment, setIncrement] = useState(0);
+  const [increment, setIncrement] = useState(props.size === "smallTimer" ? 0 : 1);
 
   //getting current time and dates to mark date of incident
   var date = new Date().getDate(); //To get the Current Date

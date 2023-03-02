@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
+import CheckListItem from "../../components/CheckListItem";
+
 import { useSelector, useDispatch } from "react-redux";
 import { pushReady } from "../../src/app/features/readyTeams/readyTeamsSlice";
 import { pushEnroute } from "../../src/app/features/enrouteTeams/enrouteTeamsSlice";
 import { insertRoster } from "../../src/app/features/rosterTeams/rosterTeamsSlice";
 
 import TeamList from "../../components/TeamList";
-
 
 function PracticeTop(props) {
   const [alarm, setAlarm] = useState("");
@@ -32,7 +33,6 @@ function PracticeTop(props) {
   const rosterTeams = useSelector((state) => state.rosterTeams.teams);
   const enrouteTeams = useSelector((state) => state.enrouteTeams.teams);
   const readyTeams = useSelector((state) => state.readyTeams.teams);
-  const tChartTeams = useSelector((state) => state.tChart.teams);
 
   return (
     //header
@@ -47,221 +47,42 @@ function PracticeTop(props) {
         {/* Initial Size Up Buttons */}
         <View style={styles.topButtons}>
           <Text style={styles.groupingText}>Initial Size-Up:</Text>
-
-          {/* Working Fire Notifications */}
-          <View style={styles.wrapper}>
-            <TouchableOpacity
-              style={styles.check}
-              onPress={() =>
-                checkAlarm === true
-                  ? (SetAlarmCheck(false), setAlarm("none"))
-                  : SetAlarmCheck(true)
-              }
-            >
-              <View style={styles.outterCheck}>
-                {checkAlarm === true && <View style={styles.innerCheck} />}
-              </View>
-              <Text style={styles.bold}>Working Fire Notifications:</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={[styles.wrapper, styles.indent]}>
-            {["1st alarm", "2nd alarm", "3rd alarm"].map((alarms) => (
-              <TouchableOpacity
-                key={alarms}
-                style={styles.button}
-                onPress={() =>
-                  alarm === alarms
-                    ? (setAlarm("none"), SetAlarmCheck(false))
-                    : (setAlarm(alarms), SetAlarmCheck(true))
-                }
-              >
-                <View style={styles.outterButton}>
-                  {alarm === alarms && <View style={styles.innerButton} />}
-                </View>
-                <Text style={[styles.font, styles.bold]}>{alarms}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-          {/* On Scene Report */}
-          <View style={styles.wrapper}>
-            <TouchableOpacity
-              style={styles.check}
-              onPress={() =>
-                checkReport === true
-                  ? (setReportCheck(false), setReport("none"))
-                  : setReportCheck(true)
-              }
-            >
-              <View style={styles.outterCheck}>
-                {checkReport === true && <View style={styles.innerCheck} />}
-              </View>
-              <Text>On Scene Report:</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={[styles.wrapper, styles.indent]}>
-            {[
+          <CheckListItem
+            title={"Working Fire Notifications:"}
+            checkList={["1st alarm", "2nd alarm", "3rd alarm"]}
+            bold={true}
+            indent={true}
+          />
+          <CheckListItem
+            title={"On Scene Report:"}
+            checkList={[
               "Location / Building Type / Smoke and Fire Conditions / Threats to Exposures",
-            ].map((reports) => (
-              <TouchableOpacity
-                key={reports}
-                style={styles.button}
-                onPress={() =>
-                  report === reports
-                    ? (setReport("none"), setReportCheck(false))
-                    : (setReport(reports), setReportCheck(true))
-                }
-              >
-                <View style={styles.outterButton}>
-                  {report === reports && <View style={styles.innerButton} />}
-                </View>
-                <Text style={styles.font}>{reports}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-
-          {/* Declare Strategy */}
-          <View style={styles.wrapper}>
-            <TouchableOpacity
-              style={styles.check}
-              onPress={() =>
-                checkStrategy === true
-                  ? (setStrategyCheck(false), setStrategy("none"))
-                  : setStrategyCheck(true)
-              }
-            >
-              <View style={styles.outterCheck}>
-                {checkStrategy === true && <View style={styles.innerCheck} />}
-              </View>
-              <Text>Declare Strategy:</Text>
-            </TouchableOpacity>
-
-            {["Offensive", "Defensive"].map((choice) => (
-              <TouchableOpacity
-                key={choice}
-                style={styles.button}
-                onPress={() =>
-                  strategy === choice
-                    ? (setStrategy("none"), setStrategyCheck(false))
-                    : (setStrategy(choice), setStrategyCheck(true))
-                }
-              >
-                <View style={styles.outterButton}>
-                  {strategy === choice && <View style={styles.innerButton} />}
-                </View>
-                <Text style={styles.font}>{choice}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-
-          {/* Declare Mode */}
-          <View style={styles.wrapper}>
-            <TouchableOpacity
-              style={styles.check}
-              onPress={() =>
-                checkMode === true
-                  ? (setCheckMode(false), setMode("none"))
-                  : setCheckMode(true)
-              }
-            >
-              <View style={styles.outterCheck}>
-                {checkMode === true && <View style={styles.innerCheck} />}
-              </View>
-              <Text>Declare Mode:</Text>
-            </TouchableOpacity>
-
-            {["Investigative", "Fast Action", "Command"].map((choice) => (
-              <TouchableOpacity
-                key={choice}
-                style={styles.button}
-                onPress={() =>
-                  mode === choice
-                    ? (setMode("none"), setCheckMode(false))
-                    : (setMode(choice), setCheckMode(true))
-                }
-              >
-                <View style={styles.outterButton}>
-                  {mode === choice && <View style={styles.innerButton} />}
-                </View>
-                <Text style={styles.font}>{choice}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-
-          {/* Establish Command */}
-          <View style={styles.wrapper}>
-            <TouchableOpacity
-              style={styles.check}
-              onPress={() =>
-                checkCommand === true
-                  ? (setCheckCommand(false), setCommand("none"))
-                  : setCheckCommand(true)
-              }
-            >
-              <View style={styles.outterCheck}>
-                {checkCommand === true && <View style={styles.innerCheck} />}
-              </View>
-              <Text>Establish Command:</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={[styles.wrapper, styles.indent]}>
-            {[
+            ]}
+            indent={true}
+          />
+          <CheckListItem
+            title={"Declare Strategy:"}
+            checkList={["Offensive", "Defensive"]}
+          />
+          <CheckListItem
+            title={"Declare Mode:"}
+            checkList={["Investigative", "Fast Action", "Command"]}
+          />
+          <CheckListItem
+            title={"Establish Command:"}
+            checkList={[
               'Name / Incident Command / Designated "A" Side / Command Post Location',
-            ].map((choice) => (
-              <TouchableOpacity
-                key={choice}
-                style={styles.button}
-                onPress={() =>
-                  command === choice
-                    ? (setCommand("none"), setCheckCommand(false))
-                    : (setCommand(choice), setCheckCommand(true))
-                }
-              >
-                <View style={styles.outterButton}>
-                  {command === choice && <View style={styles.innerButton} />}
-                </View>
-                <Text style={styles.font}>{choice}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-
-          {/* Designate Accountability Location */}
-          <View style={styles.wrapper}>
-            <TouchableOpacity
-              style={styles.check}
-              onPress={() =>
-                checkLocation === true
-                  ? (setCheckLocation(false), setLocation("none"))
-                  : setCheckLocation(true)
-              }
-            >
-              <View style={styles.outterCheck}>
-                {checkLocation === true && <View style={styles.innerCheck} />}
-              </View>
-              <Text>Designate Accountability Location:</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={[styles.wrapper, styles.indent]}>
-            {[
+            ]}
+            indent={true}
+          />
+          <CheckListItem
+            title={"Designate Accountability Location:"}
+            checkList={[
               "Initial Operation / Urgent Needs / Instruction to Incoming Units",
-            ].map((choice) => (
-              <TouchableOpacity
-                key={choice}
-                style={styles.button}
-                onPress={() =>
-                  location === choice
-                    ? (setLocation("none"), setCheckLocation(false))
-                    : (setLocation(choice), setCheckLocation(true))
-                }
-              >
-                <View style={styles.outterButton}>
-                  {location === choice && <View style={styles.innerButton} />}
-                </View>
-                <Text style={styles.font}>{choice}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+            ]}
+            indent={true}
+          />
+
         </View>
 
         <TeamList
@@ -319,7 +140,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 30,
     top: 10,
-  },  
+  },
   indent: {
     left: 20,
   },

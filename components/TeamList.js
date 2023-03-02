@@ -27,6 +27,7 @@ const TeamList = (props) => {
 
   return (
     <DraxView
+    on
       style={styles.container}
       onReceiveDragDrop={(event) => {
         let payload = event.dragged.payload;

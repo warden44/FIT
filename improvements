@@ -1,5 +1,9 @@
 //Things to improve
 
+//onpress and onLongPress workarounds
+there is an onTouchStart and onTouchEnd, you could start timer define a touch
+there is also an onTouchMove, maybe you could see do a long press by making sure the item isnt moving
+
 //For using slices
 You can change everything from the moveItem and moveTeam functions into the reducers of the lists. The onRecieveDragDrop fucntion would need to know the from list and to list. The from list comes from payload, to list will be hard coded into the component or set as a parameter if its an actual component. Can we just put the reducer function to remove item from the from list in the payload?
 

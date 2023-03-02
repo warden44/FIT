@@ -1,22 +1,14 @@
+import React from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { DraxView } from "react-native-drax";
+
 import DraxItem from "./DraxItem";
 
 import { useSelector, useDispatch } from "react-redux";
-import {
-  spliceRoster,
-  insertRoster,
-} from "../src/app/features/rosterTeams/rosterTeamsSlice";
-import {
-  spliceEnroute,
-  pushEnroute,
-} from "../src/app/features/enrouteTeams/enrouteTeamsSlice";
-import {
-  spliceReady,
-  pushReady,
-} from "../src/app/features/readyTeams/readyTeamsSlice";
+import { spliceRoster } from "../src/app/features/rosterTeams/rosterTeamsSlice";
+import { spliceEnroute } from "../src/app/features/enrouteTeams/enrouteTeamsSlice";
+import { spliceReady } from "../src/app/features/readyTeams/readyTeamsSlice";
 import { spliceTChartTeam } from "../src/app/features/tChart/tChartSlice";
-import { DraxProvider, DraxView, DraxList } from "react-native-drax";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import React from "react";
 
 const TeamList = (props) => {
   const rosterTeams = useSelector((state) => state.rosterTeams.teams);
@@ -30,7 +22,7 @@ const TeamList = (props) => {
   const push = props.push;
   const pagination = props.pagination;
 
-  const [department, setDepartment] = React.useState(3);
+  const [department, setDepartment] = React.useState(3); //Pagination state
   const numberOfTeams = 7;
 
   return (
@@ -39,6 +31,7 @@ const TeamList = (props) => {
       onReceiveDragDrop={(event) => {
         let payload = event.dragged.payload;
 
+        //if not being dropped on itself, figure out where its coming from, then copy to list and remove from old list
         if (payload[1] === listName) {
         } else if (payload[1] === "roster") {
           dispatch(push(rosterTeams[payload[0]]));
@@ -57,45 +50,48 @@ const TeamList = (props) => {
     >
       <View style={styles.title}>
         <Text style={styles.titleText}>{title}</Text>
-        {pagination &&
-        <View style={styles.departmentSelect}>
-          <TouchableOpacity
-            style={styles.departmentButton}
-            onPress={() =>
-              setDepartment(department === 1 ? numberOfTeams : department - 1)
-            }
-          >
-            <Text>{"<"}</Text>
-          </TouchableOpacity>
 
-          <View style={styles.departmentButton}>
-            <Text>{department}</Text>
+        {/* if pagination is set to true, add button */}
+        {pagination && (
+          <View style={styles.departmentSelect}>
+            <TouchableOpacity
+              style={styles.departmentButton}
+              onPress={() =>
+                setDepartment(department === 1 ? numberOfTeams : department - 1)
+              }
+            >
+              <Text>{"<"}</Text>
+            </TouchableOpacity>
+
+            <View style={styles.departmentButton}>
+              <Text>{department}</Text>
+            </View>
+            <TouchableOpacity
+              style={styles.departmentButton}
+              onPress={() =>
+                setDepartment(numberOfTeams === department ? 1 : department + 1)
+              }
+            >
+              <Text>{">"}</Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={styles.departmentButton}
-            onPress={() =>
-              setDepartment(numberOfTeams === department ? 1 : department + 1)
-            }
-          >
-            <Text>{">"}</Text>
-          </TouchableOpacity>
-        </View>}
-      </View>
-      {pagination === true ? (
-        <View style={styles.teamList}>
-        {list.map((item, index) =>
-          item.name[1] === department.toString()
-            ? DraxItem({ item, index })
-            : []
         )}
       </View>
+      {/* if pagination is set to true, filter teams, if not show all */}
+      {pagination === true ? (
+        <View style={styles.teamList}>
+          {list.map((item, index) =>
+            item.name[1] === department.toString()
+              ? DraxItem({ item, index })
+              : []
+          )}
+        </View>
       ) : (
         <View style={styles.teamList}>
-        {list.map((item, index) => DraxItem({ item, index }))}
-      </View>
+          {list.map((item, index) => DraxItem({ item, index }))}
+        </View>
       )}
     </DraxView>
-
   );
 };
 

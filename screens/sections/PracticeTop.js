@@ -1,19 +1,13 @@
-//create internal teamList that only shows when the drop down is clicked
-//when item is selected in dropdown, use the index (value key) to push the team from teamList to dragTeamList
-//also remove team from teamList
-//dragTeamList should be mapped to drax view with a component similar to the lower half
-//Issues: how do we push an item back to the teamList from the dragTeamList if we are done with it?
-
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+
 import { useSelector, useDispatch } from "react-redux";
-import Ready from "../../oldStuff/teamLists/Ready";
-import Enroute from "../../oldStuff/teamLists/Enroute";
-import Roster from "../../oldStuff/teamLists/Roster";
-import TeamList from "../../components/TeamList";
 import { pushReady } from "../../src/app/features/readyTeams/readyTeamsSlice";
 import { pushEnroute } from "../../src/app/features/enrouteTeams/enrouteTeamsSlice";
 import { insertRoster } from "../../src/app/features/rosterTeams/rosterTeamsSlice";
+
+import TeamList from "../../components/TeamList";
+
 
 function PracticeTop(props) {
   const [alarm, setAlarm] = useState("");
@@ -277,7 +271,7 @@ function PracticeTop(props) {
           push={insertRoster}
           pagination={true}
         />
-                <TeamList
+        <TeamList
           title={"Enroute"}
           list={enrouteTeams}
           listName={"enroute"}
@@ -297,38 +291,11 @@ function PracticeTop(props) {
 }
 
 const styles = StyleSheet.create({
-  todo: {
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    width: "20%",
-    height: "98%",
-    backgroundColor: "gray",
-    borderWidth: 2,
-  },
-  task: {
-    width: "95%",
-    fontSize: 20,
-    flexDirection: "row",
-    justifyContent: "center",
-    borderWidth: 2,
-    borderColor: "red",
-    borderRadius: 10,
-    margin: 2,
-    marginTop: 4,
-    marginBottom: 4,
-  },
   bold: {
     fontWeight: "bold",
   },
   button: {
     flexDirection: "row",
-  },
-  chartSection: {
-    flex: 1,
-    borderTopWidth: 1,
-    paddingLeft: 5,
-    paddingRight: 5,
   },
   check: {
     flexDirection: "row",
@@ -338,58 +305,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-  },
-  departmentSelect: {
-    alignSelf: "center",
-    flexDirection: "row",
-    flex: 1,
-  },
-  departmentButton: {
-    flex: 1,
-    backgroundColor: "lightblue",
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 1,
-    width: 20,
-    height: 20,
-    margin: 2,
-  },
-  dragging: {
-    width: 0,
-    height: 0,
-    borderWidth: 0,
-    textAlign: "center",
-  },
-  dragHover: {
-    width: "15%",
-    height: "auto",
-  },
-  dropdown: {
-    position: "relative",
-  },
-  enroute: {
-    flexDirection: "column",
-    flexWrap: "wrap",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    alignContent: "center",
-    width: "15%",
-    height: "99%",
-    maxHeight: "99%",
-    backgroundColor: "lightblue",
-    borderWidth: 2,
-  },
-  enroutePagination: {
-    flexDirection: "column",
-    flexWrap: "wrap",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    alignContent: "center",
-    width: "100%",
-    height: "75%",
-    maxHeight: "100%",
-    backgroundColor: "lightblue",
-    flex: 3,
   },
   font: {
     fontSize: 13,
@@ -404,11 +319,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 30,
     top: 10,
-  },
-  highlight: {
-    color: "red",
-    fontWeight: "bold",
-  },
+  },  
   indent: {
     left: 20,
   },
@@ -422,29 +333,6 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     backgroundColor: "red",
-  },
-  list: {
-    backgroundColor: "blue",
-    width: "100%",
-    flexDirection: "column",
-    justifyContent: "flex-end",
-    alignContent: "flex-end",
-    textAlign: "center",
-  },
-  mayday: {
-    width: "25%",
-    height: "99%",
-    backgroundColor: "yellow",
-    borderWidth: 2,
-  },
-  maydayHeader: {
-    flex: 1,
-    color: "white",
-    backgroundColor: "red",
-    fontWeight: "bold",
-    textAlign: "center",
-    paddingLeft: 5,
-    paddingRight: 5,
   },
   outterButton: {
     width: 15,
@@ -467,35 +355,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginRight: 10,
     backgroundColor: "white",
-  },
-  ready: {
-    width: "15%",
-    height: "99%",
-    alignItems: "center",
-    backgroundColor: "lightgreen",
-    borderWidth: 2,
-  },
-  team: {
-    width: "48%",
-    fontSize: 20,
-    flexDirection: "row",
-    justifyContent: "center",
-    borderWidth: 2,
-    borderColor: "red",
-    backgroundColor: "lightyellow",
-    borderRadius: 10,
-    margin: 2,
-    marginTop: 4,
-    marginBottom: 4,
-  },
-  teamName: {
-    borderTopWidth: 2,
-    margin: 5,
-    textAlign: "center",
-  },
-  textStyle: {
-    fontSize: 12.5,
-    textAlign: "center",
   },
   top: {
     width: "100%",

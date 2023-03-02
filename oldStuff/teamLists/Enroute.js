@@ -1,53 +1,53 @@
-import DraxItem from "../../../../components/DraxItem";
+import DraxItem from "../../components/DraxItem";
 
 import { useSelector, useDispatch } from "react-redux";
-import { spliceRoster, insertRoster } from "../rosterTeams/rosterTeamsSlice";
-import { spliceEnroute, pushEnroute } from "../enrouteTeams/enrouteTeamsSlice";
-import { spliceReady, pushReady } from "./readyTeamsSlice";
-import { spliceTChartTeam } from "../tChart/tChartSlice";
+import { spliceRoster, insertRoster } from "../../src/app/features/rosterTeams/rosterTeamsSlice";
+import { spliceEnroute, pushEnroute } from "../../src/app/features/enrouteTeams/enrouteTeamsSlice";
+import { spliceReady, pushReady } from "../../src/app/features/readyTeams/readyTeamsSlice";
+import { spliceTChartTeam } from "../../src/app/features/tChart/tChartSlice";
+
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 
-export default function Ready() {
-  const rosterTeams = useSelector((state) => state.rosterTeams.teams);
-  const enrouteTeams = useSelector((state) => state.enrouteTeams.teams);
+export default function Enroute() {
   const readyTeams = useSelector((state) => state.readyTeams.teams);
+  const enrouteTeams = useSelector((state) => state.enrouteTeams.teams);
+  const rosterTeams = useSelector((state) => state.rosterTeams.teams);
   const tChartTeams = useSelector((state) => state.tChart.teams);
   const dispatch = useDispatch();
 
-
   return (
     <DraxView
-      style={styles.ready}
+      style={styles.enroute}
       onReceiveDragDrop={(event) => {
         let payload = event.dragged.payload;
 
-        if (payload[1] === "ready") {
+        if (payload[1] === "enroute") {
         } else if (payload[1] === "roster") {
-          dispatch(pushReady(rosterTeams[payload[0]]));
+          dispatch(pushEnroute(rosterTeams[payload[0]]));
           dispatch(spliceRoster(payload[0]));
-        } else if (payload[1] === "enroute") {
-          dispatch(pushReady(enrouteTeams[payload[0]]));
-          dispatch(spliceEnroute(payload[0]));
+        } else if (payload[1] === "ready") {
+          dispatch(pushEnroute(readyTeams[payload[0]]));
+          dispatch(spliceReady(payload[0]));
         } else if (payload[1] === "tChartTeams") {
-          dispatch(pushReady(tChartTeams[payload[0]]));
+          dispatch(pushEnroute(tChartTeams[payload[0]]));
           dispatch(spliceTChartTeam(payload[0]));
         }
       }}
     >
       <View style={styles.title}>
-        <Text style={styles.titleText}>Ready</Text>
+        <Text style={styles.titleText}>Enroute</Text>
       </View>
       <View style={styles.teamList}>
-        {readyTeams.map((item, index) => DraxItem({ item, index }))}
+        {enrouteTeams.map((item, index) => DraxItem({ item, index }))}
       </View>
     </DraxView>
   );
 }
 
 const styles = StyleSheet.create({
-  ready: {
+  enroute: {
     flexDirection: "column",
     flexWrap: "wrap",
     alignItems: "center",

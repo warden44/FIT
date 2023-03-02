@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Timer from "../../components/Timer";
+import Timer from "../../src/app/features/Timer";
 import Tasks from "../../src/app/features/tasks/Tasks";
 import TChart from "../../src/app/features/tChart/TChart";
 import { GestureHandlerRootView } from "react-native-gesture-handler";

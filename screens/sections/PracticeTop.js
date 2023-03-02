@@ -5,20 +5,17 @@
 //Issues: how do we push an item back to the teamList from the dragTeamList if we are done with it?
 
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import Ready from "../../src/app/features/readyTeams/Ready";
-import Enroute from "../../src/app/features/enrouteTeams/Enroute";
-import Roster from "../../src/app/features/rosterTeams/Roster";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import Ready from "../../oldStuff/teamLists/Ready";
+import Enroute from "../../oldStuff/teamLists/Enroute";
+import Roster from "../../oldStuff/teamLists/Roster";
 import TeamList from "../../components/TeamList";
 import { pushReady } from "../../src/app/features/readyTeams/readyTeamsSlice";
+import { pushEnroute } from "../../src/app/features/enrouteTeams/enrouteTeamsSlice";
+import { insertRoster } from "../../src/app/features/rosterTeams/rosterTeamsSlice";
 
 function PracticeTop(props) {
-
   const [alarm, setAlarm] = useState("");
   const [checkAlarm, SetAlarmCheck] = useState(false);
 
@@ -38,6 +35,10 @@ function PracticeTop(props) {
 
   const [checkLocation, setCheckLocation] = useState(false);
 
+  const rosterTeams = useSelector((state) => state.rosterTeams.teams);
+  const enrouteTeams = useSelector((state) => state.enrouteTeams.teams);
+  const readyTeams = useSelector((state) => state.readyTeams.teams);
+  const tChartTeams = useSelector((state) => state.tChart.teams);
 
   return (
     //header
@@ -269,11 +270,27 @@ function PracticeTop(props) {
           </View>
         </View>
 
-        <Roster/>
-        <Enroute/>
-        <Ready/>
-        <TeamList push={pushReady}/>
-
+        <TeamList
+          title={"Roster"}
+          list={rosterTeams}
+          listName={"roster"}
+          push={insertRoster}
+          pagination={true}
+        />
+                <TeamList
+          title={"Enroute"}
+          list={enrouteTeams}
+          listName={"enroute"}
+          push={pushEnroute}
+          pagination={false}
+        />
+        <TeamList
+          title={"Ready"}
+          list={readyTeams}
+          listName={"ready"}
+          push={pushReady}
+          pagination={false}
+        />
       </View>
     </View>
   );

@@ -21,7 +21,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Timer from "../../../../components/Timer";
+import Timer from "../Timer";
 import TChartEmptySlot from "../../../../components/TChartEmptySlot";
 import { GestureHandlerRootView, TextInput } from "react-native-gesture-handler";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";

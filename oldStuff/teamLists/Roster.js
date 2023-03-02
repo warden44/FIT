@@ -1,10 +1,10 @@
-import DraxItem from "../../../../components/DraxItem";
+import DraxItem from "../../components/DraxItem";
 
 import { useSelector, useDispatch } from "react-redux";
-import { spliceRoster, insertRoster } from "./rosterTeamsSlice";
-import { spliceEnroute, pushEnroute } from "../enrouteTeams/enrouteTeamsSlice";
-import { spliceReady, pushReady } from "../readyTeams/readyTeamsSlice";
-import { spliceTChartTeam } from "../tChart/tChartSlice";
+import { spliceRoster, insertRoster } from "../../src/app/features/rosterTeams/rosterTeamsSlice";
+import { spliceEnroute, pushEnroute } from "../../src/app/features/enrouteTeams/enrouteTeamsSlice";
+import { spliceReady, pushReady } from "../../src/app/features/readyTeams/readyTeamsSlice";
+import { spliceTChartTeam } from "../../src/app/features/tChart/tChartSlice";
 
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";

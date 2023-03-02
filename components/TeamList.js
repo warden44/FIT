@@ -1,77 +1,85 @@
-//****** ABANDONED FOR NOW, intedned for universal team list component************
+import DraxItem from "./DraxItem";
 
 import { useSelector, useDispatch } from "react-redux";
-import { spliceReady, pushReady } from "./readyTeamsSlice";
-import { spliceEnroute, pushEnroute } from "../enrouteTeams/enrouteTeamsSlice";
+import { spliceRoster, insertRoster } from "../src/app/features/rosterTeams/rosterTeamsSlice";
+import { spliceEnroute, pushEnroute } from "../src/app/features/enrouteTeams/enrouteTeamsSlice";
+import { spliceReady, pushReady } from "../src/app/features/readyTeams/readyTeamsSlice";
+import { spliceTChartTeam } from "../src/app/features/tChart/tChartSlice";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
-
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 
-//variables needed, which team list, color
-
-export default function TeamList(props) {
-  let list = props.list;
-  const readyTeams = useSelector((state) => state.readyTeams.teams);
+const TeamList = (props) => {
+  const rosterTeams = useSelector((state) => state.rosterTeams.teams);
   const enrouteTeams = useSelector((state) => state.enrouteTeams.teams);
+  const readyTeams = useSelector((state) => state.readyTeams.teams);
+  const tChartTeams = useSelector((state) => state.tChart.teams);
   const dispatch = useDispatch();
-
-  const DraxTeam = ({ item, index }) => {
-    return (
-      <DraxView
-        style={[styles.team, { borderColor: item.border_color }]}
-        animateSnapback={false}
-        draggingStyle={styles.dragging}
-        dragReleasedStyle={styles.dragReleased}
-        hoverDraggingStyle={styles.dragHover}
-        dragPayload={[index, item.currentList]}
-        longPressDelay={150}
-        receivingStyle={styles.receiving}
-        renderContent={({ viewState }) => {
-          const receivingDrag = viewState && viewState.receivingDrag;
-          const payload = receivingDrag && receivingDrag.payload;
-          return (
-            <View>
-              <Text style={styles.textStyle}>{item.name}</Text>
-            </View>
-          );
-        }}
-        key={index}
-        onReceiveDragDrop={(event) => {}}
-      />
-    );
-  };
+  const push = props.push();
 
   return (
     <DraxView
       style={styles.ready}
       onReceiveDragDrop={(event) => {
         let payload = event.dragged.payload;
-        if (payload[1] === list) {
 
-        }
-        else if (payload[1] === "enroute") {
-          dispatch(pushReady(enrouteTeams[payload[0]]));
+        if (payload[1] === "ready") {
+        } else if (payload[1] === "roster") {
+          dispatch(push(rosterTeams[payload[0]]));
+          dispatch(spliceRoster(payload[0]));
+        } else if (payload[1] === "enroute") {
+          dispatch(push(enrouteTeams[payload[0]]));
           dispatch(spliceEnroute(payload[0]));
+        } else if (payload[1] === "tChartTeams") {
+          dispatch(push(tChartTeams[payload[0]]));
+          dispatch(spliceTChartTeam(payload[0]));
         }
       }}
     >
-      {readyTeams.map((item, index) => DraxTeam({ item, index }))}
+      <View style={styles.title}>
+        <Text style={styles.titleText}>Ready</Text>
+      </View>
+      <View style={styles.teamList}>
+        {readyTeams.map((item, index) => DraxItem({ item, index }))}
+      </View>
     </DraxView>
   );
-}
+};
+
+export default TeamList;
 
 const styles = StyleSheet.create({
   ready: {
     flexDirection: "column",
     flexWrap: "wrap",
-    justifyContent: "flex-start",
     alignItems: "center",
     alignContent: "center",
     width: "15%",
     height: "99%",
     maxHeight: "99%",
-    backgroundColor: "lightgreen",
+    backgroundColor: "gray",
     borderWidth: 2,
+    margin: 0,
+    padding: 0,
+  },
+  teamList: {
+    flexDirection: "column",
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    width: "100%",
+    backgroundColor: "lightblue",
+    flex: 3,
+    margin: 0,
+    padding: 0,
+  },
+  title: {
+    flex: 1,
+  },
+  titleText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    alignSelf: "center",
+    flex: 1,
   },
 });

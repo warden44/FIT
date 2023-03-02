@@ -10,17 +10,14 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Dimensions,
 } from "react-native";
-import { DraxProvider, DraxView, DraxList } from "react-native-drax";
-import DropDownPicker from "react-native-dropdown-picker";
-import AppContext from "../../components/AppContext";
 import Ready from "../../src/app/features/readyTeams/Ready";
 import Enroute from "../../src/app/features/enrouteTeams/Enroute";
 import Roster from "../../src/app/features/rosterTeams/Roster";
+import TeamList from "../../components/TeamList";
+import { pushReady } from "../../src/app/features/readyTeams/readyTeamsSlice";
 
 function PracticeTop(props) {
-  const myContext = React.useContext(AppContext);
 
   const [alarm, setAlarm] = useState("");
   const [checkAlarm, SetAlarmCheck] = useState(false);
@@ -40,53 +37,6 @@ function PracticeTop(props) {
   const [location, setLocation] = useState("");
 
   const [checkLocation, setCheckLocation] = useState(false);
-
-  /// drop down list ///
-  let something = false;
-  const [open, setOpen] = useState(false);
-  // const [value, setValue] = useState(null);
-  const [items, setItems] = useState(myContext.dropTeamList);
-  const [label, setLabel] = useState("roster");
-  // const [index, setIndex] = useState();
-
-  // useEffect(() => {
-  //   setIndex(-1);
-  // }, [index]);
-
-  const [department, setDepartment] = useState(3);
-
-  const EnrouteTeams = ({ item, index }) => {
-    return (
-      <DraxView
-        style={[styles.team, { borderColor: item.border_color }]}
-        animateSnapback={false}
-        draggingStyle={styles.dragging}
-        dragReleasedStyle={styles.dragReleased}
-        hoverDraggingStyle={styles.dragHover}
-        dragPayload={[index, item.currentList]}
-        longPressDelay={150}
-        receivingStyle={styles.receiving}
-        renderContent={({ viewState }) => {
-          const receivingDrag = viewState && viewState.receivingDrag;
-          const payload = receivingDrag && receivingDrag.payload;
-          return (
-            <View>
-              <Text style={styles.textStyle}>{item.name}</Text>
-            </View>
-          );
-        }}
-        key={index}
-        onReceiveDragDrop={(event) => {
-          myContext.moveTeam(
-            myContext.dragEnrouteList,
-            myContext.setDragEnrouteList,
-            event.dragged.payload,
-            "enroute"
-          );
-        }}
-      />
-    );
-  };
 
 
   return (
@@ -318,56 +268,11 @@ function PracticeTop(props) {
             ))}
           </View>
         </View>
-        {/* <DraxView
-          style={styles.enroute}
-          onReceiveDragDrop={(event) => {
-            myContext.moveTeam(
-              myContext.dragEnrouteList,
-              myContext.setDragEnrouteList,
-              event.dragged.payload,
-              "enroute"
-            );
-          }}
-        >
-          <View style={styles.departmentSelect}>
-            <TouchableOpacity
-              style={styles.departmentButton}
-              onPress={() =>
-                setDepartment(
-                  department === 1 ? myContext.numberOfTeams : department - 1
-                )
-              }
-            >
-              <Text>{"<"}</Text>
-            </TouchableOpacity>
 
-            <View style={styles.departmentButton}>
-              <Text>{department}</Text>
-            </View>
-            <TouchableOpacity
-              style={styles.departmentButton}
-              onPress={() =>
-                setDepartment(
-                  myContext.numberOfTeams === department ? 1 : department + 1
-                )
-              }
-            >
-              <Text>{">"}</Text>
-            </TouchableOpacity>
-
-            {console.log(department)}
-          </View>
-          <View style={styles.enroutePagination}>
-            {myContext.RosterList.map((item, index) =>
-              item.name[1] === department.toString()
-                ? EnrouteTeams({ item, index })
-                : []
-            )}
-          </View>
-        </DraxView> */}
         <Roster/>
         <Enroute/>
         <Ready/>
+        <TeamList push={pushReady}/>
 
       </View>
     </View>

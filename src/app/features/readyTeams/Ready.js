@@ -1,15 +1,10 @@
+import DraxItem from "../../../../components/DraxItem";
+
 import { useSelector, useDispatch } from "react-redux";
 import { spliceRoster, insertRoster } from "../rosterTeams/rosterTeamsSlice";
 import { spliceEnroute, pushEnroute } from "../enrouteTeams/enrouteTeamsSlice";
 import { spliceReady, pushReady } from "./readyTeamsSlice";
-import {
-  spliceTChartTeam,
-  spliceTChartTask,
-  insertTChartTeam,
-  insertTChartTask,
-  moveTChartTeam,
-  moveTChartTask,
-} from "../tChart/tChartSlice";
+import { spliceTChartTeam } from "../tChart/tChartSlice";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
@@ -21,30 +16,6 @@ export default function Ready() {
   const tChartTeams = useSelector((state) => state.tChart.teams);
   const dispatch = useDispatch();
 
-  const ReadyDrax = ({ item, index }) => {
-    return (
-      <DraxView
-        style={[styles.team, { borderColor: item.border_color }]}
-        animateSnapback={false}
-        draggingStyle={styles.dragging}
-        dragReleasedStyle={styles.dragReleased}
-        hoverDraggingStyle={styles.dragHover}
-        dragPayload={[index, item.currentList]}
-        longPressDelay={150}
-        receivingStyle={styles.receiving}
-        renderContent={({ viewState }) => {
-          const receivingDrag = viewState && viewState.receivingDrag;
-          const payload = receivingDrag && receivingDrag.payload;
-          return (
-            <View>
-              <Text style={styles.textStyle}>{item.name}</Text>
-            </View>
-          );
-        }}
-        key={index}
-      />
-    );
-  };
 
   return (
     <DraxView
@@ -65,7 +36,12 @@ export default function Ready() {
         }
       }}
     >
-      {readyTeams.map((item, index) => ReadyDrax({ item, index }))}
+      <View style={styles.title}>
+        <Text style={styles.titleText}>Ready</Text>
+      </View>
+      <View style={styles.teamList}>
+        {readyTeams.map((item, index) => DraxItem({ item, index }))}
+      </View>
     </DraxView>
   );
 }
@@ -74,26 +50,34 @@ const styles = StyleSheet.create({
   ready: {
     flexDirection: "column",
     flexWrap: "wrap",
-    justifyContent: "flex-start",
     alignItems: "center",
     alignContent: "center",
     width: "15%",
     height: "99%",
     maxHeight: "99%",
-    backgroundColor: "lightgreen",
+    backgroundColor: "gray",
     borderWidth: 2,
+    margin: 0,
+    padding: 0,
   },
-  team: {
-    width: "30%",
-    height: "15%",
+  teamList: {
+    flexDirection: "column",
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    width: "100%",
+    backgroundColor: "lightblue",
+    flex: 3,
+    margin: 0,
+    padding: 0,
+  },
+  title: {
+    flex: 1,
+  },
+  titleText: {
     fontSize: 20,
-    flexDirection: "row",
-    justifyContent: "center",
-    ali: "center",
-    borderWidth: 2,
-    borderColor: "red",
-    backgroundColor: "lightyellow",
-    borderRadius: 10,
-    margin: 2,
+    fontWeight: "bold",
+    alignSelf: "center",
+    flex: 1,
   },
 });

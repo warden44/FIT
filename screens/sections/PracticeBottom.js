@@ -19,97 +19,16 @@ import * as functs from "../../utils/MoveItem";
 const gestureRootViewStyle = { flex: 1 };
 
 function PracticeBottom(props) {
-  const myContext = React.useContext(AppContext);
-
   const [filter, setFilter] = React.useState("red");
 
-  const TodoTasks = ({ item, index }) => {
-    return (
-      <DraxView
-        style={[styles.task, { borderColor: item.border_color }]}
-        animateSnapback={false}
-        draggingStyle={styles.dragging}
-        dragReleasedStyle={styles.dragReleased}
-        hoverDraggingStyle={styles.dragHover}
-        dragPayload={[index, item.currentList]}
-        longPressDelay={150}
-        receivingStyle={styles.receiving}
-        renderContent={({ viewState }) => {
-          const receivingDrag = viewState && viewState.receivingDrag;
-          const payload = receivingDrag && receivingDrag.payload;
-          return (
-            <View>
-              <Text style={styles.itemFont}>{item.name}</Text>
-            </View>
-          );
-        }}
-        key={index}
-        onReceiveDragDrop={(event) => {
-          myContext.moveItem(
-            myContext.dragTaskList,
-            myContext.setDragTaskList,
-            event.dragged.payload,
-            "task"
-          );
-        }}
-      />
-    );
-  };
-
-  const DoneTasks = ({ item, index }) => {
-    return (
-      <DraxView
-        style={[styles.task, { borderColor: item.border_color }]}
-        animateSnapback={false}
-        draggingStyle={styles.dragging}
-        dragReleasedStyle={styles.dragReleased}
-        hoverDraggingStyle={styles.dragHover}
-        dragPayload={[index, item.currentList]}
-        longPressDelay={150}
-        receivingStyle={styles.receiving}
-        renderContent={({ viewState }) => {
-          const receivingDrag = viewState && viewState.receivingDrag;
-          const payload = receivingDrag && receivingDrag.payload;
-          return (
-            <View>
-              <Text style={styles.itemFont}>{item.name}</Text>
-            </View>
-          );
-        }}
-        key={index}
-        onReceiveDragDrop={(event) => {
-          myContext.moveItem(
-            myContext.dragDoneList,
-            myContext.setDragDoneList,
-            event.dragged.payload,
-            "done"
-          );
-        }}
-      />
-    );
-  };
 
   const [bench, setBench] = React.useState("");
   const [checkBench, setCheckBench] = React.useState(false);
 
   return (
     <View style={styles.container}>
-      {/* <DraxView
-        style={styles.todo}
-        onReceiveDragDrop={(event) => {
-          myContext.moveItem(
-            myContext.dragTaskList,
-            myContext.setDragTaskList,
-            event.dragged.payload,
-            "task"
-          );
-        }}
-      >
-        {myContext.dragTaskList.map((item, index) =>
-          item.border_color === filter ? TodoTasks({ item, index }) : []
-        )}
-      </DraxView> */}
-      <Tasks/>
+
+      <Tasks />
       <View style={[styles.switchTasks]}>
         <TouchableOpacity
           style={[styles.switchButton, { backgroundColor: filter }]}
@@ -120,21 +39,7 @@ function PracticeBottom(props) {
         ></TouchableOpacity>
       </View>
 
-      <DraxView
-        style={styles.done}
-        onReceiveDragDrop={(event) => {
-          myContext.moveItem(
-            myContext.dragDoneList,
-            myContext.setDragDoneList,
-            event.dragged.payload,
-            "done"
-          );
-        }}
-      >
-        {myContext.dragDoneList.map((item, index) =>
-          item.border_color === filter ? DoneTasks({ item, index }) : []
-        )}
-      </DraxView>
+
       <View style={styles.rightBotom}>
         <View style={styles.benchmarks}>
           {/* Benchmarks */}
@@ -178,9 +83,11 @@ function PracticeBottom(props) {
           <Timer></Timer>
         </View>
         <View style={styles.teamCharts}>
-          {Array(12).fill().map((task, index) => (
-            <TChart style={styles.tChart} key={index} tChartID={index} />
-          ))}
+          {Array(12)
+            .fill()
+            .map((task, index) => (
+              <TChart style={styles.tChart} key={index} tChartID={index} />
+            ))}
         </View>
       </View>
     </View>

@@ -19,7 +19,6 @@ import * as functs from "../../utils/MoveItem";
 const gestureRootViewStyle = { flex: 1 };
 
 function PracticeBottom(props) {
-  const [filter, setFilter] = React.useState("red");
 
 
   const [bench, setBench] = React.useState("");
@@ -28,19 +27,12 @@ function PracticeBottom(props) {
   return (
     <View style={styles.container}>
 
-      <Tasks />
-      <View style={[styles.switchTasks]}>
-        <TouchableOpacity
-          style={[styles.switchButton, { backgroundColor: filter }]}
-          onPress={() => {
-            filter === "red" ? setFilter("yellow") : setFilter("red");
-            console.log(filter);
-          }}
-        ></TouchableOpacity>
-      </View>
+      <Tasks style={{}}/>
 
 
-      <View style={styles.rightBotom}>
+
+
+      <View style={styles.rightBottom}>
         <View style={styles.benchmarks}>
           {/* Benchmarks */}
           <TouchableOpacity
@@ -83,9 +75,9 @@ function PracticeBottom(props) {
           <Timer></Timer>
         </View>
         <View style={styles.teamCharts}>
-          {Array(12)
+          {Array(16)
             .fill()
-            .map((task, index) => (
+            .map(( item, index) => (
               <TChart style={styles.tChart} key={index} tChartID={index} />
             ))}
         </View>
@@ -187,24 +179,16 @@ const styles = StyleSheet.create({
     marginRight: 10,
     backgroundColor: "white",
   },
-  rightBotom: {
-    width: "55%",
-    height: "98%",
+  rightBottom: {
+    // width: "55%",
+    flex: 3,
+    // height: "98%",
+    margin: 5,
     backgroundColor: "lightgray",
     borderWidth: 2,
   },
   smallFont: {
     fontSize: 10,
-  },
-  switchButton: {
-    opacity: 0.75,
-    flex: 1,
-    borderRadius: 10,
-    borderWidth: 3,
-  },
-  switchTasks: {
-    width: "2%",
-    height: "98%",
   },
   task: {
     width: "48%",

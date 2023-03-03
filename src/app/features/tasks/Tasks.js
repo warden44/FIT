@@ -18,7 +18,7 @@ const Tasks = () => {
   const tChartTasks = useSelector((state) => state.tChart.tasks);
   const dispatch = useDispatch();
 
-  const priority = 1;
+  const [priority, setPriority] = React.useState(1);
 
   const TaskDrax = ({ item, index }) => {
     return (
@@ -59,34 +59,67 @@ const Tasks = () => {
       return false;
     }
   };
-  return (
-    <DraxView
-      style={styles.tasksContainer}
-      onReceiveDragDrop={(event) => {
-        let payload = event.dragged.payload;
 
-        if (payload[1] === "task") {
-        } else if (payload[1] === "tChartTasks") {
+  return (
+    <View style={styles.container}>
+      <DraxView
+        style={styles.taskComponent}
+        onReceiveDragDrop={(event) => {
+          let payload = event.dragged.payload;
+
+          if (payload[1] === "task") {
+          } else if (payload[1] === "tChartTasks") {
             if (!checkDoubleTasks(tChartTasks[payload[0]].id)) {
-            dispatch(pushTask(tChartTasks[payload[0]]));
+              dispatch(pushTask(tChartTasks[payload[0]]));
+            }
+            dispatch(spliceTChartTask(payload[0]));
           }
-          dispatch(spliceTChartTask(payload[0]));
-        }
-      }}
-    >
-      {tasks.map((item, index) =>
-        item.priority === priority ? TaskDrax({ item, index }) : []
-      )}
-    </DraxView>
+        }}
+      >
+        {tasks.map((item, index) =>
+          item.priority === priority ? TaskDrax({ item, index }) : []
+        )}
+      </DraxView>
+      <View style={styles.switchTasks}>
+        <TouchableOpacity
+          style={[
+            styles.switchButton,
+            priority === 1
+              ? { backgroundColor: "red" }
+              : { backgroundColor: "yellow" },
+          ]}
+          onPress={() => {
+            priority === 1 ? setPriority(2) : setPriority(1);
+          }}
+        ></TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
 export default Tasks;
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    flex: 1,
+    height: "98%",
+    width: "100%",
+    justifyContent: "center",
+  },
   itemFont: {
     fontSize: 12.5,
     textAlign: "center",
+  },
+  switchButton: {
+    opacity: 0.75,
+    flex: 1,
+    borderRadius: 10,
+    borderWidth: 3,
+  },
+  switchTasks: {
+    flex: 1,
+    marginLeft: 5,
   },
   task: {
     width: "48%",
@@ -101,14 +134,13 @@ const styles = StyleSheet.create({
     marginTop: 4,
     marginBottom: 4,
   },
-  tasksContainer: {
+  taskComponent: {
     flexDirection: "column",
     flexWrap: "wrap",
     justifyContent: "flex-start",
-    alignItems: "center",
-    alignContent: "center",
-    width: "20%",
-    height: "98%",
+    alignItems: "flex-start",
+    // alignContent: "space-around",
+    flex: 9,
     backgroundColor: "lightblue",
     borderWidth: 2,
   },

@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  teams: ["", "", "", "", "", "", "", "", "", "", "", ""],
-  tasks: ["", "", "", "", "", "", "", "", "", "", "", ""],
+  teams: Array(16).fill(""),
+  tasks: Array(16).fill(""),
 };
 
 const tChartSlice = createSlice({
@@ -49,14 +49,21 @@ const tChartSlice = createSlice({
     },
     moveTChartTeam: (state, action) => {
       state.teams.splice(action.payload.toIndex, 1, action.payload.team);
-      state.teams.splice(action.payload.fromIndex, 1, "")
+      state.teams.splice(action.payload.fromIndex, 1, "");
     },
     moveTChartTask: (state, action) => {
       state.tasks.splice(action.payload.toIndex, 1, action.payload.task);
-      state.tasks.splice(action.payload.fromIndex, 1, "")
+      state.tasks.splice(action.payload.fromIndex, 1, "");
     },
   },
 });
 
-export const { spliceTChartTeam, spliceTChartTask, insertTChartTeam, insertTChartTask, moveTChartTeam, moveTChartTask } = tChartSlice.actions;
+export const {
+  spliceTChartTeam,
+  spliceTChartTask,
+  insertTChartTeam,
+  insertTChartTask,
+  moveTChartTeam,
+  moveTChartTask,
+} = tChartSlice.actions;
 export default tChartSlice.reducer;

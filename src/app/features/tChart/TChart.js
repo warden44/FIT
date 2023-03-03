@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   tChart: {
     // justifyContent: 'space-around',
     // alignItems: 'center',
-    width: "25%",
+    width: "20%",
     height: "22%",
     backgroundColor: "lightyellow",
     borderWidth: 1,

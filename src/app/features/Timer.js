@@ -5,7 +5,9 @@ function Timer(props) {
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [hours, setHours] = useState(0);
-  const [increment, setIncrement] = useState(props.size === "smallTimer" ? 0 : 1);
+  const [increment, setIncrement] = useState(
+    props.size === "smallTimer" ? 0 : 1
+  );
 
   //getting current time and dates to mark date of incident
   var date = new Date().getDate(); //To get the Current Date
@@ -124,6 +126,7 @@ function Timer(props) {
           </TouchableOpacity>
         </View>
       ) : (
+        ////////////////////////Big Timer
         <View style={styles.container}>
           <View style={styles.date}>
             <View>
@@ -140,6 +143,7 @@ function Timer(props) {
             </View>
           </View>
           <TouchableOpacity
+          
             style={styles.bigTimer}
             onLongPress={() => {
               //reset timer and date
@@ -167,7 +171,7 @@ function Timer(props) {
               {seconds}
             </Text>
           </TouchableOpacity>
-          <View style={styles.elapsed}>
+          {/* <View style={styles.elapsed}>
             <Text>Elapsed Time Notifications: </Text>
             {[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60].map((fiver) => (
               <View key={fiver}>
@@ -204,7 +208,7 @@ function Timer(props) {
                 )}
               </View>
             ))}
-          </View>
+          </View> */}
         </View>
       )}
     </View>
@@ -213,23 +217,26 @@ function Timer(props) {
 
 const styles = StyleSheet.create({
   bigFont: {
-    fontSize: 20,
+    fontSize: 30,
   },
   bigTimer: {
+    height: "90%",
     backgroundColor: "white",
     borderWidth: 1,
     borderRadius: 8,
     borderColor: "red",
-    margin: 5,
     paddingLeft: 5,
     paddingRight: 5,
+    justifyContent: "center",
     textAlign: "center",
   },
   container: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "center",
     alignItems: "center",
     width: "100%",
+    height: "100%",
+
   },
   currentTime: {
     opacity: 0.075,
@@ -240,6 +247,7 @@ const styles = StyleSheet.create({
   date: {
     justifyContent: "center",
     alignItems: "center",
+    marginRight: 10,
   },
   dateSmall: {
     flexDirection: "row",

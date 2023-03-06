@@ -71,9 +71,9 @@ function PracticeBottom(props) {
             )
           )}
         </View>
-        <View style={styles.elapsed}>
+        {/* <View style={styles.elapsed}>
           <Timer></Timer>
-        </View>
+        </View> */}
         <View style={styles.teamCharts}>
           {Array(16)
             .fill()
@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
   },
   elapsed: {
     width: "100%",
+    backgroundColor: "gray"
   },
   font: {
     fontSize: 14,

@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  SafeAreaView
 } from "react-native";
 import Top from "./sections/Top";
 import PracticeTop from "./sections/PracticeTop";
@@ -19,13 +20,15 @@ function MainScreen(props) {
 
   return (
       <GestureHandlerRootView style={gestureRootViewStyle}>
-        <DraxProvider style={styles.container}>
+        <DraxProvider>
+          <SafeAreaView style={styles.container}>
           <View style={styles.top}>
             <PracticeTop />
           </View>
           <View style={styles.bottom}>
             <PracticeBottom />
           </View>
+          </SafeAreaView>
         </DraxProvider>
       </GestureHandlerRootView>
   );
@@ -37,6 +40,7 @@ const styles = StyleSheet.create({
     zIndex: -1,
   },
   container: {
+    paddingTop: 15,
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-around",

@@ -7,8 +7,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { pushReady } from "../../src/app/features/readyTeams/readyTeamsSlice";
 import { pushEnroute } from "../../src/app/features/enrouteTeams/enrouteTeamsSlice";
 import { insertRoster } from "../../src/app/features/rosterTeams/rosterTeamsSlice";
+import Icon from "react-native-vector-icons/Feather";
 
 import TeamList from "../../components/TeamList";
+import Timer from "../../src/app/features/Timer";
 
 function PracticeTop(props) {
   const rosterTeams = useSelector((state) => state.rosterTeams.teams);
@@ -18,10 +20,32 @@ function PracticeTop(props) {
   return (
     //header
     <View style={styles.container}>
-      <View>
-        <Text style={styles.header}>
-          Syracuse Fire Incident Tactical Worksheet
-        </Text>
+      <View style={styles.header}>
+        <View style={{ flex: 1,}}>
+          <Timer />
+        </View>
+        <View style={{ flex: 2, height: "100%" }}>
+          <Text style={styles.titleText}>
+            Syracuse Fire Incident Tactical Worksheet
+          </Text>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Icon.Button
+            name="settings"
+            backgroundColor={"gray"}
+            size={25}
+            iconStyle={{
+              marginRight: "auto",
+            }}
+          />
+          {/* <Text>Settings</Text> */}
+        </View>
       </View>
 
       <View style={styles.top}>
@@ -100,16 +124,26 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   header: {
-    alignSelf: "center",
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "flex-end",
+    paddingBottom: 5,
+  },
+  title: {
+    flex: 1,
+    alignItems: "center",
+  },
+  titleText: {
     color: "red",
     fontWeight: "bold",
     fontSize: 30,
-    top: 10,
+    textAlign: "center",
   },
   top: {
+    // flex: 10,
     width: "100%",
     maxHeight: "100%",
-    top: 10,
     borderTopColor: "black",
     borderTopWidth: 2,
     borderBottomColor: "black",

@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import Timer from "../../src/app/features/Timer";
 import Tasks from "../../src/app/features/tasks/Tasks";
+import Benchmarks from "../../components/Benchmarks";
 import TChart from "../../src/app/features/tChart/TChart";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
@@ -19,65 +20,19 @@ import * as functs from "../../utils/MoveItem";
 const gestureRootViewStyle = { flex: 1 };
 
 function PracticeBottom(props) {
-
-
-  const [bench, setBench] = React.useState("");
-  const [checkBench, setCheckBench] = React.useState(false);
-
   return (
     <View style={styles.container}>
-
-      <Tasks style={{}}/>
-
-
-
+      <Tasks style={{}} />
 
       <View style={styles.rightBottom}>
-        <View style={styles.benchmarks}>
-          {/* Benchmarks */}
-          <TouchableOpacity
-            style={styles.check}
-            onPress={() =>
-              checkBench === true
-                ? (setCheckBench(false), setBench("none"))
-                : setCheckBench(true)
-            }
-          >
-            <View style={styles.outterCheck}>
-              {checkBench === true && <View style={styles.innerCheck} />}
-            </View>
-            <Text style={[styles.bold, styles.font]}>Benchmarks:</Text>
-          </TouchableOpacity>
-
-          {['"All Clear" Complete', "Fire Under Control", "Loss Stopped"].map(
-            (choice) => (
-              <TouchableOpacity
-                key={choice}
-                style={styles.button}
-                onPress={() =>
-                  bench === choice
-                    ? (setBench("none"), setCheckBench(false))
-                    : (setBench(choice), setCheckBench(true))
-                }
-              >
-                <View style={styles.outterButton}>
-                  {bench === choice && <View style={styles.innerButton} />}
-                </View>
-                <Text style={[styles.font, styles.bold]}>
-                  {choice}
-                  <Text style={[styles.bold, styles.smallFont]}>{"\n"}PAR</Text>
-                </Text>
-              </TouchableOpacity>
-            )
-          )}
-        </View>
+        <View style={styles.benchmarks}><Benchmarks/></View>
         {/* <View style={styles.elapsed}>
           <Timer></Timer>
         </View> */}
         <View style={styles.teamCharts}>
           {Array(16)
             .fill()
-            .map(( item, index) => (
+            .map((item, index) => (
               <TChart style={styles.tChart} key={index} tChartID={index} />
             ))}
         </View>
@@ -88,12 +43,8 @@ function PracticeBottom(props) {
 
 const styles = StyleSheet.create({
   benchmarks: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    width: "100%",
-    marginTop: 0,
-    marginBottom: 0,
-    paddingRight: 10,
+    height: "10%",
+    // backgroundColor: "white"
   },
   bold: {
     fontWeight: "bold",
@@ -135,7 +86,7 @@ const styles = StyleSheet.create({
   },
   elapsed: {
     width: "100%",
-    backgroundColor: "gray"
+    backgroundColor: "gray",
   },
   font: {
     fontSize: 14,

@@ -21,7 +21,7 @@ function PracticeTop(props) {
     //header
     <View style={styles.container}>
       <View style={styles.header}>
-        <View style={{ flex: 1,}}>
+        <View style={{ flex: 1, alignItems: "flex-start", marginLeft: 20 }}>
           <Timer />
         </View>
         <View style={{ flex: 2, height: "100%" }}>
@@ -33,7 +33,8 @@ function PracticeTop(props) {
           style={{
             flex: 1,
             justifyContent: "center",
-            alignItems: "center",
+            alignItems: "flex-end",
+            marginRight: 20,
           }}
         >
           <Icon.Button
@@ -41,7 +42,11 @@ function PracticeTop(props) {
             backgroundColor={"gray"}
             size={25}
             iconStyle={{
-              marginRight: "auto",
+              marginRight: 0,
+              marginLeft: 0,
+              height: 25,
+              width: 25,
+
             }}
           />
           {/* <Text>Settings</Text> */}
@@ -126,7 +131,7 @@ const styles = StyleSheet.create({
   header: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "flex-end",
     paddingBottom: 5,
   },

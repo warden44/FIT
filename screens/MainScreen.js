@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     zIndex: -1,
   },
   container: {
-    paddingTop: 15,
+    paddingTop: 20,
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-around",

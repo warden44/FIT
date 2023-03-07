@@ -143,7 +143,6 @@ function Timer(props) {
             </View>
           </View>
           <TouchableOpacity
-          
             style={styles.bigTimer}
             onLongPress={() => {
               //reset timer and date
@@ -234,9 +233,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    width: "100%",
-    height: "100%",
-
+    flex: 1,
   },
   currentTime: {
     opacity: 0.075,
@@ -274,10 +271,6 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     textAlign: "center",
   },
-
-  // smallFont: {
-  //   fontSize: 15,
-  // },
 });
 
 export default Timer;

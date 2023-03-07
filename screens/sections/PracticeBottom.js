@@ -11,6 +11,7 @@ import {
 import Timer from "../../src/app/features/Timer";
 import Tasks from "../../src/app/features/tasks/Tasks";
 import Benchmarks from "../../components/Benchmarks";
+import ElapsedTime from "../../components/ElapsedTime";
 import TChart from "../../src/app/features/tChart/TChart";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
@@ -25,7 +26,12 @@ function PracticeBottom(props) {
       <Tasks style={{}} />
 
       <View style={styles.rightBottom}>
-        <View style={styles.benchmarks}><Benchmarks/></View>
+        <View style={styles.benchElapsed}>
+          <View style={styles.benchmarks}>
+            <Benchmarks />
+          </View>
+          <ElapsedTime style={{flex: 1}}/>
+        </View>
         {/* <View style={styles.elapsed}>
           <Timer></Timer>
         </View> */}
@@ -42,9 +48,14 @@ function PracticeBottom(props) {
 }
 
 const styles = StyleSheet.create({
-  benchmarks: {
+  benchElapsed: {
+    flexDirection: "row",
     height: "10%",
-    // backgroundColor: "white"
+  },
+  benchmarks: {
+    margin: 5,
+    marginBottom: 0,
+
   },
   bold: {
     fontWeight: "bold",

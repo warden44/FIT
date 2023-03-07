@@ -5,35 +5,20 @@ const Benchmarks = () => {
   const [allClear, setAllClear] = React.useState("");
   const [underControl, setUnderControl] = React.useState("");
   const [lossStopped, setLossStopped] = React.useState("");
-  // var currentBlinker = 0;
   const [currentBlinker, setCurrentBlinker] = useState(0);
-  // var trackTasks = [false, false, false];
   const [trackTasks, setTrackTasks] = useState([false, false, false]);
   const [blinker, setBlinker] = React.useState();
   const [checkBench, setCheckBench] = React.useState(false);
 
-  const manageBlinker = (index) => {
-    let tempTrack = [...trackTasks];
-    tempTrack[index] = true;
-    setTrackTasks(tempTrack);
+  var timer;
+  //toggles blinker every .75 seconds
+  useEffect(() => {
+    timer = setInterval(() => {
+      toggleBlinker();
+    }, 750);
 
-    if (!trackTasks[0]) {
-      setCurrentBlinker(0);
-    } else if (!trackTasks[1]) {
-      setCurrentBlinker(1);
-    } else if (!trackTasks[2]) {
-      setCurrentBlinker(2);
-    }
-    else {
-      setCurrentBlinker();
-    }
-    console.log(currentBlinker);
-    console.log(trackTasks);
-  };
-
-  // useEffect(() => {
-
-  // }, [currentBlinker, trackTasks]);
+    return () => clearInterval(timer);
+  });
 
   const toggleBlinker = () => {
     if (blinker) {
@@ -43,14 +28,26 @@ const Benchmarks = () => {
     }
   };
 
-  var timer;
-  useEffect(() => {
-    timer = setInterval(() => {
-      toggleBlinker();
-    }, 1000);
+  //called when blinker is clicked, sets the blinking task to true, relies on next useeffect
+  const manageBlinker = (index) => {
+    let tempTrack = [...trackTasks];
+    tempTrack[index] = true;
+    setTrackTasks(tempTrack);
+  };
 
-    return () => clearInterval(timer);
-  });
+  //Runs through blinkers to see which one is next, else if all done, set check to true
+  useEffect(() => {
+    if (!trackTasks[0]) {
+      setCurrentBlinker(0);
+    } else if (!trackTasks[1]) {
+      setCurrentBlinker(1);
+    } else if (!trackTasks[2]) {
+      setCurrentBlinker(2);
+    } else {
+      setCurrentBlinker();
+      setCheckBench(true);
+    }
+  }, [trackTasks]);
 
   return (
     <View style={styles.container}>
@@ -62,37 +59,42 @@ const Benchmarks = () => {
         }
       >
         <View style={styles.outterCheck}>
-          {checkBench === true ? (
+          {!checkBench ? (
             <View style={styles.innerCheck} />
           ) : (
             <View style={styles.innerCheckComplete} />
           )}
         </View>
-        <Text style={[styles.bold, styles.font]}>Benchmarks:</Text>
+        <Text style={styles.buttonName}>Benchmarks:</Text>
       </TouchableOpacity>
 
       {/* All Clear */}
+      {/* onPress, if blinking, move blinker and set task to true, else toggle green and white and off */}
       <TouchableOpacity
         style={styles.button}
         onPress={() =>
           currentBlinker === 0
-            ? (manageBlinker(0))
+            ? (manageBlinker(0), setAllClear(true))
             : allClear === true
             ? setAllClear(false)
-            : setAllClear(true)
+            : (manageBlinker(0), setAllClear(true))
         }
       >
-        <View style={styles.outterButton}>
+        {/* Leave all untouched tasks with a red border so screen shots can see they are not done */}
+        <View
+          style={[
+            styles.outterButton,
+            !trackTasks[0] && { borderColor: "red" },
+          ]}
+        >
+          {/* Blink or toggle green and white */}
           {currentBlinker === 0 && blinker ? (
             <View style={styles.innerButton} />
           ) : allClear === true ? (
             <View style={styles.innerButtonComplete} />
           ) : null}
         </View>
-        <Text style={[styles.font, styles.bold]}>
-          "All Clear" Complete
-          <Text style={[styles.bold, styles.smallFont]}>{"\n"}PAR</Text>
-        </Text>
+        <Text style={styles.buttonName}>"All Clear" Complete{"\n"}PAR</Text>
       </TouchableOpacity>
 
       {/* Fire Under Control */}
@@ -100,10 +102,10 @@ const Benchmarks = () => {
         style={styles.button}
         onPress={() =>
           currentBlinker === 1
-          ? (manageBlinker(1))
-          : underControl === true
+            ? (manageBlinker(1), setUnderControl(true))
+            : underControl === true
             ? setUnderControl(false)
-            : setUnderControl(true)
+            : (manageBlinker(1), setUnderControl(true))
         }
       >
         <View style={styles.outterButton}>
@@ -113,10 +115,7 @@ const Benchmarks = () => {
             <View style={styles.innerButtonComplete} />
           ) : null}
         </View>
-        <Text style={[styles.font, styles.bold]}>
-          Fire Under Control
-          <Text style={[styles.bold, styles.smallFont]}>{"\n"}PAR</Text>
-        </Text>
+        <Text style={styles.buttonName}>Fire Under Control{"\n"}PAR</Text>
       </TouchableOpacity>
 
       {/* Loss Stopped */}
@@ -124,10 +123,10 @@ const Benchmarks = () => {
         style={styles.button}
         onPress={() =>
           currentBlinker === 2
-          ? (manageBlinker(2))
-          : lossStopped === true
+            ? (manageBlinker(2), setLossStopped(true))
+            : lossStopped === true
             ? setLossStopped(false)
-            : setLossStopped(true)
+            : (manageBlinker(2), setLossStopped(true))
         }
       >
         <View style={styles.outterButton}>
@@ -137,10 +136,7 @@ const Benchmarks = () => {
             <View style={styles.innerButtonComplete} />
           ) : null}
         </View>
-        <Text style={[styles.font, styles.bold]}>
-          Loss Stopped
-          <Text style={[styles.bold, styles.smallFont]}>{"\n"}PAR</Text>
-        </Text>
+        <Text style={styles.buttonName}>Loss Stopped{"\n"}PAR</Text>
       </TouchableOpacity>
     </View>
   );
@@ -148,64 +144,57 @@ const Benchmarks = () => {
 
 export default Benchmarks;
 
+//to give white gap like in the top buttons and checks, change widths and heights of inners back to 10
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    justifyContent: "flex-end",
-    width: "100%",
+    justifyContent: "flex-start",
+    flex: 1,
     marginTop: 0,
     marginBottom: 0,
     paddingRight: 10,
     backgroundColor: "lightblue",
   },
-  bold: {
-    fontWeight: "bold",
-  },
   button: {
     flexDirection: "row",
-  },
-  buttons: {
-    flexDirection: "row",
-    width: "100%",
-    marginTop: 0,
-    marginBottom: 0,
     alignItems: "center",
+  },
+  buttonName: {
+    textAlign: "center",
+    textAlignVertical: "center",
+    justifyContent: "center",
+    fontWeight: "bold",
+    fontSize: 11,
   },
   check: {
     flexDirection: "row",
   },
-  extraLine: {
-    flexDirection: "column",
-  },
-  indent: {
-    left: 20,
-  },
   innerButton: {
-    width: 10,
-    height: 10,
+    width: 15,
+    height: 15,
     backgroundColor: "red",
     borderRadius: 10,
   },
   innerButtonComplete: {
-    width: 10,
-    height: 10,
+    width: 15,
+    height: 15,
     backgroundColor: "green",
     borderRadius: 10,
   },
   innerCheck: {
-    width: 10,
-    height: 10,
+    width: 15,
+    height: 15,
     backgroundColor: "red",
   },
   innerCheckComplete: {
-    width: 10,
-    height: 10,
+    width: 15,
+    height: 15,
     backgroundColor: "green",
   },
   outterButton: {
     width: 15,
     height: 15,
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",
@@ -217,19 +206,11 @@ const styles = StyleSheet.create({
   outterCheck: {
     width: 15,
     height: 15,
-    borderWidth: 1,
+    borderWidth: 2,
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
     marginRight: 10,
     backgroundColor: "white",
-  },
-  wrapper: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    width: "100%",
-    marginTop: 0,
-    marginBottom: 0,
   },
 });

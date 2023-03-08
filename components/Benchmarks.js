@@ -182,13 +182,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   innerCheck: {
-    width: 15,
-    height: 15,
+    width: 13,
+    height: 13,
     backgroundColor: "red",
   },
   innerCheckComplete: {
-    width: 15,
-    height: 15,
+    width: 13,
+    height: 13,
     backgroundColor: "green",
   },
   outterButton: {

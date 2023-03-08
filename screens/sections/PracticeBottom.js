@@ -32,9 +32,6 @@ function PracticeBottom(props) {
           </View>
           <ElapsedTime style={{flex: 1}}/>
         </View>
-        {/* <View style={styles.elapsed}>
-          <Timer></Timer>
-        </View> */}
         <View style={styles.teamCharts}>
           {Array(16)
             .fill()

@@ -22,7 +22,7 @@ const TeamList = (props) => {
   const push = props.push;
   const pagination = props.pagination;
 
-  const [department, setDepartment] = React.useState(3); //Pagination state
+  const [department, setDepartment] = React.useState(1); //Pagination state
   const numberOfTeams = 7;
 
   return (

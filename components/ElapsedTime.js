@@ -4,8 +4,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Audio } from "expo-av";
 
 const ElapsedTime = () => {
-  const [seconds, setSeconds] = useState(55);
-  const [minutes, setMinutes] = useState(19);
+  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(0);
   const [hours, setHours] = useState(0);
   const [increment, setIncrement] = useState(1);
   const [active, setActive] = useState();
@@ -23,17 +23,25 @@ const ElapsedTime = () => {
         setMinutes(minutes + increment);
         setSeconds(0);
         if (minutes === 19) {
+          let tempPressed = pressed;
+          tempPressed[3] = false;
+          setPressed(tempPressed);
           playSound();
           setActive(20);
         }
         if (minutes === 39) {
+          let tempPressed = pressed;
+          tempPressed[7] = false;
+          setPressed(tempPressed);
           playSound();
           setActive(40);
         }
         if (minutes === 59) {
           setHours(hours + increment);
+          let tempPressed = pressed;
+          tempPressed[11] = false;
+          setPressed(tempPressed);
           setMinutes(0);
-          setPressed(Array(12));
           playSound();
           setActive(60);
         }
@@ -73,42 +81,56 @@ const ElapsedTime = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 1, backgroundColor: "black" }}>
-        <Button title="Play Sound" onPress={playSound} />
-      </View>
       <Text style={styles.titleText}>Elapsed Time {"\n"}Notifications: </Text>
       <View style={styles.markerContainer}>
+        {/* {minuteMarkers.map((item, index) => {
+          return (
+            <View
+              key={index}
+              style={styles.markerView}
+            >
+              <Text style={styles.fiver}>s</Text>
+            </View>
+          );
+        })} */}
         {minuteMarkers.map((fiver, index) => {
           let tempPressed = pressed;
           return (
-            <TouchableOpacity
-              style={styles.touchableMarker}
-              key={index}
-              onPress={() => (
-                (tempPressed[index] = tempPressed[index] ? false : true),
-                setPressed(tempPressed),
-                active === fiver
-                  ? (sound.unloadAsync(), setBlinker(false), setActive(null))
-                  : null
-              )}
-            >
-              {
-                <Text
-                  style={pressed[index] ? styles.fiverPassedTime : styles.fiver}
-                >
-                  {fiver % 20 === 0 ? (
-                    <Text
-                      style={active === fiver && blinker ? null : styles.par}
-                    >
-                      {fiver}
-                      {"\n"}PAR
-                    </Text>
-                  ) : (
-                    <Text>{fiver}</Text>
-                  )}
-                </Text>
-              }
-            </TouchableOpacity>
+            <View style={styles.markerView} key={index}>
+              <TouchableOpacity
+                style={styles.markerTouch}
+                onPress={() => (
+                  (tempPressed[index] = tempPressed[index] ? false : true),
+                  setPressed(tempPressed),
+                  // activ ? setPressed(Array(12)) : null,
+                  active === fiver
+                    ? (sound.unloadAsync(),
+                      setBlinker(false),
+                      setActive(null),
+                      fiver === 60 && setPressed(Array(12)))
+                    : null
+                )}
+              >
+                {
+                  <Text
+                    style={
+                      pressed[index] ? styles.fiverPassedTime : styles.fiver
+                    }
+                  >
+                    {fiver % 20 === 0 ? (
+                      <Text
+                        style={active === fiver && blinker ? null : styles.par}
+                      >
+                        {fiver}
+                        {"\n"}PAR
+                      </Text>
+                    ) : (
+                      <Text>{fiver}</Text>
+                    )}
+                  </Text>
+                }
+              </TouchableOpacity>
+            </View>
           );
         })}
       </View>
@@ -126,6 +148,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: 5,
     marginBottom: 0,
+    backgroundColor: "lightgreen",
   },
   fiverPassedTime: {
     opacity: 0.075,
@@ -140,10 +163,19 @@ const styles = StyleSheet.create({
   },
   markerContainer: {
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    justifyContent: "flex-end",
     alignItems: "center",
     height: "100%",
+    width: "100%",
     flex: 4,
+  },
+  markerTouch: {
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  markerView: {
+    flex: 1,
   },
   par: {
     textAlign: "center",
@@ -154,11 +186,5 @@ const styles = StyleSheet.create({
     verticalAlign: "center",
     marginRight: "auto",
     flex: 1,
-  },
-  touchableMarker: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center",
   },
 });

@@ -16,20 +16,8 @@ import {
 } from "./tChartSlice";
 
 import * as React from "react";
-import {
-  Dimensions,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Timer from "../Timer";
-import TChartEmptySlot from "../../../../components/TChartEmptySlot";
-import {
-  GestureHandlerRootView,
-  TextInput,
-} from "react-native-gesture-handler";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 
 function TChart(props) {
@@ -162,8 +150,24 @@ function TChart(props) {
       >
         {task.map((item, index) => TChartSlotDrax(item, index))}
       </View>
-      <View style={styles.tChartTimer}>
-        <Timer size={"smallTimer"}></Timer>
+      <View style={styles.xButtonTimer}>
+        <TouchableOpacity
+          style={styles.xButton}
+          onPress={() =>
+            team.forEach((item, index) => {
+              console.log(index);
+              console.log(team);
+              dispatch(pushEnroute(tChartTeams[tChartID][index]));
+              dispatch(spliceTChartTeam([tChartID, item.currentList, 0]));
+            })
+          }
+        >
+          <Text>X</Text>
+        </TouchableOpacity>
+
+        <View style={styles.tChartTimer}>
+          <Timer size={"smallTimer"}></Timer>
+        </View>
       </View>
     </DraxView>
   );
@@ -210,12 +214,24 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   tChartTimer: {
+    flex: 5,
     paddingLeft: 5,
     paddingRight: 5,
   },
   textStyle: {
     textAlign: "center",
     margin: 0,
+  },
+  xButton: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "red",
+  },
+  xButtonTimer: {
+    flexDirection: "row",
+    flex: 1,
+    height: "100%",
   },
 });
 

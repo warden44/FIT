@@ -86,10 +86,10 @@ function Timer(props) {
   });
 
   return (
-    <View>
+    <View style={styles.container}>
       {props.size === "smallTimer" ? (
-        <View style={styles.dateSmall}>
-          <View>
+        <View style={styles.containerSmall}>
+          <View style={styles.dateSmall}>
             <Text>
               {markHour < 10 && 0}
               {markHour >= 0 && markHour}:{markMin < 10 && 0}
@@ -105,6 +105,7 @@ function Timer(props) {
               resetDate();
             }}
             onPress={() => {
+              console.log("why does this owrk")
               //if timer is not running and is clicked, if timer is set to zero, reset date, else stop timer
               if (increment === 0) {
                 //start timer
@@ -127,7 +128,7 @@ function Timer(props) {
         </View>
       ) : (
         ////////////////////////Big Timer
-        <View style={styles.container}>
+        <View style={styles.containerBig}>
           <View style={styles.date}>
             <View>
               <Text>
@@ -170,44 +171,6 @@ function Timer(props) {
               {seconds}
             </Text>
           </TouchableOpacity>
-          {/* <View style={styles.elapsed}>
-            <Text>Elapsed Time Notifications: </Text>
-            {[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60].map((fiver) => (
-              <View key={fiver}>
-                {minutes >= fiver ? (
-                  <Text style={styles.currentTime}>
-                    {fiver % 20 === 0 ? (
-                      <Text style={styles.par}>
-                        {" "}
-                        {fiver}
-                        {"\n"}PAR
-                      </Text>
-                    ) : (
-                      <Text>
-                        {fiver}
-                        {"  "}
-                      </Text>
-                    )}
-                  </Text>
-                ) : (
-                  <Text style={styles.fiver}>
-                    {fiver % 20 === 0 ? (
-                      <Text style={styles.par}>
-                        {" "}
-                        {fiver}
-                        {"\n"}PAR
-                      </Text>
-                    ) : (
-                      <Text>
-                        {fiver}
-                        {"  "}
-                      </Text>
-                    )}
-                  </Text>
-                )}
-              </View>
-            ))}
-          </View> */}
         </View>
       )}
     </View>
@@ -215,6 +178,23 @@ function Timer(props) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    height: "100%"
+  },
+  containerBig: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+  },
+  containerSmall: {
+    flex: 1,
+    height: "100%",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
   bigFont: {
     fontSize: 30,
   },
@@ -229,47 +209,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     textAlign: "center",
   },
-  container: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-  },
-  currentTime: {
-    opacity: 0.075,
-    fontWeight: "bold",
-    textDecorationLine: "line-through",
-    textDecorationStyle: "double",
-  },
   date: {
     justifyContent: "center",
     alignItems: "center",
     marginRight: 10,
   },
   dateSmall: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flex: 1,
+    justifyContent: "center",
     alignItems: "center",
   },
-  fiver: {
-    fontWeight: "bold",
-  },
-  elapsed: {
-    flexDirection: "row",
-  },
-  par: {
-    textAlign: "center",
-    color: "red",
-  },
   smallTimer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "lightgray",
     borderWidth: 1,
     borderRadius: 8,
     borderColor: "blue",
-    margin: 2,
     paddingLeft: 5,
     paddingRight: 5,
     textAlign: "center",
+    height: "100%",
   },
 });
 

@@ -48,10 +48,13 @@ const Tasks = () => {
 
   const checkDoubleTasks = (id) => {
     let count = 0;
-    tChartTasks.forEach((task) => {
-      if (task.id === id) {
-        count++;
-      }
+    tChartTasks.forEach((tChart) => {
+      tChart.forEach((task) => {
+        if (task.id === id) {
+          count++;
+        }
+      })
+
     });
     if (count > 1) {
       return true;
@@ -69,10 +72,11 @@ const Tasks = () => {
 
           if (payload[1] === "task") {
           } else if (payload[1] === "tChartTasks") {
-            if (!checkDoubleTasks(tChartTasks[payload[0]].id)) {
-              dispatch(pushTask(tChartTasks[payload[0]]));
+            if (!checkDoubleTasks(tChartTasks[payload[0]][payload[2]].id)) {
+              console.log("inside check");
+              dispatch(pushTask(tChartTasks[payload[0]][payload[2]]));
             }
-            dispatch(spliceTChartTask(payload[0]));
+            dispatch(spliceTChartTask(payload));
           }
         }}
       >

@@ -1,3 +1,6 @@
+// I want each team to be draggable
+// push item to end of array only allowing for two, if already has two, do nothing
+
 import { useSelector, useDispatch } from "react-redux";
 import { spliceRoster, insertRoster } from "../rosterTeams/rosterTeamsSlice";
 import { spliceEnroute, pushEnroute } from "../enrouteTeams/enrouteTeamsSlice";
@@ -23,7 +26,10 @@ import {
 } from "react-native";
 import Timer from "../Timer";
 import TChartEmptySlot from "../../../../components/TChartEmptySlot";
-import { GestureHandlerRootView, TextInput } from "react-native-gesture-handler";
+import {
+  GestureHandlerRootView,
+  TextInput,
+} from "react-native-gesture-handler";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 
 function TChart(props) {
@@ -39,11 +45,12 @@ function TChart(props) {
   let task = tChartTasks[tChartID]; //this is basically the index
 
   let team = tChartTeams[tChartID];
+  // team = [{ name: "idk" }, { name: "yes" }];
 
   let opac = 0.25;
   let glow = "black";
 
-  if (team || task) {
+  if (team.length || task.length) {
     opac = 1;
     glow = "gold";
   } else {
@@ -51,24 +58,25 @@ function TChart(props) {
     glow = "black";
   }
 
-  const TChartSlotDrax = (item) => {
+  const TChartSlotDrax = (item, index) => {
     return (
       <DraxView
         style={[
-          styles.tChartSection,
+          styles.tChartItem,
           { borderColor: "black" },
 
           item.currentList === "tChartTasks"
             ? { borderColor: "red" }
             : item.currentList === "tChartTeams"
             ? { borderColor: "green" }
-            : { borderColor: "black" },
+            : null,
         ]}
+        key={index}
         animateSnapback={false}
         draggingStyle={styles.dragging}
         dragReleasedStyle={styles.dragReleased}
         hoverDraggingStyle={styles.dragHover}
-        dragPayload={[tChartID, item.currentList]}
+        dragPayload={[tChartID, item.currentList, index]}
         longPressDelay={150}
         receivingStyle={styles.receiving}
         renderContent={({ viewState }) => {
@@ -86,14 +94,13 @@ function TChart(props) {
     );
   };
 
-
   return (
     <DraxView
       style={[styles.tChart, { opacity: opac, borderColor: glow }]}
       onReceiveDragDrop={(event) => {
         let payload = event.dragged.payload;
 
-        if (tChartTeams[tChartID]) {
+        if (tChartTeams[tChartID].length > 2) {
         } else if (payload[1] === "roster") {
           dispatch(
             insertTChartTeam({
@@ -127,7 +134,7 @@ function TChart(props) {
             })
           );
         }
-        if (tChartTasks[tChartID]) {
+        if (tChartTasks[tChartID].length > 1) {
         } else if (payload[1] === "task") {
           dispatch(
             insertTChartTask({ toIndex: tChartID, task: tasks[payload[0]] })
@@ -144,11 +151,17 @@ function TChart(props) {
         }
       }}
     >
-      {/* {team ? TChartSlotDrax(team) : TChartEmptySlot()}
-      {task ? TChartSlotDrax(task) : TChartEmptySlot()} */}
-      {TChartSlotDrax(team)}
-      {TChartSlotDrax(task)}
+      <View
+        style={team.length > 0 ? styles.tChartSection : styles.tChartSectionMT}
+      >
+        {team.map((item, index) => TChartSlotDrax(item, index))}
+      </View>
 
+      <View
+        style={task.length > 0 ? styles.tChartSection : styles.tChartSectionMT}
+      >
+        {task.map((item, index) => TChartSlotDrax(item, index))}
+      </View>
       <View style={styles.tChartTimer}>
         <Timer size={"smallTimer"}></Timer>
       </View>
@@ -178,11 +191,23 @@ const styles = StyleSheet.create({
     margin: 5,
     padding: 2,
   },
-  tChartSection: {
+  tChartItem: {
     textAlign: "center",
     flex: 1,
     borderWidth: 2,
     margin: 1,
+  },
+  tChartSection: {
+    flexDirection: "row",
+    flex: 1,
+    textAlign: "center",
+  },
+  tChartSectionMT: {
+    flexDirection: "row",
+    flex: 1,
+    textAlign: "center",
+    margin: 1,
+    borderWidth: 2,
   },
   tChartTimer: {
     paddingLeft: 5,
@@ -191,7 +216,6 @@ const styles = StyleSheet.create({
   textStyle: {
     textAlign: "center",
     margin: 0,
-    fontSize: 12.5,
   },
 });
 

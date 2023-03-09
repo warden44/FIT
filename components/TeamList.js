@@ -22,7 +22,7 @@ const TeamList = (props) => {
   const push = props.push;
   const pagination = props.pagination;
 
-  const [department, setDepartment] = React.useState(1); //Pagination state
+  const [department, setDepartment] = React.useState(3); //Pagination state
   const numberOfTeams = 7;
 
   return (
@@ -44,8 +44,8 @@ const TeamList = (props) => {
           dispatch(push(readyTeams[payload[0]]));
           dispatch(spliceReady(payload[0]));
         } else if (payload[1] === "tChartTeams") {
-          dispatch(push(tChartTeams[payload[0]]));
-          dispatch(spliceTChartTeam(payload[0]));
+          dispatch(push(tChartTeams[payload[0]][payload[2]]));
+          dispatch(spliceTChartTeam(payload));
         }
       }}
     >

@@ -16,7 +16,13 @@ import {
 } from "./tChartSlice";
 
 import * as React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Timer from "../Timer";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 
@@ -31,20 +37,39 @@ function TChart(props) {
   const dispatch = useDispatch();
 
   let task = tChartTasks[tChartID]; //this is basically the index
-
   let team = tChartTeams[tChartID];
+  const [customTask, setCustomTask] = React.useState()
+
   // team = [{ name: "idk" }, { name: "yes" }];
 
   let opac = 0.25;
   let glow = "black";
+  let xBackground = "gray";
 
-  if (team.length || task.length) {
+  if (team.length || task.length || customTask) {
     opac = 1;
     glow = "gold";
+    xBackground = "red";
   } else {
     opac = 0.25;
     glow = "black";
   }
+
+  const checkDoubleTasks = (id) => {
+    let count = 0;
+    tChartTasks.forEach((tChart) => {
+      tChart.forEach((task) => {
+        if (task.id === id) {
+          count++;
+        }
+      });
+    });
+    if (count > 1) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const TChartSlotDrax = (item, index) => {
     return (
@@ -79,6 +104,28 @@ function TChart(props) {
           );
         }}
       />
+    );
+  };
+
+  const TChartMTTask = () => {
+    return (
+      <View style={[styles.tChartSectionMT, customTask && {borderColor: "red"}]}>
+        <TextInput
+          style={{ textAlign: "center" }}
+          placeholder="+"
+          selectTextOnFocus={true}
+          onChangeText={(text) => (setCustomTask(text))}
+          disableFullscreenUI={true}
+        >
+          <Text>{customTask}</Text>
+        </TextInput>
+      </View>
+    );
+  };
+  const TChartMT = () => {
+    return (
+      <View style={styles.tChartSectionMT}>
+      </View>
     );
   };
 
@@ -139,30 +186,42 @@ function TChart(props) {
         }
       }}
     >
-      <View
-        style={team.length > 0 ? styles.tChartSection : styles.tChartSectionMT}
-      >
-        {team.map((item, index) => TChartSlotDrax(item, index))}
-      </View>
+      {team.length > 0 ? (
+        <View style={styles.tChartSection}>
+          {team.map((item, index) => TChartSlotDrax(item, index))}
+        </View>
+      ) : (
+        TChartMT()
+      )}
 
-      <View
-        style={task.length > 0 ? styles.tChartSection : styles.tChartSectionMT}
-      >
-        {task.map((item, index) => TChartSlotDrax(item, index))}
-      </View>
+      {task.length > 0 ? (
+        <View style={styles.tChartSection}>
+          {task.map((item, index) => TChartSlotDrax(item, index))}
+        </View>
+      ) : (
+        TChartMTTask()
+      )}
       <View style={styles.xButtonTimer}>
         <TouchableOpacity
-          style={styles.xButton}
-          onPress={() =>
+          style={[styles.xButton, { backgroundColor: xBackground }]}
+          onPress={() => (
             team.forEach((item, index) => {
-              console.log(index);
-              console.log(team);
               dispatch(pushEnroute(tChartTeams[tChartID][index]));
               dispatch(spliceTChartTeam([tChartID, item.currentList, 0]));
-            })
-          }
+            }),
+            task.forEach((item, index) => {
+              if (!checkDoubleTasks(item.id)) {
+                console.log("inside check");
+                dispatch(pushTask(item));
+              }
+              dispatch(spliceTChartTask([tChartID, item.currentList, 0]));
+            }),
+            (setCustomTask())
+          )}
         >
-          <Text>X</Text>
+          <Text style={styles.xButtonText} adjustsFontSizeToFit>
+            X
+          </Text>
         </TouchableOpacity>
 
         <View style={styles.tChartTimer}>
@@ -207,16 +266,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   tChartSectionMT: {
-    flexDirection: "row",
-    flex: 1,
     textAlign: "center",
-    margin: 1,
+    flex: 1,
     borderWidth: 2,
+    margin: 1,
   },
   tChartTimer: {
     flex: 5,
-    paddingLeft: 5,
-    paddingRight: 5,
   },
   textStyle: {
     textAlign: "center",
@@ -226,11 +282,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "red",
+  },
+  xButtonText: {
+    fontWeight: "bold",
   },
   xButtonTimer: {
     flexDirection: "row",
     flex: 1,
+    margin: 1,
+    marginHorizontal: 2,
     height: "100%",
   },
 });

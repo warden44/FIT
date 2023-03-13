@@ -38,7 +38,7 @@ function TChart(props) {
 
   let task = tChartTasks[tChartID]; //this is basically the index
   let team = tChartTeams[tChartID];
-  const [customTask, setCustomTask] = React.useState()
+  const [customTask, setCustomTask] = React.useState();
 
   // team = [{ name: "idk" }, { name: "yes" }];
 
@@ -97,9 +97,7 @@ function TChart(props) {
           const payload = receivingDrag && receivingDrag.payload;
           return (
             <View>
-              <Text style={styles.textStyle} adjustsFontSizeToFit>
-                {item.name}
-              </Text>
+              <Text style={styles.textStyle}>{item.name}</Text>
             </View>
           );
         }}
@@ -107,14 +105,28 @@ function TChart(props) {
     );
   };
 
-  const TChartMTTask = () => {
+  const TChartCustomTask = () => {
     return (
-      <View style={[styles.tChartSectionMT, customTask && {borderColor: "red"}]}>
+      <View
+        style={[
+          styles.tChartSectionMT,
+          customTask && { borderColor: "red", backgroundColor: "lightgray" },
+        ]}
+      >
+        {/* <TouchableOpacity
+          style={[styles.xButton, { backgroundColor: xBackground }]}
+        >
+          <Text style={styles.xButtonText} adjustsFontSizeToFit>
+            X
+          </Text>
+        </TouchableOpacity> */}
         <TextInput
-          style={{ textAlign: "center" }}
+          style={{ flex: 5, textAlign: "center" }}
           placeholder="+"
           selectTextOnFocus={true}
-          onChangeText={(text) => (setCustomTask(text))}
+          onSubmitEditing={({ nativeEvent: { text, eventCount, target } }) =>
+            setCustomTask("Custom - " + text)
+          }
           disableFullscreenUI={true}
         >
           <Text>{customTask}</Text>
@@ -123,20 +135,26 @@ function TChart(props) {
     );
   };
   const TChartMT = () => {
-    return (
-      <View style={styles.tChartSectionMT}>
-      </View>
-    );
+    return <View style={styles.tChartSectionMT}></View>;
   };
 
   return (
     <DraxView
       style={[styles.tChart, { opacity: opac, borderColor: glow }]}
       onReceiveDragDrop={(event) => {
+        console.log("wtf");
         let payload = event.dragged.payload;
 
-        if (tChartTeams[tChartID].length > 2) {
+        //////if a team
+        if (team.length > 2 || (payload[0] === tChartID && payload[1] === "tChartTeams")) {
+          console.log("1");
+          console.log(team.length > 2);
+          console.log(payload[0]);
+          console.log(tChartID);
+
         } else if (payload[1] === "roster") {
+          console.log("2");
+
           dispatch(
             insertTChartTeam({
               toIndex: tChartID,
@@ -160,29 +178,32 @@ function TChart(props) {
             })
           );
           dispatch(spliceReady(payload[0]));
-        } else if (payload[1] === "tChartTeams" && !tChartTeams[tChartID]) {
+        } else if (payload[1] === "tChartTeams") {
           dispatch(
-            moveTChartTeam({
+            insertTChartTeam({
               toIndex: tChartID,
-              fromIndex: payload[0],
-              team: tChartTeams[payload[0]],
+              team: tChartTeams[payload[0]][payload[2]],
             })
           );
+          dispatch(spliceTChartTeam(payload));
         }
-        if (tChartTasks[tChartID].length > 1) {
+        //////////////////////////////if a task
+        if (task.length > 2 || (payload[0] === tChartID && payload[1] === "tChartTasks")) {
         } else if (payload[1] === "task") {
+          setCustomTask();
           dispatch(
             insertTChartTask({ toIndex: tChartID, task: tasks[payload[0]] })
           );
           dispatch(spliceTask(payload[0]));
-        } else if (payload[1] === "tChartTasks" && !tChartTasks[tChartID]) {
+        } else if (payload[1] === "tChartTasks") {
+          setCustomTask();
           dispatch(
-            moveTChartTask({
+            insertTChartTask({
               toIndex: tChartID,
-              fromIndex: payload[0],
-              task: tChartTasks[payload[0]],
+              task: tChartTasks[payload[0]][payload[2]],
             })
           );
+          dispatch(spliceTChartTask(payload));
         }
       }}
     >
@@ -198,8 +219,10 @@ function TChart(props) {
         <View style={styles.tChartSection}>
           {task.map((item, index) => TChartSlotDrax(item, index))}
         </View>
+      ) : tChartID < 16 - 4 ? (
+        TChartMT()
       ) : (
-        TChartMTTask()
+        TChartCustomTask()
       )}
       <View style={styles.xButtonTimer}>
         <TouchableOpacity
@@ -211,12 +234,11 @@ function TChart(props) {
             }),
             task.forEach((item, index) => {
               if (!checkDoubleTasks(item.id)) {
-                console.log("inside check");
                 dispatch(pushTask(item));
               }
               dispatch(spliceTChartTask([tChartID, item.currentList, 0]));
             }),
-            (setCustomTask())
+            setCustomTask()
           )}
         >
           <Text style={styles.xButtonText} adjustsFontSizeToFit>
@@ -266,8 +288,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   tChartSectionMT: {
-    textAlign: "center",
     flex: 1,
+    flexDirection: "row",
+    textAlign: "center",
     borderWidth: 2,
     margin: 1,
   },
@@ -282,6 +305,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    textAlign: "left",
+    borderWidth: 1,
   },
   xButtonText: {
     fontWeight: "bold",

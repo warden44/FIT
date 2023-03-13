@@ -73,7 +73,6 @@ const Tasks = () => {
           if (payload[1] === "task") {
           } else if (payload[1] === "tChartTasks") {
             if (!checkDoubleTasks(tChartTasks[payload[0]][payload[2]].id)) {
-              console.log("inside check");
               dispatch(pushTask(tChartTasks[payload[0]][payload[2]]));
             }
             dispatch(spliceTChartTask(payload));

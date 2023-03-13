@@ -7,7 +7,6 @@ import { store } from "./src/app/store";
 import { Provider } from "react-redux";
 
 export default function App() {
-  console.log(store);
   return (
     <Provider store={store}>
       <MainScreen />

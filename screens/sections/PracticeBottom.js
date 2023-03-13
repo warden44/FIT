@@ -8,17 +8,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Timer from "../../src/app/features/Timer";
 import Tasks from "../../src/app/features/tasks/Tasks";
 import Benchmarks from "../../components/Benchmarks";
 import ElapsedTime from "../../components/ElapsedTime";
 import TChart from "../../src/app/features/tChart/TChart";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { DraxProvider, DraxView, DraxList } from "react-native-drax";
-import AppContext from "../../components/AppContext";
-import * as functs from "../../utils/MoveItem";
 
-const gestureRootViewStyle = { flex: 1 };
+
 
 function PracticeBottom(props) {
   return (

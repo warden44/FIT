@@ -105,7 +105,6 @@ function Timer(props) {
               resetDate();
             }}
             onPress={() => {
-              console.log("why does this owrk")
               //if timer is not running and is clicked, if timer is set to zero, reset date, else stop timer
               if (increment === 0) {
                 //start timer

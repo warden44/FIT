@@ -25,6 +25,18 @@ function Timer(props) {
   const [markMin, setMarkMin] = useState(min);
   const [markSec, setMarkSec] = useState(sec);
 
+  let sayHi = () => {
+    console.log("hi");
+  };
+
+  function startTimer() {
+    setIncrement(1);
+  }
+
+  function stopTimer() {
+    setIncrement(0);
+  }
+
   function resetTimer() {
     setSeconds(0);
     setMinutes(0);
@@ -45,6 +57,16 @@ function Timer(props) {
     setMarkHour(hour);
     setMarkMin(min);
     setMarkSec(sec);
+  }
+
+  if (props.reference) {
+    props.reference.current = {
+      hi: sayHi,
+      startTimer: startTimer,
+      stopTimer: stopTimer,
+      resetTimer: resetTimer,
+      resetDate: resetDate,
+    };
   }
 
   //make hours AM and PM
@@ -179,7 +201,7 @@ function Timer(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: "100%"
+    height: "100%",
   },
   containerBig: {
     flexDirection: "row",
@@ -226,8 +248,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     borderColor: "blue",
-    paddingLeft: 5,
-    paddingRight: 5,
+
     textAlign: "center",
     height: "100%",
   },

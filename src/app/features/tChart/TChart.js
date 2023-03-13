@@ -25,6 +25,7 @@ import {
 } from "react-native";
 import Timer from "../Timer";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
+import { useEffect } from "react";
 
 function TChart(props) {
   var tChartID = props.tChartID;
@@ -36,24 +37,41 @@ function TChart(props) {
   const tChartTasks = useSelector((state) => state.tChart.tasks);
   const dispatch = useDispatch();
 
-  let task = tChartTasks[tChartID]; //this is basically the index
+  let task = tChartTasks[tChartID];
   let team = tChartTeams[tChartID];
   const [customTask, setCustomTask] = React.useState();
 
-  // team = [{ name: "idk" }, { name: "yes" }];
+  let timerRef = React.useRef();
 
-  let opac = 0.25;
-  let glow = "black";
-  let xBackground = "gray";
+  const [active, setActive] = React.useState(false);
+  const [opac, setOpac] = React.useState(0.25);
+  const [glow, setGlow] = React.useState("black");
+  const [xBackground, setXBackground] = React.useState("gray");
 
-  if (team.length || task.length || customTask) {
-    opac = 1;
-    glow = "gold";
-    xBackground = "red";
-  } else {
-    opac = 0.25;
-    glow = "black";
-  }
+  React.useEffect(() => {
+    if (team.length || task.length || customTask) {
+      setActive(true);
+    } else {
+      setActive(false);
+    }
+  }, [team.length || task.length || customTask]);
+
+  React.useEffect(() => {
+    if (active) {
+      setOpac(1);
+      setGlow("black");
+      setXBackground("red");
+      timerRef.current.hi();
+      timerRef.current.resetTimer();
+      timerRef.current.resetDate();
+      timerRef.current.startTimer();
+    } else {
+      setOpac(0.25);
+      setGlow("black");
+      setXBackground("gray");
+      timerRef.current.stopTimer();
+    }
+  }, [active]);
 
   const checkDoubleTasks = (id) => {
     let count = 0;
@@ -142,19 +160,14 @@ function TChart(props) {
     <DraxView
       style={[styles.tChart, { opacity: opac, borderColor: glow }]}
       onReceiveDragDrop={(event) => {
-        console.log("wtf");
         let payload = event.dragged.payload;
 
         //////if a team
-        if (team.length > 2 || (payload[0] === tChartID && payload[1] === "tChartTeams")) {
-          console.log("1");
-          console.log(team.length > 2);
-          console.log(payload[0]);
-          console.log(tChartID);
-
+        if (
+          team.length > 2 ||
+          (payload[0] === tChartID && payload[1] === "tChartTeams")
+        ) {
         } else if (payload[1] === "roster") {
-          console.log("2");
-
           dispatch(
             insertTChartTeam({
               toIndex: tChartID,
@@ -188,7 +201,10 @@ function TChart(props) {
           dispatch(spliceTChartTeam(payload));
         }
         //////////////////////////////if a task
-        if (task.length > 2 || (payload[0] === tChartID && payload[1] === "tChartTasks")) {
+        if (
+          task.length > 1 ||
+          (payload[0] === tChartID && payload[1] === "tChartTasks")
+        ) {
         } else if (payload[1] === "task") {
           setCustomTask();
           dispatch(
@@ -247,7 +263,7 @@ function TChart(props) {
         </TouchableOpacity>
 
         <View style={styles.tChartTimer}>
-          <Timer size={"smallTimer"}></Timer>
+          <Timer size={"smallTimer"} reference={timerRef}></Timer>
         </View>
       </View>
     </DraxView>

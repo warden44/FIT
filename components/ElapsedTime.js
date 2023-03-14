@@ -146,8 +146,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    margin: 5,
-    marginBottom: 0,
+    padding: ".5%",
     backgroundColor: "lightgreen",
   },
   fiverPassedTime: {

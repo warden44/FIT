@@ -16,6 +16,7 @@ import TeamList from "../components/TeamList";
 import { insertRoster } from "../src/app/features/rosterTeams/rosterTeamsSlice";
 import { pushEnroute } from "../src/app/features/enrouteTeams/enrouteTeamsSlice";
 import { pushReady } from "../src/app/features/readyTeams/readyTeamsSlice";
+import { pushStaged } from "../src/app/features/stagedTeams/stagedTeams";
 import Timer from "../src/app/features/Timer";
 import Icon from "react-native-vector-icons/Feather";
 import Tasks from "../src/app/features/tasks/Tasks";
@@ -31,6 +32,7 @@ function MainScreen(props) {
   const rosterTeams = useSelector((state) => state.rosterTeams.teams);
   const enrouteTeams = useSelector((state) => state.enrouteTeams.teams);
   const readyTeams = useSelector((state) => state.readyTeams.teams);
+  const stagedTeams = useSelector((state) => state.stagedTeams.teams);
 
   return (
     <GestureHandlerRootView style={gestureRootViewStyle}>
@@ -114,7 +116,6 @@ function MainScreen(props) {
                   list={enrouteTeams}
                   listName={"enroute"}
                   push={pushEnroute}
-                  pagination={false}
                 />
               </View>
               <View style={styles.topTeamListHolder}>
@@ -123,39 +124,36 @@ function MainScreen(props) {
                   list={readyTeams}
                   listName={"ready"}
                   push={pushReady}
-                  pagination={false}
                 />
               </View>
               <View style={styles.topTeamListHolder}>
                 <TeamList
-                  title={"Ready"}
-                  list={readyTeams}
-                  listName={"ready"}
-                  push={pushReady}
-                  pagination={false}
+                  title={"Staged"}
+                  list={stagedTeams}
+                  listName={"staged"}
+                  push={pushStaged}
                 />
               </View>
             </View>
           </View>
           <View style={styles.containerBottom}>
-            <Tasks style={{}} />
-
+            <View style={styles.bottomTasks}>
+              <Tasks />
+            </View>
             <View style={styles.bottomRight}>
               <View style={styles.bottomBenchElapsed}>
                 <View style={styles.bottomBenchmarks}>
                   <Benchmarks />
                 </View>
-                <ElapsedTime style={{ flex: 1 }} />
+                <View style={styles.bottomElapsed}>
+                  <ElapsedTime />
+                </View>
               </View>
               <View style={styles.bottomTCharts}>
                 {Array(16)
                   .fill()
                   .map((item, index) => (
-                    <TChart
-                      style={styles.bottomTChart}
-                      key={index}
-                      tChartID={index}
-                    />
+                    <TChart key={index} tChartID={index} />
                   ))}
               </View>
             </View>
@@ -179,12 +177,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 20,
+    paddingHorizontal: "1%",
+    paddingVertical: ".25%",
   },
   containerHeader: {
     width: "100%",
     height: "6%",
-    paddingHorizontal: 20,
+    paddingHorizontal: "1%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-end",
@@ -199,7 +198,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 20,
+    paddingHorizontal: "1%",
+    paddingVertical: ".25%",
   },
 
   headerSettings: {
@@ -209,7 +209,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   headerSettingsButton: {
-    padding: 0,
     marginRight: "auto",
     marginLeft: "auto",
     height: 25,
@@ -245,45 +244,43 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   topTeamLists: {
-    width: "55%",
+    width: "56%",
     height: "100%",
-    marginLeft: 5,
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "white",
   },
   topTeamListHolder: {
-    width: "24%",
+    flex: 1,
+    marginHorizontal: ".5%",
+  },
+  bottomTasks: {
+    width: "25%",
+  },
+  bottomRight: {
+    width: "74%",
+    backgroundColor: "lightgray",
+    borderWidth: 2,
   },
   bottomBenchElapsed: {
     flexDirection: "row",
     height: "10%",
   },
   bottomBenchmarks: {
-    margin: 5,
-    marginBottom: 0,
+    flex: 1,
+    borderRightWidth: 0.5,
+    borderBottomWidth: 1,
   },
-  bottomRight: {
-    flex: 3,
-    margin: 5,
-    backgroundColor: "lightgray",
-    borderWidth: 2,
+  bottomElapsed: {
+    flex: 1,
+    borderLeftWidth: 0.5,
+    borderBottomWidth: 1,
   },
   bottomTCharts: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-evenly",
+    alignContent: "center",
     flexWrap: "wrap",
-  },
-  bottomTChart: {
-    // justifyContent: 'space-around',
-    // alignItems: 'center',
-    width: "25%",
-    height: "22%",
-    backgroundColor: "white",
-    margin: 5,
-    padding: 5,
-    paddingBottom: 0,
   },
   dragging: {
     width: 0,

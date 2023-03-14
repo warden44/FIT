@@ -17,6 +17,7 @@ import {
 
 import * as React from "react";
 import {
+  KeyboardAvoidingView,
   StyleSheet,
   Text,
   TextInput,
@@ -47,6 +48,8 @@ function TChart(props) {
   const [opac, setOpac] = React.useState(0.25);
   const [glow, setGlow] = React.useState("black");
   const [xBackground, setXBackground] = React.useState("gray");
+
+  const [keyboardOpen, setKeyBoardOpen] = React.useState(false);
 
   React.useEffect(() => {
     if (team.length || task.length || customTask) {
@@ -129,22 +132,31 @@ function TChart(props) {
         style={[
           styles.tChartSectionMT,
           customTask && { borderColor: "red", backgroundColor: "lightgray" },
+          keyboardOpen && {
+            position: "absolute",
+            height: 50,
+            width: "100%",
+            bottom: 5,
+            backgroundColor: "lightyellow",
+            borderWidth: 5,
+            zIndex: 1,
+          },
         ]}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
-        {/* <TouchableOpacity
-          style={[styles.xButton, { backgroundColor: xBackground }]}
-        >
-          <Text style={styles.xButtonText} adjustsFontSizeToFit>
-            X
-          </Text>
-        </TouchableOpacity> */}
         <TextInput
-          style={{ flex: 5, textAlign: "center" }}
+          style={{ flex: 5, textAlign: "center", opacity: 5 }}
           placeholder="+"
           selectTextOnFocus={true}
-          onSubmitEditing={({ nativeEvent: { text, eventCount, target } }) =>
-            setCustomTask("Custom - " + text)
-          }
+          onFocus={() => (
+            setKeyBoardOpen(true), setOpac(1), console.log(keyboardOpen)
+          )}
+          onSubmitEditing={({ nativeEvent: { text, eventCount, target } }) => {
+            setKeyBoardOpen(false);
+            if (text) {
+              setCustomTask("Custom - " + text);
+            }
+          }}
           disableFullscreenUI={true}
         >
           <Text>{customTask}</Text>

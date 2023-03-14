@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     flex: 1,
-    height: "98%",
+    height: "100%",
     width: "100%",
     justifyContent: "center",
   },
@@ -140,9 +140,9 @@ const styles = StyleSheet.create({
   taskComponent: {
     flexDirection: "column",
     flexWrap: "wrap",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     alignItems: "flex-start",
-    // alignContent: "space-around",
+    alignContent: "space-around",
     flex: 9,
     backgroundColor: "lightblue",
     borderWidth: 2,

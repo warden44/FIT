@@ -150,9 +150,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     flex: 1,
-    marginTop: 0,
-    marginBottom: 0,
-    paddingRight: 10,
+    padding: "1%",
     backgroundColor: "lightblue",
   },
   button: {

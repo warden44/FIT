@@ -17,7 +17,7 @@ import TChart from "../../src/app/features/tChart/TChart";
 
 function PracticeBottom(props) {
   return (
-    <View style={styles.container}>
+    <View style={styles.bottom}>
       <Tasks style={{}} />
 
       <View style={styles.rightBottom}>
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   check: {
     flexDirection: "row",
   },
-  container: {
+  bottom: {
     flex: 1,
     width: "100%",
     flexDirection: "row",

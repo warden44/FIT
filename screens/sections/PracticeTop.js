@@ -19,7 +19,7 @@ function PracticeTop(props) {
 
   return (
     //header
-    <View style={styles.container}>
+    <View style={styles.top}>
       <View style={styles.header}>
         <View style={{ flex: 1, alignItems: "flex-start", marginLeft: 20 }}>
           <Timer />
@@ -116,12 +116,15 @@ function PracticeTop(props) {
           pagination={false}
         />
       </View>
+
+
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  top: {
     flex: 1,
   },
   groupingText: {
@@ -145,7 +148,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     textAlign: "center",
   },
-  top: {
+  buttonsLists: {
     // flex: 10,
     width: "100%",
     maxHeight: "100%",

@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     width: "20%",
     height: "22%",
     backgroundColor: "lightyellow",
-    borderWidth: 1,
+    borderWidth: 3,
     margin: 5,
     padding: 2,
   },

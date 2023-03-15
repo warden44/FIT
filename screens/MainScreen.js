@@ -12,6 +12,7 @@ import PracticeTop from "./sections/PracticeTop";
 import PracticeBottom from "./sections/PracticeBottom";
 import Bottom from "./sections/Bottom";
 import CheckListItem from "../components/CheckListItem";
+import Mayday from "../components/Mayday";
 import TeamList from "../components/TeamList";
 import { insertRoster } from "../src/app/features/rosterTeams/rosterTeamsSlice";
 import { pushEnroute } from "../src/app/features/enrouteTeams/enrouteTeamsSlice";
@@ -26,8 +27,11 @@ import TChart from "../src/app/features/tChart/TChart";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 function MainScreen(props) {
   const gestureRootViewStyle = { flex: 1 };
+
+  const [mayday, setMayday] = useState(true);
 
   const rosterTeams = useSelector((state) => state.rosterTeams.teams);
   const enrouteTeams = useSelector((state) => state.enrouteTeams.teams);
@@ -60,45 +64,59 @@ function MainScreen(props) {
           </View>
           <View style={styles.containerTop}>
             {/* Initial Size Up Buttons */}
-            <View style={styles.topButtons}>
-              <Text style={styles.topButtonsGroupingText}>
-                Initial Size-Up:
-              </Text>
-              <CheckListItem
-                title={"Working Fire Notifications:"}
-                checkList={["1st alarm", "2nd alarm", "3rd alarm"]}
-                bold={true}
-                indent={true}
-              />
-              <CheckListItem
-                title={"On Scene Report:"}
-                checkList={[
-                  "Location / Building Type / Smoke and Fire Conditions / Threats to Exposures",
-                ]}
-                indent={true}
-              />
-              <CheckListItem
-                title={"Declare Strategy:"}
-                checkList={["Offensive", "Defensive"]}
-              />
-              <CheckListItem
-                title={"Declare Mode:"}
-                checkList={["Investigative", "Fast Action", "Command"]}
-              />
-              <CheckListItem
-                title={"Establish Command:"}
-                checkList={[
-                  'Name / Incident Command / Designated "A" Side / Command Post Location',
-                ]}
-                indent={true}
-              />
-              <CheckListItem
-                title={"Designate Accountability Location:"}
-                checkList={[
-                  "Initial Operation / Urgent Needs / Instruction to Incoming Units",
-                ]}
-                indent={true}
-              />
+
+            <View style={styles.topLeft}>
+              <TouchableOpacity
+                style={styles.topMaydayButton}
+                onPress={() => (
+                  setMayday(mayday ? false : true), console.log("settingmayday")
+                )}
+              >
+                <Text style={styles.topMaydayButtonText}>{mayday ? "Check List" : "MAYDAY"}</Text>
+              </TouchableOpacity>
+              <View style={[styles.topMayday, { opacity: mayday ? 1 : 0 }]}>
+                <Mayday />
+              </View>
+              <View style={{ opacity: mayday ? 0 : 1 }}>
+                <Text style={styles.topButtonsGroupingText}>
+                  Initial Size-Up:
+                </Text>
+                <CheckListItem
+                  title={"Working Fire Notifications:"}
+                  checkList={["1st alarm", "2nd alarm", "3rd alarm"]}
+                  bold={true}
+                  indent={true}
+                />
+                <CheckListItem
+                  title={"On Scene Report:"}
+                  checkList={[
+                    "Location / Building Type / Smoke and Fire Conditions / Threats to Exposures",
+                  ]}
+                  indent={true}
+                />
+                <CheckListItem
+                  title={"Declare Strategy:"}
+                  checkList={["Offensive", "Defensive"]}
+                />
+                <CheckListItem
+                  title={"Declare Mode:"}
+                  checkList={["Investigative", "Fast Action", "Command"]}
+                />
+                <CheckListItem
+                  title={"Establish Command:"}
+                  checkList={[
+                    'Name / Incident Command / Designated "A" Side / Command Post Location',
+                  ]}
+                  indent={true}
+                />
+                <CheckListItem
+                  title={"Designate Accountability Location:"}
+                  checkList={[
+                    "Initial Operation / Urgent Needs / Instruction to Incoming Units",
+                  ]}
+                  indent={true}
+                />
+              </View>
             </View>
             <View style={styles.topTeamLists}>
               <View style={styles.topTeamListHolder}>
@@ -236,8 +254,31 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 10,
   },
-  topButtons: {
-    width: "40%",
+  topLeft: {
+    width: "42.5%",
+    height: "100%",
+  },
+  topMaydayButton: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    width: "15%",
+    height: "15%",
+    backgroundColor: "red",
+    zIndex: 2,
+    justifyContent: "center",
+  },
+  topMayday: {
+    position: "absolute",
+    right: "20%",
+    width: "65%",
+    height: "100%",
+  },
+  topMaydayButtonText: {
+    textAlign: "center",
+    textAlignVertical: "center",
+    color: "white",
+    fontWeight: "bold",
   },
   topButtonsGroupingText: {
     fontSize: 15,

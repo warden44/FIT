@@ -6,6 +6,7 @@ import {
   View,
   SafeAreaView,
   StatusBar,
+  Switch,
 } from "react-native";
 import Top from "./sections/Top";
 import PracticeTop from "./sections/PracticeTop";
@@ -66,14 +67,29 @@ function MainScreen(props) {
             {/* Initial Size Up Buttons */}
 
             <View style={styles.topLeft}>
-              <TouchableOpacity
-                style={styles.topMaydayButton}
-                onPress={() => (
-                  setMayday(mayday ? false : true), console.log("settingmayday")
-                )}
+              <View
+                style={styles.topMaydayContainer}
               >
-                <Text style={styles.topMaydayButtonText}>{mayday ? "Check List" : "MAYDAY"}</Text>
-              </TouchableOpacity>
+                <View style={styles.topMaydayLabel}>
+                  <Text style={[styles.topMaydayLabelText, {borderBottomWidth: 1}, mayday && {color: "white"}]}>
+                    Check List
+                  </Text>
+                  <Text style={[styles.topMaydayLabelText, !mayday && {color: "white"}]}>
+                    MAYDAY
+                  </Text>
+                </View>
+                <View style={styles.topMaydaySwitch}>
+                  <Switch
+                    onValueChange={() => (
+                      setMayday(mayday ? false : true),
+                      console.log("settingmayday")
+                    )}
+                    value={mayday}
+                    thumbColor={"black"}
+                    trackColor={{true: "yellow", false: "yellow"}}
+                  />
+                </View>
+              </View>
               <View style={[styles.topMayday, { opacity: mayday ? 1 : 0 }]}>
                 <Mayday />
               </View>
@@ -258,27 +274,46 @@ const styles = StyleSheet.create({
     width: "42.5%",
     height: "100%",
   },
-  topMaydayButton: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    width: "15%",
-    height: "15%",
-    backgroundColor: "red",
-    zIndex: 2,
-    justifyContent: "center",
-  },
   topMayday: {
     position: "absolute",
-    right: "20%",
+    left: 0,
     width: "65%",
     height: "100%",
   },
-  topMaydayButtonText: {
+  topMaydayContainer: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    width: "30%",
+    height: "25%",
+    backgroundColor: "lightgray",
+    zIndex: 1,
+    borderWidth: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 1,
+  },
+  topMaydayLabel: {
+    flex: 2,
+    height: "100%",
+    zIndex: 1,
+    marginRight: "1%",
+    padding: 1,
+    justifyContent: "center",
+  },
+  topMaydayLabelText: {
+    flex: 1,
     textAlign: "center",
     textAlignVertical: "center",
-    color: "white",
+    color: "black",
     fontWeight: "bold",
+  },
+  topMaydaySwitch: {
+    flex: 1,
+    height: "100%",
+    marginLeft: "1%",
+    transform: [{ rotate: "90deg" }],
   },
   topButtonsGroupingText: {
     fontSize: 15,

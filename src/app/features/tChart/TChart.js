@@ -269,7 +269,7 @@ function TChart(props) {
             setCustomTask()
           )}
         >
-          <Text style={styles.xButtonText} adjustsFontSizeToFit>
+          <Text style={styles.xButtonText}>
             X
           </Text>
         </TouchableOpacity>

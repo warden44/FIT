@@ -64,7 +64,6 @@ function TChart(props) {
       setOpac(1);
       setGlow("black");
       setXBackground("red");
-      timerRef.current.hi();
       timerRef.current.resetTimer();
       timerRef.current.resetDate();
       timerRef.current.startTimer();
@@ -93,6 +92,7 @@ function TChart(props) {
   };
 
   const TChartSlotDrax = (item, index) => {
+
     return (
       <DraxView
         style={[
@@ -107,17 +107,22 @@ function TChart(props) {
         ]}
         key={index}
         animateSnapback={false}
-        draggingStyle={styles.dragging}
-        dragReleasedStyle={styles.dragReleased}
-        hoverDraggingStyle={styles.dragHover}
+        // draggingStyle={styles.dragging}
+        // dragReleasedStyle={styles.dragReleased}
+        // hoverStyle={styles.dragHover}
         dragPayload={[tChartID, item.currentList, index]}
         longPressDelay={150}
         receivingStyle={styles.receiving}
         renderContent={({ viewState }) => {
-          const receivingDrag = viewState && viewState.receivingDrag;
-          const payload = receivingDrag && receivingDrag.payload;
           return (
-            <View>
+            <View style={{ backgroundColor: "lightyellow" }}>
+              <Text style={styles.textStyle}>{item.name}</Text>
+            </View>
+          );
+        }}
+        renderHoverContent={({ viewState }) => {
+          return (
+            <View style={{ backgroundColor: "lightyellow" }}>
               <Text style={styles.textStyle}>{item.name}</Text>
             </View>
           );
@@ -269,9 +274,7 @@ function TChart(props) {
             setCustomTask()
           )}
         >
-          <Text style={styles.xButtonText}>
-            X
-          </Text>
+          <Text style={styles.xButtonText}>X</Text>
         </TouchableOpacity>
 
         <View style={styles.tChartTimer}>
@@ -284,15 +287,18 @@ function TChart(props) {
 
 const styles = StyleSheet.create({
   dragging: {
-    width: 0,
-    height: 0,
-    textAlign: "center",
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 50,
+    borderColor: "black",
+    display: "none",
   },
   dragHover: {
-    width: "15%",
-    height: "auto",
-    backgroundColor: "lightyellow",
-    borderWidth: 2,
+    // width: "15%",
+    // height: "auto",
+    // backgroundColor: "lightyellow",
+    // borderWidth: 2,
+    display: "flex",
   },
   tChart: {
     // justifyContent: 'space-around',

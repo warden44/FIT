@@ -146,14 +146,6 @@ const initialState = {
     },
     {
       id: 18,
-      name: "Water",
-      border_color: "red",
-      currentList: "task",
-      tChart: 12,
-      priority: 1,
-    },
-    {
-      id: 19,
       name: "Rehab",
       border_color: "red",
       currentList: "task",
@@ -161,7 +153,7 @@ const initialState = {
       priority: 1,
     },
     {
-      id: 20,
+      id: 19,
       name: "Salvage",
       border_color: "red",
       currentList: "task",
@@ -169,7 +161,7 @@ const initialState = {
       priority: 1,
     },
     {
-      id: 21,
+      id: 20,
       name: "Overhaul",
       border_color: "red",
       currentList: "task",
@@ -177,7 +169,7 @@ const initialState = {
       priority: 1,
     },
     {
-      id: 22,
+      id: 21,
       name: "Medical",
       border_color: "red",
       currentList: "task",
@@ -185,7 +177,7 @@ const initialState = {
       priority: 1,
     },
     {
-      id: 23,
+      id: 22,
       name: "Traffic Control",
       border_color: "yellow",
       currentList: "task",
@@ -193,7 +185,7 @@ const initialState = {
       priority: 2,
     },
     {
-      id: 24,
+      id: 23,
       name: "Police",
       border_color: "yellow",
       currentList: "task",
@@ -201,7 +193,7 @@ const initialState = {
       priority: 2,
     },
     {
-      id: 25,
+      id: 24,
       name: "PIO",
       border_color: "yellow",
       currentList: "task",
@@ -209,7 +201,7 @@ const initialState = {
       priority: 2,
     },
     {
-      id: 26,
+      id: 25,
       name: "Investigators",
       border_color: "yellow",
       currentList: "task",
@@ -217,7 +209,7 @@ const initialState = {
       priority: 2,
     },
     {
-      id: 27,
+      id: 26,
       name: "Fire Marhsal",
       border_color: "yellow",
       currentList: "task",
@@ -225,7 +217,7 @@ const initialState = {
       priority: 2,
     },
     {
-      id: 28,
+      id: 27,
       name: "State Fire Marhsal",
       border_color: "yellow",
       currentList: "task",
@@ -233,7 +225,7 @@ const initialState = {
       priority: 2,
     },
     {
-      id: 29,
+      id: 28,
       name: "Health Department",
       border_color: "yellow",
       currentList: "task",
@@ -241,7 +233,7 @@ const initialState = {
       priority: 2,
     },
     {
-      id: 30,
+      id: 29,
       name: "Occupant Services",
       border_color: "yellow",
       currentList: "task",
@@ -249,7 +241,7 @@ const initialState = {
       priority: 2,
     },
     {
-      id: 31,
+      id: 30,
       name: "Board Up",
       border_color: "yellow",
       currentList: "task",
@@ -257,13 +249,21 @@ const initialState = {
       priority: 2,
     },
     {
-      id: 32,
+      id: 31,
       name: "Red Cross",
       border_color: "yellow",
       currentList: "task",
       tChart: 12,
       priority: 2,
     },
+    // {
+    //   id: 18,
+    //   name: "Water",
+    //   border_color: "yellow",
+    //   currentList: "task",
+    //   tChart: 12,
+    //   priority: 2,
+    // },
   ],
 };
 

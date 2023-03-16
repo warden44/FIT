@@ -32,7 +32,7 @@ import { useState } from "react";
 function MainScreen(props) {
   const gestureRootViewStyle = { flex: 1 };
 
-  const [mayday, setMayday] = useState(true);
+  const [mayday, setMayday] = useState(false);
 
   const rosterTeams = useSelector((state) => state.rosterTeams.teams);
   const enrouteTeams = useSelector((state) => state.enrouteTeams.teams);
@@ -67,26 +67,34 @@ function MainScreen(props) {
             {/* Initial Size Up Buttons */}
 
             <View style={styles.topLeft}>
-              <View
-                style={styles.topMaydayContainer}
-              >
+              <View style={styles.topMaydayContainer}>
                 <View style={styles.topMaydayLabel}>
-                  <Text style={[styles.topMaydayLabelText, {borderBottomWidth: 1}, mayday && {color: "white"}]}>
+                  <Text
+                    style={[
+                      styles.topMaydayLabelText,
+                      { borderBottomWidth: 1 },
+                      { color: "black" },
+                      mayday && { opacity: 0.5 },
+                    ]}
+                  >
                     Check List
                   </Text>
-                  <Text style={[styles.topMaydayLabelText, !mayday && {color: "white"}]}>
+                  <Text
+                    style={[
+                      styles.topMaydayLabelText,
+                      { color: "yellow" },
+                      !mayday && { opacity: 0.5 },
+                    ]}
+                  >
                     MAYDAY
                   </Text>
                 </View>
                 <View style={styles.topMaydaySwitch}>
                   <Switch
-                    onValueChange={() => (
-                      setMayday(mayday ? false : true),
-                      console.log("settingmayday")
-                    )}
+                    onValueChange={() => setMayday(mayday ? false : true)}
                     value={mayday}
-                    thumbColor={"black"}
-                    trackColor={{true: "yellow", false: "yellow"}}
+                    thumbColor={mayday ? "yellow" : "black"}
+                    trackColor={{ true: "white", false: "white" }}
                   />
                 </View>
               </View>
@@ -228,7 +236,6 @@ const styles = StyleSheet.create({
     borderTopColor: "black",
     borderTopWidth: 2,
     borderBottomColor: "black",
-    borderBottomWidth: 2,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -273,6 +280,9 @@ const styles = StyleSheet.create({
   topLeft: {
     width: "42.5%",
     height: "100%",
+    padding: 1,
+    borderBottomWidth: 2,
+    borderRightWidth: 2
   },
   topMayday: {
     position: "absolute",
@@ -283,7 +293,7 @@ const styles = StyleSheet.create({
   topMaydayContainer: {
     position: "absolute",
     top: 0,
-    right: 0,
+    right: "1%",
     width: "30%",
     height: "25%",
     backgroundColor: "lightgray",

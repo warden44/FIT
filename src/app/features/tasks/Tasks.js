@@ -10,7 +10,7 @@ import {
   moveTChartTasks,
 } from "../tChart/tChartSlice";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Switch } from "react-native";
 import React from "react";
 
 const Tasks = () => {
@@ -25,23 +25,22 @@ const Tasks = () => {
       <DraxView
         style={[styles.task, { borderColor: item.border_color }]}
         animateSnapback={false}
-        draggingStyle={styles.dragging}
-        dragReleasedStyle={styles.dragReleased}
-        hoverDraggingStyle={styles.dragHover}
         dragPayload={[index, item.currentList]}
-        longPressDelay={150}
+        longPressDelay={0}
         receivingStyle={styles.receiving}
         renderContent={({ viewState }) => {
           const receivingDrag = viewState && viewState.receivingDrag;
           const payload = receivingDrag && receivingDrag.payload;
           return (
-            <View>
+            <TouchableOpacity
+              style={styles.taskText}
+              onLongPress={() => console.log("wow")}
+            >
               <Text style={styles.itemFont}>{item.name}</Text>
-            </View>
+            </TouchableOpacity>
           );
         }}
         key={index}
-        onReceiveDragDrop={(event) => {}}
       />
     );
   };
@@ -53,8 +52,7 @@ const Tasks = () => {
         if (task.id === id) {
           count++;
         }
-      })
-
+      });
     });
     if (count > 1) {
       return true;
@@ -67,6 +65,7 @@ const Tasks = () => {
     <View style={styles.container}>
       <DraxView
         style={styles.taskComponent}
+        onAccessibilityTap={() => console.log("does this work")}
         onReceiveDragDrop={(event) => {
           let payload = event.dragged.payload;
 
@@ -79,23 +78,21 @@ const Tasks = () => {
           }
         }}
       >
-        {tasks.map((item, index) =>
-          item.priority === priority ? TaskDrax({ item, index }) : []
+        <View style={styles.switchButton}>
+          <Switch
+            onValueChange={() => {
+              priority === 1 ? setPriority(2) : setPriority(1);
+            }}
+            value={priority === 1 ? false : true}
+            thumbColor={priority === 1 ? "red" : "yellow"}
+            trackColor={{ true: "white", false: "white" }}
+          />
+        </View>
+        {tasks.map(
+          (item, index) =>
+            item.priority === priority && TaskDrax({ item, index })
         )}
       </DraxView>
-      <View style={styles.switchTasks}>
-        <TouchableOpacity
-          style={[
-            styles.switchButton,
-            priority === 1
-              ? { backgroundColor: "red" }
-              : { backgroundColor: "yellow" },
-          ]}
-          onPress={() => {
-            priority === 1 ? setPriority(2) : setPriority(1);
-          }}
-        ></TouchableOpacity>
-      </View>
     </View>
   );
 };
@@ -115,14 +112,15 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   switchButton: {
-    opacity: 0.75,
-    flex: 1,
-    borderRadius: 10,
-    borderWidth: 3,
-  },
-  switchTasks: {
-    flex: 1,
-    marginLeft: 5,
+    width: "48%",
+    height: "7.25%",
+    backgroundColor: "lightgray",
+    flexDirection: "row",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderRadius: 100,
+    margin: 2,
+    marginVertical: 4,
   },
   task: {
     width: "48%",
@@ -130,19 +128,23 @@ const styles = StyleSheet.create({
     backgroundColor: "lightyellow",
     flexDirection: "row",
     justifyContent: "center",
+    alignItems: "center",
     borderWidth: 2,
     borderColor: "red",
     borderRadius: 10,
-    margin: 2,
-    marginTop: 4,
-    marginBottom: 4,
+    margin: "1%",
+    marginVertical: "1.25%",
+  },
+  taskText: {
+    textAlign: "center",
+    textAlignVertical: "center",
   },
   taskComponent: {
     flexDirection: "column",
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "flex-start",
-    alignContent: "space-around",
+    alignContent: "flex-start",
     flex: 9,
     backgroundColor: "lightblue",
     borderWidth: 2,

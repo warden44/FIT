@@ -282,7 +282,8 @@ const styles = StyleSheet.create({
     height: "100%",
     padding: 1,
     borderBottomWidth: 2,
-    borderRightWidth: 2
+    borderRightWidth: 2,
+
   },
   topMayday: {
     position: "absolute",

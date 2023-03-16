@@ -24,6 +24,8 @@ const Tasks = () => {
     return (
       <DraxView
         style={[styles.task, { borderColor: item.border_color }]}
+        draggingStyle={{borderColor: "yellow",}}
+        hoverDraggingStyle={{}}
         animateSnapback={false}
         dragPayload={[index, item.currentList]}
         longPressDelay={0}

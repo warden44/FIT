@@ -107,26 +107,18 @@ function TChart(props) {
         ]}
         key={index}
         animateSnapback={false}
-        // draggingStyle={styles.dragging}
-        // dragReleasedStyle={styles.dragReleased}
-        // hoverStyle={styles.dragHover}
+        draggingStyle={{width: 0, height: 0, borderWidth: 0}}
+        hoverStyle={{width: "30%", height: "30%",}}
         dragPayload={[tChartID, item.currentList, index]}
         longPressDelay={150}
         receivingStyle={styles.receiving}
         renderContent={({ viewState }) => {
           return (
-            <View style={{ backgroundColor: "lightyellow" }}>
+            <View style={{ backgroundColor: "green" }}>
               <Text style={styles.textStyle}>{item.name}</Text>
             </View>
           );
-        }}
-        renderHoverContent={({ viewState }) => {
-          return (
-            <View style={{ backgroundColor: "lightyellow" }}>
-              <Text style={styles.textStyle}>{item.name}</Text>
-            </View>
-          );
-        }}
+        }}  
       />
     );
   };

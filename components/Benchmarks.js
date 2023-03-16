@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     flex: 1,
     padding: "1%",
-    backgroundColor: "lightblue",
+    backgroundColor: "lightgreen",
   },
   button: {
     flexDirection: "row",

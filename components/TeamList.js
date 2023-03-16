@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import { DraxView } from "react-native-drax";
 
 import DraxItem from "./DraxItem";
@@ -33,38 +39,29 @@ const TeamList = (props) => {
       style={styles.container}
       onReceiveDragDrop={(event) => {
         let payload = event.dragged.payload;
-        let test;
         //if not being dropped on itself, figure out where its coming from, then copy to list and remove from old list
         if (payload[1] === listName) {
-          test = "same";
         } else if (payload[1] === "roster") {
-          test = "roster";
           dispatch(push(rosterTeams[payload[0]]));
           dispatch(spliceRoster(payload[0]));
         } else if (payload[1] === "enroute") {
-          test = "enroute";
           dispatch(push(enrouteTeams[payload[0]]));
           dispatch(spliceEnroute(payload[0]));
         } else if (payload[1] === "ready") {
-          test = "ready";
           dispatch(push(readyTeams[payload[0]]));
           dispatch(spliceReady(payload[0]));
         } else if (payload[1] === "staged") {
-          test = "staged";
           dispatch(push(stagedTeams[payload[0]]));
           dispatch(spliceStaged(payload[0]));
         } else if (payload[1] === "tChartTeams") {
-          test = "tcharts";
           dispatch(push(tChartTeams[payload[0]][payload[2]]));
           dispatch(spliceTChartTeam(payload));
         }
-        console.log(test);
       }}
     >
       <View style={styles.title}>
         <Text style={styles.titleText}>{title}</Text>
       </View>
-      {/* if pagination is set to true, filter teams, if not show all */}
       {/* if pagination is set to true, add buttons */}
       {pagination && (
         <View style={styles.departmentSelect}>
@@ -92,15 +89,22 @@ const TeamList = (props) => {
       )}
       {pagination === true ? (
         <View style={styles.teamList}>
-          {list.map((item, index) =>
-            item.name[1] === department.toString()
-              ? DraxItem({ item, index })
-              : []
+          {list.map(
+            (item, index) =>
+              item.name[1] === department.toString() && (
+                <View style={styles.team} key={index}>
+                  {DraxItem({ item, index })}
+                </View>
+              )
           )}
         </View>
       ) : (
         <View style={styles.teamList}>
-          {list.map((item, index) => DraxItem({ item, index }))}
+          {list.map((item, index) => (
+            <View style={styles.team} key={index}>
+              {DraxItem({ item, index })}
+            </View>
+          ))}
         </View>
       )}
     </DraxView>
@@ -130,12 +134,23 @@ const styles = StyleSheet.create({
   },
   departmentButton: {
     flex: 1,
+    elevation: 5,
+    zIndex: 99,
+    shadowColor: "rgba(0,0,0, .4)", // IOS
+    shadowOffset: { height: 1, width: 1 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1, //IOS
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
     height: "100%",
     margin: 2,
+  },
+  team: {
+    width: Dimensions.get("window").width * 0.04,
+    height: Dimensions.get("window").height * 0.04,
+    margin: "1%",
   },
   teamList: {
     flexDirection: "column",
@@ -145,13 +160,13 @@ const styles = StyleSheet.create({
     width: "100%",
     flex: 6,
     margin: 0,
-    padding: 0,
+    paddingVertical: 1,
   },
   title: {
     flex: 1,
     width: "100%",
     borderBottomWidth: 2,
-    backgroundColor: "lightgray"
+    backgroundColor: "lightgray",
   },
   titleText: {
     fontSize: 20,

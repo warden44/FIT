@@ -4,8 +4,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Audio } from "expo-av";
 
 const ElapsedTime = () => {
-  const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(55);
+  const [minutes, setMinutes] = useState(19);
   const [hours, setHours] = useState(0);
   const [increment, setIncrement] = useState(1);
   const [active, setActive] = useState();

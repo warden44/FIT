@@ -17,6 +17,7 @@ import {
 
 import * as React from "react";
 import {
+  Dimensions,
   KeyboardAvoidingView,
   StyleSheet,
   Text,
@@ -48,8 +49,6 @@ function TChart(props) {
   const [opac, setOpac] = React.useState(0.25);
   const [glow, setGlow] = React.useState("black");
   const [xBackground, setXBackground] = React.useState("gray");
-
-  const [keyboardOpen, setKeyBoardOpen] = React.useState(false);
 
   React.useEffect(() => {
     if (team.length || task.length || customTask) {
@@ -91,34 +90,27 @@ function TChart(props) {
     }
   };
 
-  const TChartSlotDrax = (item, index) => {
-
+  const TChartDraxItem = (item, index) => {
     return (
       <DraxView
         style={[
           styles.tChartItem,
-          { borderColor: "black" },
-
-          item.currentList === "tChartTasks"
-            ? { borderColor: "red" }
-            : item.currentList === "tChartTeams"
-            ? { borderColor: "green" }
-            : null,
+          item.currentList === "tChartTasks" && styles.tChartTask,
         ]}
         key={index}
         animateSnapback={false}
-        draggingStyle={{width: 0, height: 0, borderWidth: 0}}
-        hoverStyle={{width: "30%", height: "30%",}}
+        // draggingStyle={{ width: 0, height: 0, borderWidth: 0 }}
+        // hoverStyle={{ width: "30%", height: "30%" }}
         dragPayload={[tChartID, item.currentList, index]}
         longPressDelay={150}
         receivingStyle={styles.receiving}
         renderContent={({ viewState }) => {
           return (
-            <View style={{ backgroundColor: "green" }}>
+            <View style={{}}>
               <Text style={styles.textStyle}>{item.name}</Text>
             </View>
           );
-        }}  
+        }}
       />
     );
   };
@@ -127,31 +119,22 @@ function TChart(props) {
     return (
       <View
         style={[
-          styles.tChartSectionMT,
+          styles.tChartCustomTask,
           customTask && { borderColor: "red", backgroundColor: "lightgray" },
-          keyboardOpen && {
-            position: "absolute",
-            height: 50,
-            width: "100%",
-            bottom: 5,
-            backgroundColor: "lightyellow",
-            borderWidth: 5,
-            zIndex: 1,
-          },
         ]}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <TextInput
           style={{ flex: 5, textAlign: "center", opacity: 5 }}
-          placeholder="+"
+          placeholder="Custom"
           selectTextOnFocus={true}
-          onFocus={() => (
-            setKeyBoardOpen(true), setOpac(1), console.log(keyboardOpen)
-          )}
-          onSubmitEditing={({ nativeEvent: { text, eventCount, target } }) => {
-            setKeyBoardOpen(false);
+          onFocus={() => setOpac(1)}
+          onSubmitEditing={({ nativeEvent: { text } }) => {
             if (text) {
-              setCustomTask("Custom - " + text);
+              setCustomTask(text);
+            } else {
+              setCustomTask();
+              setOpac(0.25);
             }
           }}
           disableFullscreenUI={true}
@@ -161,13 +144,10 @@ function TChart(props) {
       </View>
     );
   };
-  const TChartMT = () => {
-    return <View style={styles.tChartSectionMT}></View>;
-  };
 
   return (
     <DraxView
-      style={[styles.tChart, { opacity: opac, borderColor: glow }]}
+      style={[styles.tChartContainer, { opacity: opac, borderColor: glow }]}
       onReceiveDragDrop={(event) => {
         let payload = event.dragged.payload;
 
@@ -232,23 +212,14 @@ function TChart(props) {
         }
       }}
     >
-      {team.length > 0 ? (
-        <View style={styles.tChartSection}>
-          {team.map((item, index) => TChartSlotDrax(item, index))}
-        </View>
-      ) : (
-        TChartMT()
-      )}
-
-      {task.length > 0 ? (
-        <View style={styles.tChartSection}>
-          {task.map((item, index) => TChartSlotDrax(item, index))}
-        </View>
-      ) : tChartID < 16 - 4 ? (
-        TChartMT()
-      ) : (
-        TChartCustomTask()
-      )}
+      <View style={styles.tChartSectionMT}>
+        {team.map((item, index) => TChartDraxItem(item, index))}
+      </View>
+      <View style={styles.tChartSectionMT}>
+        {tChartID < 16 - 4 || task.length > 0
+          ? task.map((item, index) => TChartDraxItem(item, index))
+          : TChartCustomTask()}
+      </View>
       <View style={styles.xButtonTimer}>
         <TouchableOpacity
           style={[styles.xButton, { backgroundColor: xBackground }]}
@@ -292,21 +263,41 @@ const styles = StyleSheet.create({
     // borderWidth: 2,
     display: "flex",
   },
-  tChart: {
+  tChartContainer: {
     // justifyContent: 'space-around',
     // alignItems: 'center',
-    width: "20%",
-    height: "22%",
+    width: "100%",
+    height: "100%",
     backgroundColor: "lightyellow",
-    borderWidth: 3,
-    margin: 5,
-    padding: 2,
+    borderWidth: 2,
+    padding: 1,
   },
   tChartItem: {
     textAlign: "center",
+    borderRadius: 5,
+    backgroundColor: "lightgreen",
+    borderBottomWidth: 2,
+    borderRightWidth: 2,
+    borderColor: "green",
+    width: Dimensions.get("window").width * 0.04,
+    height: "100%",
+    marginHorizontal: "1%",
+  },
+  tChartTask: {
+    borderColor: "red",
+    width: Dimensions.get("window").width * 0.07,
     flex: 1,
-    borderWidth: 2,
+    backgroundColor: "#FFBEBE",
+  },
+  tChartCustomTask: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    textAlign: "center",
     margin: 1,
+    padding: 1,
   },
   tChartSection: {
     flexDirection: "row",
@@ -316,9 +307,11 @@ const styles = StyleSheet.create({
   tChartSectionMT: {
     flex: 1,
     flexDirection: "row",
+    justifyContent: "space-evenly",
     textAlign: "center",
     borderWidth: 2,
     margin: 1,
+    padding: 1,
   },
   tChartTimer: {
     flex: 5,

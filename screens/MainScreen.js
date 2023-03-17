@@ -195,7 +195,9 @@ function MainScreen(props) {
                 {Array(16)
                   .fill()
                   .map((item, index) => (
-                    <TChart key={index} tChartID={index} />
+                    <View style={styles.bottomTChart} key={index}>
+                      <TChart tChartID={index} />
+                    </View>
                   ))}
               </View>
             </View>
@@ -283,7 +285,6 @@ const styles = StyleSheet.create({
     padding: 1,
     borderBottomWidth: 2,
     borderRightWidth: 2,
-
   },
   topMayday: {
     position: "absolute",
@@ -362,12 +363,17 @@ const styles = StyleSheet.create({
     borderLeftWidth: 0.5,
     borderBottomWidth: 1,
   },
+  bottomTChart: {
+    width: "23%",
+    height: "23%",
+  },
   bottomTCharts: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-evenly",
-    alignContent: "center",
+    alignContent: "space-between",
     flexWrap: "wrap",
+    padding: ".5%",
   },
   dragging: {
     width: 0,

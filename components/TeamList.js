@@ -30,18 +30,9 @@ const TeamList = (props) => {
   const push = props.push;
   const pagination = props.pagination;
 
-  const [department, setDepartment] = React.useState(3); //Pagination state
-  const deparmentNames = [
-    "South Weber",
-    "Clinton",
-    "Syracuse",
-    "North Davis",
-    "Layton",
-    "Kaysville",
-    "Farmington",
-    "Hill AFB",
-  ];
-  const numberOfTeams = 8;
+  const [department, setDepartment] = React.useState(0); //Pagination state
+  let departmentName;
+  const numberOfTeams = list.length;
 
   return (
     <DraxView
@@ -78,7 +69,7 @@ const TeamList = (props) => {
           <TouchableOpacity
             style={styles.departmentButton}
             onPress={() =>
-              setDepartment(department === 1 ? numberOfTeams : department - 1)
+              setDepartment(department === 0 ? numberOfTeams - 1 : department - 1)
             }
           >
             <Text>{"<"}</Text>
@@ -86,13 +77,13 @@ const TeamList = (props) => {
 
           <View style={styles.departmentLabel}>
             <Text style={styles.departmentLabelText} adjustsFontSizeToFit>
-              {deparmentNames[department - 1].toString()}
+              {list[department].teamName}
             </Text>
           </View>
           <TouchableOpacity
             style={styles.departmentButton}
             onPress={() =>
-              setDepartment(numberOfTeams === department ? 1 : department + 1)
+              setDepartment(numberOfTeams - 1 === department ? 0 : department + 1)
             }
           >
             <Text>{">"}</Text>
@@ -101,21 +92,14 @@ const TeamList = (props) => {
       )}
       {pagination === true ? (
         <View style={styles.teamList}>
-          {list.map((item, index) =>
-            item.name[1] === department.toString() &&
-            item.name != "T101" &&
-            item.name != "BC111" ? (
-              <View style={styles.team} key={index}>
-                {DraxItem({ item, index })}
-              </View>
-            ) : (
-              department === 8 &&
-              (item.name === "T101" || item.name === "BC111") && (
+          {list.map(
+            (dept, index) =>
+              index === department &&
+              dept.teams.map((item, index) => (
                 <View style={styles.team} key={index}>
                   {DraxItem({ item, index })}
                 </View>
-              )
-            )
+              ))
           )}
         </View>
       ) : (

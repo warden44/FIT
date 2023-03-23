@@ -34,7 +34,7 @@ function MainScreen(props) {
 
   const [mayday, setMayday] = useState(false);
 
-  const rosterTeams = useSelector((state) => state.rosterTeams.teams);
+  const rosterTeams = useSelector((state) => state.rosterTeams.roster);
   const enrouteTeams = useSelector((state) => state.enrouteTeams.teams);
   const readyTeams = useSelector((state) => state.readyTeams.teams);
   const stagedTeams = useSelector((state) => state.stagedTeams.teams);

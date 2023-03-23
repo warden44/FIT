@@ -81,18 +81,15 @@ const ElapsedTime = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titleText}>Elapsed Time {"\n"}Notifications: </Text>
+      <TouchableOpacity
+        style={{ flex: 1 }}
+        onLongPress={() => (
+          setPressed(Array(12)), setSeconds(0), setMinutes(0)
+        )}
+      >
+        <Text style={styles.titleText}>Elapsed Time {"\n"}Notifications: </Text>
+      </TouchableOpacity>
       <View style={styles.markerContainer}>
-        {/* {minuteMarkers.map((item, index) => {
-          return (
-            <View
-              key={index}
-              style={styles.markerView}
-            >
-              <Text style={styles.fiver}>s</Text>
-            </View>
-          );
-        })} */}
         {minuteMarkers.map((fiver, index) => {
           let tempPressed = pressed;
           return (
@@ -146,8 +143,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    padding: "1%",
-    backgroundColor: "lightgreen",
+    padding: ".5%",
+    backgroundColor: "lightblue",
   },
   fiverPassedTime: {
     opacity: 0.075,

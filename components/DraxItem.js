@@ -6,7 +6,7 @@ import React from "react";
 const DraxItem = ({ item, index }) => {
   return (
     <DraxView
-      style={[styles.team, { borderColor: item.border_color }]}
+      style={styles.team}
       animateSnapback={false}
       draggingStyle={{
         position: "absolute",
@@ -34,16 +34,18 @@ export default DraxItem;
 
 const styles = StyleSheet.create({
   team: {
-    width: "100%",
-    height: "100%",
+    width: Dimensions.get("window").width * 0.04,
+    height: Dimensions.get("window").height * 0.04,
+    backgroundColor: "lightgreen",
+    borderBottomWidth: 2,
+    borderRightWidth: 2,
+    borderColor: "black",
+    borderRadius: 5,
     fontSize: 20,
-    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 2,
-    borderColor: "red",
-    backgroundColor: "lightyellow",
-    borderRadius: 10,
+
+
   },
   textStyle: {
     textAlign: "center",

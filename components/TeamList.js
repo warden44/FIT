@@ -31,7 +31,17 @@ const TeamList = (props) => {
   const pagination = props.pagination;
 
   const [department, setDepartment] = React.useState(3); //Pagination state
-  const numberOfTeams = 7;
+  const deparmentNames = [
+    "South Weber",
+    "Clinton",
+    "Syracuse",
+    "North Davis",
+    "Layton",
+    "Kaysville",
+    "Farmington",
+    "Hill AFB",
+  ];
+  const numberOfTeams = 8;
 
   return (
     <DraxView
@@ -74,8 +84,10 @@ const TeamList = (props) => {
             <Text>{"<"}</Text>
           </TouchableOpacity>
 
-          <View style={styles.departmentButton}>
-            <Text>{department}</Text>
+          <View style={styles.departmentLabel}>
+            <Text style={styles.departmentLabelText} adjustsFontSizeToFit>
+              {deparmentNames[department - 1].toString()}
+            </Text>
           </View>
           <TouchableOpacity
             style={styles.departmentButton}
@@ -89,13 +101,21 @@ const TeamList = (props) => {
       )}
       {pagination === true ? (
         <View style={styles.teamList}>
-          {list.map(
-            (item, index) =>
-              item.name[1] === department.toString() && (
+          {list.map((item, index) =>
+            item.name[1] === department.toString() &&
+            item.name != "T101" &&
+            item.name != "BC111" ? (
+              <View style={styles.team} key={index}>
+                {DraxItem({ item, index })}
+              </View>
+            ) : (
+              department === 8 &&
+              (item.name === "T101" || item.name === "BC111") && (
                 <View style={styles.team} key={index}>
                   {DraxItem({ item, index })}
                 </View>
               )
+            )
           )}
         </View>
       ) : (
@@ -126,26 +146,35 @@ const styles = StyleSheet.create({
   },
   departmentSelect: {
     alignSelf: "center",
+    width: "100%",
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
     margin: "2%",
     flex: 1,
   },
   departmentButton: {
-    flex: 1,
-    elevation: 5,
-    zIndex: 99,
-    shadowColor: "rgba(0,0,0, .4)", // IOS
-    shadowOffset: { height: 1, width: 1 }, // IOS
-    shadowOpacity: 1, // IOS
-    shadowRadius: 1, //IOS
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
-    height: "100%",
+    width: Dimensions.get("window").width * 0.025,
+    height: Dimensions.get("window").height * 0.035,
+
+    borderRadius: 100,
     margin: 2,
+  },
+  departmentLabel: {
+    justifyContent: "center",
+    alignItems: "center",
+    borderBottomWidth: 1,
+    width: Dimensions.get("window").width * 0.06,
+    height: Dimensions.get("window").height * 0.035,
+    margin: 2,
+  },
+  departmentLabelText: {
+    fontStyle: "italic",
+    color: "black",
   },
   team: {
     width: Dimensions.get("window").width * 0.04,

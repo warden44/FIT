@@ -1,5 +1,33 @@
 //Things to improve
 
+//3-22-23 meeting
+
+* Custom team
+E31, M31, A31, ME51, T21, E42, B41, B51, E32, T31,
+long press tasks to gray out
+Secondary task add 
+get rid of IRIT
+
+prioritize tasks
+Fire attack, safety officer, rit, utilities, ventilation, water supply, search and rescue
+
+
+move gas and electric to secondary
+
+change gas and electric to gas company electric company 
+
+move standpipe and fdc connection, exposure, secondary water supply to second row
+
+medical to first row
+
+add xout button to tasks
+
+take assign off tasks
+
+activate time out Mayday and checklist on erupttt
+
+//end of 3-22-23
+
 //onpress and onLongPress workarounds
 there is an onTouchStart and onTouchEnd, you could start timer define a touch
 there is also an onTouchMove, maybe you could see do a long press by making sure the item isnt moving

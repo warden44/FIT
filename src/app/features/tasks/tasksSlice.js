@@ -11,7 +11,7 @@ const initialState = {
     {
       id: 1,
       name: "Fire Attack",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
@@ -19,7 +19,7 @@ const initialState = {
     {
       id: 2,
       name: "Support/Backup Lines",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
@@ -27,7 +27,7 @@ const initialState = {
     {
       id: 3,
       name: "FDC Connection",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
@@ -35,7 +35,7 @@ const initialState = {
     {
       id: 4,
       name: "Standpipe Connection",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
@@ -43,7 +43,7 @@ const initialState = {
     {
       id: 5,
       name: "Exposure",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
@@ -51,7 +51,7 @@ const initialState = {
     {
       id: 6,
       name: "Search/Rescue",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
@@ -59,7 +59,7 @@ const initialState = {
     {
       id: 7,
       name: "Evacuation",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
@@ -67,7 +67,7 @@ const initialState = {
     {
       id: 8,
       name: "Ventilation",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
@@ -75,7 +75,7 @@ const initialState = {
     {
       id: 9,
       name: "Water Supply",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
@@ -83,23 +83,23 @@ const initialState = {
     {
       id: 10,
       name: "Secondary Water Supply",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
     },
-    {
-      id: 11,
-      name: "IRIT",
-      border_color: "red",
-      currentList: "task",
-      tChart: 12,
-      priority: 1,
-    },
+    // {
+    //   id: 11,
+    //   name: "IRIT",
+    //   background_color: "#FFBEBE",
+    //   currentList: "task",
+    //   tChart: 12,
+    //   priority: 1,
+    // },
     {
       id: 12,
       name: "RIT",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
@@ -107,7 +107,7 @@ const initialState = {
     {
       id: 13,
       name: "Assign Safety Officer",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
@@ -115,7 +115,7 @@ const initialState = {
     {
       id: 14,
       name: "Assign Accountability Officer",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
@@ -123,7 +123,7 @@ const initialState = {
     {
       id: 15,
       name: "Utilities",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
@@ -131,7 +131,7 @@ const initialState = {
     {
       id: 16,
       name: "Gas",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
@@ -139,7 +139,7 @@ const initialState = {
     {
       id: 17,
       name: "Electric",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
@@ -147,7 +147,7 @@ const initialState = {
     {
       id: 18,
       name: "Rehab",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
@@ -155,7 +155,7 @@ const initialState = {
     {
       id: 19,
       name: "Salvage",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
@@ -163,7 +163,7 @@ const initialState = {
     {
       id: 20,
       name: "Overhaul",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
@@ -171,7 +171,7 @@ const initialState = {
     {
       id: 21,
       name: "Medical",
-      border_color: "red",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 1,
@@ -179,7 +179,7 @@ const initialState = {
     {
       id: 22,
       name: "Traffic Control",
-      border_color: "yellow",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 2,
@@ -187,7 +187,7 @@ const initialState = {
     {
       id: 23,
       name: "Police",
-      border_color: "yellow",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 2,
@@ -195,7 +195,7 @@ const initialState = {
     {
       id: 24,
       name: "PIO",
-      border_color: "yellow",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 2,
@@ -203,7 +203,7 @@ const initialState = {
     {
       id: 25,
       name: "Investigators",
-      border_color: "yellow",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 2,
@@ -211,7 +211,7 @@ const initialState = {
     {
       id: 26,
       name: "Fire Marhsal",
-      border_color: "yellow",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 2,
@@ -219,7 +219,7 @@ const initialState = {
     {
       id: 27,
       name: "State Fire Marhsal",
-      border_color: "yellow",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 2,
@@ -227,7 +227,7 @@ const initialState = {
     {
       id: 28,
       name: "Health Department",
-      border_color: "yellow",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 2,
@@ -235,7 +235,7 @@ const initialState = {
     {
       id: 29,
       name: "Occupant Services",
-      border_color: "yellow",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 2,
@@ -243,7 +243,7 @@ const initialState = {
     {
       id: 30,
       name: "Board Up",
-      border_color: "yellow",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 2,
@@ -251,7 +251,7 @@ const initialState = {
     {
       id: 31,
       name: "Red Cross",
-      border_color: "yellow",
+      background_color: "#FFBEBE",
       currentList: "task",
       tChart: 12,
       priority: 2,
@@ -259,7 +259,7 @@ const initialState = {
     // {
     //   id: 18,
     //   name: "Water",
-    //   border_color: "yellow",
+    //   background_color: "#FFBEBE",
     //   currentList: "task",
     //   tChart: 12,
     //   priority: 2,
@@ -272,10 +272,10 @@ const tasksSlice = createSlice({
   initialState,
   reducers: {
     spliceTask: (state, action) => {
-      state.tasks[action.payload].border_color = "yellow";
+      state.tasks[action.payload].background_color = "#FFEA00";
     },
     pushTask: (state, action) => {
-      state.tasks[action.payload.id - 1].border_color = "gray";
+      state.tasks[action.payload.id - 1].background_color = "gray";
     },
   },
 });

@@ -192,7 +192,7 @@ function MainScreen(props) {
                 </View>
               </View>
               <View style={styles.bottomTCharts}>
-                {Array(16)
+                {Array(12)
                   .fill()
                   .map((item, index) => (
                     <View style={styles.bottomTChart} key={index}>
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-around",
-    backgroundColor: "#FFBEBE",
+    backgroundColor: "#FDEDEC",
   },
   containerBottom: {
     width: "100%",
@@ -365,7 +365,7 @@ const styles = StyleSheet.create({
   },
   bottomTChart: {
     width: "23%",
-    height: "23%",
+    height: "30%",
   },
   bottomTCharts: {
     flex: 1,

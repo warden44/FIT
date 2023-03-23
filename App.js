@@ -6,11 +6,14 @@ import FlexBox from "./screens/FlexBox";
 import { store } from "./src/app/store";
 import { Provider } from "react-redux";
 
+
+
 export default function App() {
   return (
     <Provider store={store}>
-      <MainScreen />
-    </Provider>
+
+        <MainScreen />
+    </Provider> 
   );
 }
 

@@ -11,7 +11,7 @@ const Mayday = () => {
       </View>
       <View style={styles.direction}>
         <Text style={styles.directionText}>
-          <Text style={styles.highlight}>E</Text>Mergency Traffic Declared
+          <Text style={styles.highlight}>E</Text>mergency Traffic Declared
         </Text>
       </View>
       <View style={styles.direction}>

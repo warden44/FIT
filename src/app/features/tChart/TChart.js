@@ -99,8 +99,19 @@ function TChart(props) {
         ]}
         key={index}
         animateSnapback={false}
-        // draggingStyle={{ width: 0, height: 0, borderWidth: 0 }}
-        // hoverStyle={{ width: "30%", height: "30%" }}
+        draggingStyle={{
+          position: "absolute",
+          width: 0,
+          height: 0,
+          borderWidth: 0,
+        }}
+        hoverDraggingStyle={{
+          width:
+            item.currentList === "tChartTasks"
+              ? Dimensions.get("window").width * 0.115
+              : Dimensions.get("window").width * 0.04,
+          height: Dimensions.get("window").height * 0.03,
+        }}
         dragPayload={[tChartID, item.currentList, index]}
         longPressDelay={150}
         receivingStyle={styles.receiving}
@@ -153,7 +164,7 @@ function TChart(props) {
 
         //////if a team
         if (
-          team.length > 2 ||
+          team.length > 3 ||
           (payload[0] === tChartID && payload[1] === "tChartTeams")
         ) {
         } else if (payload[1] === "roster") {
@@ -216,7 +227,7 @@ function TChart(props) {
         {team.map((item, index) => TChartDraxItem(item, index))}
       </View>
       <View style={styles.tChartSectionMT}>
-        {tChartID < 16 - 4 || task.length > 0
+        {tChartID < 16 - 16 || task.length > 0
           ? task.map((item, index) => TChartDraxItem(item, index))
           : TChartCustomTask()}
       </View>
@@ -225,7 +236,7 @@ function TChart(props) {
           style={[styles.xButton, { backgroundColor: xBackground }]}
           onPress={() => (
             team.forEach((item, index) => {
-              dispatch(pushEnroute(tChartTeams[tChartID][index]));
+              dispatch(pushReady(tChartTeams[tChartID][index]));
               dispatch(spliceTChartTeam([tChartID, item.currentList, 0]));
             }),
             task.forEach((item, index) => {
@@ -249,26 +260,12 @@ function TChart(props) {
 }
 
 const styles = StyleSheet.create({
-  dragging: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 50,
-    borderColor: "black",
-    display: "none",
-  },
-  dragHover: {
-    // width: "15%",
-    // height: "auto",
-    // backgroundColor: "lightyellow",
-    // borderWidth: 2,
-    display: "flex",
-  },
   tChartContainer: {
     // justifyContent: 'space-around',
     // alignItems: 'center',
     width: "100%",
     height: "100%",
-    backgroundColor: "lightyellow",
+    backgroundColor: "lightblue",
     borderWidth: 2,
     padding: 1,
   },

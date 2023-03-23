@@ -10,7 +10,14 @@ import {
   moveTChartTasks,
 } from "../tChart/tChartSlice";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
-import { StyleSheet, Text, View, TouchableOpacity, Switch } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Switch,
+  Dimensions,
+} from "react-native";
 import React from "react";
 
 const Tasks = () => {
@@ -19,12 +26,20 @@ const Tasks = () => {
   const dispatch = useDispatch();
 
   const [priority, setPriority] = React.useState(1);
+  const [priorityText, setPriorityText] = React.useState("Primary");
 
   const TaskDrax = ({ item, index }) => {
     return (
       <DraxView
-        style={[styles.task, { borderColor: item.border_color }]}
-        draggingStyle={{borderColor: "yellow",}}
+        style={[
+          styles.task,
+          { backgroundColor: item.background_color },
+          item.background_color === "gray" ||
+          item.background_color === "#FFEA00"
+            ? { borderColor: "black" }
+            : null,
+        ]}
+        draggingStyle={{ backgroundColor: "#FFEA00", borderColor: "black" }}
         hoverDraggingStyle={{}}
         animateSnapback={false}
         dragPayload={[index, item.currentList]}
@@ -67,7 +82,6 @@ const Tasks = () => {
     <View style={styles.container}>
       <DraxView
         style={styles.taskComponent}
-        onAccessibilityTap={() => console.log("does this work")}
         onReceiveDragDrop={(event) => {
           let payload = event.dragged.payload;
 
@@ -82,13 +96,15 @@ const Tasks = () => {
       >
         <View style={styles.switchButton}>
           <Switch
+          style={{flex: .75, alignItems: "flex-start"}}
             onValueChange={() => {
-              priority === 1 ? setPriority(2) : setPriority(1);
+              priority === 1 ? (setPriority(2), setPriorityText("Secondary")) : (setPriority(1), setPriorityText("Primary"));
             }}
             value={priority === 1 ? false : true}
-            thumbColor={priority === 1 ? "red" : "yellow"}
+            thumbColor={priority === 1 ? "red" : "red"}
             trackColor={{ true: "white", false: "white" }}
           />
+            <Text style={{flex: 1, textAlignVertical: "center"}}>{priorityText}</Text>
         </View>
         {tasks.map(
           (item, index) =>
@@ -118,22 +134,23 @@ const styles = StyleSheet.create({
     height: "7.25%",
     backgroundColor: "lightgray",
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
     borderWidth: 1,
     borderRadius: 100,
     margin: 2,
     marginVertical: 4,
   },
   task: {
-    width: "48%",
-    height: "7.25%",
-    backgroundColor: "lightyellow",
+    width: Dimensions.get("window").width * 0.115,
+    height: Dimensions.get("window").height * 0.0425,
+    backgroundColor: "#FFBEBE",
+    borderBottomWidth: 2,
+    borderRightWidth: 2,
+    borderRadius: 5,
+    borderColor: "red",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 2,
-    borderColor: "red",
-    borderRadius: 10,
     margin: "1%",
     marginVertical: "1.25%",
   },

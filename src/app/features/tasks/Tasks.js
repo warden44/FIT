@@ -42,7 +42,7 @@ const Tasks = () => {
         draggingStyle={{ backgroundColor: "#FFEA00", borderColor: "black" }}
         hoverDraggingStyle={{}}
         animateSnapback={false}
-        dragPayload={[index, item.currentList]}
+        dragPayload={{index: index, item: item}}
         longPressDelay={0}
         receivingStyle={styles.receiving}
         renderContent={({ viewState }) => {
@@ -85,10 +85,10 @@ const Tasks = () => {
         onReceiveDragDrop={(event) => {
           let payload = event.dragged.payload;
 
-          if (payload[1] === "task") {
-          } else if (payload[1] === "tChartTasks") {
-            if (!checkDoubleTasks(tChartTasks[payload[0]][payload[2]].id)) {
-              dispatch(pushTask(tChartTasks[payload[0]][payload[2]]));
+          if (payload.item.currentList === "task") {
+          } else if (payload.item.currentList === "tChartTasks") {
+            if (!checkDoubleTasks(payload.item.id)) {
+              dispatch(pushTask(payload));
             }
             dispatch(spliceTChartTask(payload));
           }

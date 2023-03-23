@@ -4,74 +4,84 @@ const customTeam = {
   teamName: "Custom",
   teams: [
     {
-      id: 6,
+      id: 101,
       name: "T21",
       border_color: "#ffaaff",
       value: 2,
       currentList: "roster",
+      department: 0,
     },
     {
-      id: 10,
+      id: 102,
       value: 0,
       name: "E31",
       border_color: "#ffaaff",
       currentList: "roster",
+      department: 0,
     },
     {
-      id: 11,
+      id: 103,
       name: "E32",
       border_color: "#ffaaff",
       value: 1,
       currentList: "roster",
+      department: 0,
     },
     {
-      id: 12,
+      id: 104,
       name: "T31",
       border_color: "#ffaaff",
       value: 2,
       currentList: "roster",
+      department: 0,
     },
     {
-      id: 13,
+      id: 105,
       value: 0,
       name: "A31",
       border_color: "#ffaaff",
       currentList: "roster",
+      department: 0,
     },
     {
-      id: 15,
+      id: 106,
       name: "M31",
       border_color: "#ffaaff",
       value: 2,
       currentList: "roster",
+      department: 0,
     },
     {
-      id: 18,
+      id: 107,
       name: "F302",
       border_color: "#ffaaff",
       value: 5,
       currentList: "roster",
+      department: 0,
     },
     {
-      id: 19,
+      id: 108,
       name: "F313",
       border_color: "#ffaaff",
       value: 5,
       currentList: "roster",
+      department: 0,
     },
     {
-      id: 23,
+      id: 109,
       name: "E42",
       border_color: "#ffaaff",
       value: 2,
       currentList: "roster",
+      department: 0,
     },
     {
-      id: 1,
+      id: 110,
       name: "BC41",
       border_color: "#ffaaff",
       value: 2,
       currentList: "roster",
+      department: 0,
     },
     {
       id: 32,
@@ -79,6 +89,7 @@ const customTeam = {
       border_color: "#ffaaff",
       value: 4,
       currentList: "roster",
+      department: 0,
     },
     {
       id: 36,
@@ -86,6 +97,7 @@ const customTeam = {
       border_color: "#ffaaff",
       value: 5,
       currentList: "roster",
+      department: 0,
     },
   ],
 };
@@ -102,6 +114,7 @@ const initialState = {
           name: "E1",
           border_color: "#ffaaff",
           currentList: "roster",
+          department: 1,
         },
         {
           id: 2,
@@ -109,6 +122,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 1,
           currentList: "roster",
+          department: 1,
         },
         {
           id: 3,
@@ -116,6 +130,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 2,
           currentList: "roster",
+          department: 1,
         },
       ],
     },
@@ -128,6 +143,7 @@ const initialState = {
           name: "A21",
           border_color: "#ffaaff",
           currentList: "roster",
+          department: 2,
         },
         {
           id: 5,
@@ -135,6 +151,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 1,
           currentList: "roster",
+          department: 2,
         },
         {
           id: 6,
@@ -142,6 +159,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 2,
           currentList: "roster",
+          department: 2,
         },
         {
           id: 7,
@@ -149,6 +167,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 3,
           currentList: "roster",
+          department: 2,
         },
         {
           id: 8,
@@ -156,6 +175,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 4,
           currentList: "roster",
+          department: 2,
         },
         {
           id: 9,
@@ -163,6 +183,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 5,
           currentList: "roster",
+          department: 2,
         },
       ],
     },
@@ -175,6 +196,7 @@ const initialState = {
           name: "E31",
           border_color: "#ffaaff",
           currentList: "roster",
+          department: 3,
         },
         {
           id: 11,
@@ -182,6 +204,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 1,
           currentList: "roster",
+          department: 3,
         },
         {
           id: 12,
@@ -189,6 +212,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 2,
           currentList: "roster",
+          department: 3,
         },
         {
           id: 13,
@@ -196,6 +220,7 @@ const initialState = {
           name: "A31",
           border_color: "#ffaaff",
           currentList: "roster",
+          department: 3,
         },
         {
           id: 14,
@@ -203,6 +228,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 1,
           currentList: "roster",
+          department: 3,
         },
         {
           id: 15,
@@ -210,6 +236,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 2,
           currentList: "roster",
+          department: 3,
         },
         {
           id: 16,
@@ -217,6 +244,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 3,
           currentList: "roster",
+          department: 3,
         },
         {
           id: 17,
@@ -224,6 +252,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 4,
           currentList: "roster",
+          department: 3,
         },
         {
           id: 18,
@@ -231,6 +260,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 5,
           currentList: "roster",
+          department: 3,
         },
         {
           id: 19,
@@ -238,6 +268,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 5,
           currentList: "roster",
+          department: 3,
         },
       ],
     },
@@ -250,6 +281,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 2,
           currentList: "roster",
+          department: 4,
         },
         {
           id: 21,
@@ -257,6 +289,7 @@ const initialState = {
           name: "A42",
           border_color: "#ffaaff",
           currentList: "roster",
+          department: 4,
         },
         {
           id: 22,
@@ -264,6 +297,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 1,
           currentList: "roster",
+          department: 4,
         },
         {
           id: 23,
@@ -271,6 +305,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 2,
           currentList: "roster",
+          department: 4,
         },
         {
           id: 24,
@@ -278,6 +313,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 3,
           currentList: "roster",
+          department: 4,
         },
         {
           id: 25,
@@ -285,6 +321,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 4,
           currentList: "roster",
+          department: 4,
         },
         {
           id: 26,
@@ -292,6 +329,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 5,
           currentList: "roster",
+          department: 4,
         },
         {
           id: 27,
@@ -299,6 +337,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 5,
           currentList: "roster",
+          department: 4,
         },
       ],
     },
@@ -311,6 +350,7 @@ const initialState = {
           name: "A51",
           border_color: "#ffaaff",
           currentList: "roster",
+          department: 5,
         },
         {
           id: 29,
@@ -318,6 +358,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 1,
           currentList: "roster",
+          department: 5,
         },
         {
           id: 30,
@@ -325,6 +366,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 2,
           currentList: "roster",
+          department: 5,
         },
         {
           id: 31,
@@ -332,6 +374,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 3,
           currentList: "roster",
+          department: 5,
         },
         {
           id: 32,
@@ -339,6 +382,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 4,
           currentList: "roster",
+          department: 5,
         },
         {
           id: 33,
@@ -346,6 +390,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 5,
           currentList: "roster",
+          department: 5,
         },
         {
           id: 34,
@@ -353,6 +398,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 5,
           currentList: "roster",
+          department: 5,
         },
         {
           id: 35,
@@ -360,6 +406,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 5,
           currentList: "roster",
+          department: 5,
         },
         {
           id: 36,
@@ -367,6 +414,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 5,
           currentList: "roster",
+          department: 5,
         },
       ],
     },
@@ -379,6 +427,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 4,
           currentList: "roster",
+          department: 6,
         },
         {
           id: 38,
@@ -386,6 +435,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 5,
           currentList: "roster",
+          department: 6,
         },
         {
           id: 39,
@@ -393,6 +443,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 5,
           currentList: "roster",
+          department: 6,
         },
         {
           id: 40,
@@ -400,6 +451,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 5,
           currentList: "roster",
+          department: 6,
         },
         {
           id: 41,
@@ -407,6 +459,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 5,
           currentList: "roster",
+          department: 6,
         },
       ],
     },
@@ -419,6 +472,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 5,
           currentList: "roster",
+          department: 7,
         },
         {
           id: 43,
@@ -426,6 +480,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 4,
           currentList: "roster",
+          department: 7,
         },
         {
           id: 44,
@@ -433,6 +488,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 5,
           currentList: "roster",
+          department: 7,
         },
         {
           id: 45,
@@ -440,6 +496,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 5,
           currentList: "roster",
+          department: 7,
         },
         {
           id: 46,
@@ -447,6 +504,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 5,
           currentList: "roster",
+          department: 7,
         },
       ],
     },
@@ -459,6 +517,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 5,
           currentList: "roster",
+          department: 8,
         },
         {
           id: 48,
@@ -466,6 +525,7 @@ const initialState = {
           border_color: "#ffaaff",
           value: 5,
           currentList: "roster",
+          department: 8,
         },
       ],
     },
@@ -477,17 +537,25 @@ const rosterTeamsSlice = createSlice({
   initialState,
   reducers: {
     spliceRoster: (state, action) => {
-      state.teams.splice(action.payload, 1);
+      state.roster[action.payload.item.department].teams.splice(
+        action.payload.index,
+        1
+      );
     },
     insertRoster: {
       reducer: (state, action) => {
-        state.teams.splice(action.payload.id - 1, 0, action.payload);
+        state.roster[action.payload.item.department].teams.push(
+          action.payload.item
+        );
       },
       prepare: (value) => {
         return {
           payload: {
             ...value,
-            currentList: "roster",
+            item: {
+              ...value.item,
+              currentList: "roster",
+            },
           },
         };
       },

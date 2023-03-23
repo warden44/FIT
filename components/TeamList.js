@@ -31,7 +31,6 @@ const TeamList = (props) => {
   const pagination = props.pagination;
 
   const [department, setDepartment] = React.useState(0); //Pagination state
-  let departmentName;
   const numberOfTeams = list.length;
 
   return (
@@ -40,20 +39,23 @@ const TeamList = (props) => {
       style={styles.container}
       onReceiveDragDrop={(event) => {
         let payload = event.dragged.payload;
+        setDepartment(payload.item.department);
         //if not being dropped on itself, figure out where its coming from, then copy to list and remove from old list
-        if (payload[1] === listName) {
-        } else if (payload[1] === "roster") {
-          dispatch(push(rosterTeams[payload[0]]));
-          dispatch(spliceRoster(payload[0]));
-        } else if (payload[1] === "enroute") {
-          dispatch(push(enrouteTeams[payload[0]]));
-          dispatch(spliceEnroute(payload[0]));
-        } else if (payload[1] === "ready") {
-          dispatch(push(readyTeams[payload[0]]));
-          dispatch(spliceReady(payload[0]));
-        } else if (payload[1] === "staged") {
-          dispatch(push(stagedTeams[payload[0]]));
-          dispatch(spliceStaged(payload[0]));
+        if (payload.item.currentList === listName) {
+        } else if (payload.item.currentList === "roster") {
+          console.log(payload)
+          dispatch(push(payload));
+          dispatch(spliceRoster(payload));
+        } else if (payload.item.currentList === "enroute") {
+          console.log("enroute")
+          dispatch(push(payload));
+          dispatch(spliceEnroute(payload));
+        } else if (payload.item.currentList === "ready") {
+          dispatch(push(payload));
+          dispatch(spliceReady(payload));
+        } else if (payload.item.currentList === "staged") {
+          dispatch(push(payload));
+          dispatch(spliceStaged(payload));
         } else if (payload[1] === "tChartTeams") {
           dispatch(push(tChartTeams[payload[0]][payload[2]]));
           dispatch(spliceTChartTeam(payload));
@@ -69,7 +71,9 @@ const TeamList = (props) => {
           <TouchableOpacity
             style={styles.departmentButton}
             onPress={() =>
-              setDepartment(department === 0 ? numberOfTeams - 1 : department - 1)
+              setDepartment(
+                department === 0 ? numberOfTeams - 1 : department - 1
+              )
             }
           >
             <Text>{"<"}</Text>
@@ -83,7 +87,9 @@ const TeamList = (props) => {
           <TouchableOpacity
             style={styles.departmentButton}
             onPress={() =>
-              setDepartment(numberOfTeams - 1 === department ? 0 : department + 1)
+              setDepartment(
+                numberOfTeams - 1 === department ? 0 : department + 1
+              )
             }
           >
             <Text>{">"}</Text>

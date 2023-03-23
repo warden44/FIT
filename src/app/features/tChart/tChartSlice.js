@@ -10,21 +10,21 @@ const tChartSlice = createSlice({
   initialState,
   reducers: {
     spliceTChartTeam: (state, action) => {
-      state.teams[action.payload[0]].splice(action.payload[2], 1, );
+      state.teams[action.payload.tChartID].splice(action.payload.index, 1, );
     },
     spliceTChartTask: (state, action) => {
-      state.tasks[action.payload[0]].splice(action.payload[2], 1, );
+      state.tasks[action.payload.tChartID].splice(action.payload.index, 1, );
     },
     insertTChartTeam: {
       reducer: (state, action) => {
-        state.teams[action.payload.toIndex].push(action.payload.team);
+        state.teams[action.payload.toIndex].push(action.payload.item);
       },
       prepare: (value) => {
         return {
           payload: {
             ...value,
-            team: {
-              ...value.team,
+            item: {
+              ...value.item,
               currentList: "tChartTeams",
             },
           },
@@ -33,28 +33,28 @@ const tChartSlice = createSlice({
     },
     insertTChartTask: {
       reducer: (state, action) => {
-        state.tasks[action.payload.toIndex].push(action.payload.task);
+        state.tasks[action.payload.toIndex].push(action.payload.item);
       },
       prepare: (value) => {
         return {
           payload: {
             ...value,
-            task: {
-              ...value.task,
+            item: {
+              ...value.item,
               currentList: "tChartTasks",
             },
           },
         };
       },
     },
-    moveTChartTeam: (state, action) => {
-      state.teams.splice(action.payload.toIndex, 1, action.payload.team);
-      state.teams.splice(action.payload.fromIndex, 1, "");
-    },
-    moveTChartTask: (state, action) => {
-      state.tasks.splice(action.payload.toIndex, 1, action.payload.task);
-      state.tasks.splice(action.payload.fromIndex, 1, "");
-    },
+    // moveTChartTeam: (state, action) => {
+    //   state.teams.splice(action.payload.toIndex, 1, action.payload.team);
+    //   state.teams.splice(action.payload.fromIndex, 1, "");
+    // },
+    // moveTChartTask: (state, action) => {
+    //   state.tasks.splice(action.payload.toIndex, 1, action.payload.task);
+    //   state.tasks.splice(action.payload.fromIndex, 1, "");
+    // },
   },
 });
 
@@ -63,7 +63,7 @@ export const {
   spliceTChartTask,
   insertTChartTeam,
   insertTChartTask,
-  moveTChartTeam,
-  moveTChartTask,
+  // moveTChartTeam,
+  // moveTChartTask,
 } = tChartSlice.actions;
 export default tChartSlice.reducer;

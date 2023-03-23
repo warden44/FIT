@@ -112,8 +112,8 @@ function TChart(props) {
               : Dimensions.get("window").width * 0.04,
           height: Dimensions.get("window").height * 0.03,
         }}
-        dragPayload={[tChartID, item.currentList, index]}
-        longPressDelay={150}
+        dragPayload={{ index: index, item: item, tChartID: tChartID }}
+        longPressDelay={0}
         receivingStyle={styles.receiving}
         renderContent={({ viewState }) => {
           return (
@@ -165,37 +165,38 @@ function TChart(props) {
         //////if a team
         if (
           team.length > 3 ||
-          (payload[0] === tChartID && payload[1] === "tChartTeams")
+          (payload.tChartID === tChartID && payload.item.currentList === "tChartTeams")
         ) {
-        } else if (payload[1] === "roster") {
+        } else if (payload.item.currentList === "roster") {
+          console.log("ayy");
           dispatch(
             insertTChartTeam({
               toIndex: tChartID,
-              team: rosterTeams[payload[0]],
+              item: payload.item,
             })
           );
-          dispatch(spliceRoster(payload[0]));
-        } else if (payload[1] === "enroute") {
+          dispatch(spliceRoster(payload));
+        } else if (payload.item.currentList === "enroute") {
           dispatch(
             insertTChartTeam({
               toIndex: tChartID,
-              team: enrouteTeams[payload[0]],
+              item: payload.item,
             })
           );
-          dispatch(spliceEnroute(payload[0]));
-        } else if (payload[1] === "ready") {
+          dispatch(spliceEnroute(payload));
+        } else if (payload.item.currentList === "ready") {
           dispatch(
             insertTChartTeam({
               toIndex: tChartID,
-              team: readyTeams[payload[0]],
+              item: payload.item,
             })
           );
-          dispatch(spliceReady(payload[0]));
-        } else if (payload[1] === "tChartTeams") {
+          dispatch(spliceReady(payload));
+        } else if (payload.item.currentList === "tChartTeams") {
           dispatch(
             insertTChartTeam({
               toIndex: tChartID,
-              team: tChartTeams[payload[0]][payload[2]],
+              item: payload.item,
             })
           );
           dispatch(spliceTChartTeam(payload));
@@ -203,20 +204,20 @@ function TChart(props) {
         //////////////////////////////if a task
         if (
           task.length > 1 ||
-          (payload[0] === tChartID && payload[1] === "tChartTasks")
+          (payload.tChartID === tChartID && payload.item.currentList === "tChartTasks")
         ) {
-        } else if (payload[1] === "task") {
+        } else if (payload.item.currentList === "task") {
           setCustomTask();
           dispatch(
-            insertTChartTask({ toIndex: tChartID, task: tasks[payload[0]] })
+            insertTChartTask({ toIndex: tChartID, item: payload.item })
           );
-          dispatch(spliceTask(payload[0]));
-        } else if (payload[1] === "tChartTasks") {
+          dispatch(spliceTask(payload));
+        } else if (payload.item.currentList === "tChartTasks") {
           setCustomTask();
           dispatch(
             insertTChartTask({
               toIndex: tChartID,
-              task: tChartTasks[payload[0]][payload[2]],
+              item: payload.item,
             })
           );
           dispatch(spliceTChartTask(payload));
@@ -236,14 +237,14 @@ function TChart(props) {
           style={[styles.xButton, { backgroundColor: xBackground }]}
           onPress={() => (
             team.forEach((item, index) => {
-              dispatch(pushReady(tChartTeams[tChartID][index]));
-              dispatch(spliceTChartTeam([tChartID, item.currentList, 0]));
+              dispatch(pushReady({item: tChartTeams[tChartID][index]}));
+              dispatch(spliceTChartTeam({tChartID: tChartID, index: 0}));
             }),
             task.forEach((item, index) => {
               if (!checkDoubleTasks(item.id)) {
-                dispatch(pushTask(item));
+                dispatch(pushTask({item: item}));
               }
-              dispatch(spliceTChartTask([tChartID, item.currentList, 0]));
+              dispatch(spliceTChartTask({tChartID: tChartID, index: 0}));
             }),
             setCustomTask()
           )}

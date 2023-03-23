@@ -272,10 +272,10 @@ const tasksSlice = createSlice({
   initialState,
   reducers: {
     spliceTask: (state, action) => {
-      state.tasks[action.payload].background_color = "#FFEA00";
+      state.tasks[action.payload.index].background_color = "#FFEA00";
     },
     pushTask: (state, action) => {
-      state.tasks[action.payload.id - 1].background_color = "gray";
+      state.tasks[action.payload.item.id - 1].background_color = "gray";
     },
   },
 });

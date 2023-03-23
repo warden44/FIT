@@ -34,17 +34,21 @@ const stagedTeamsSlice = createSlice({
   initialState,
   reducers: {
     spliceStaged: (state, action) => {
-      state.teams.splice(action.payload, 1);
+      state.teams.splice(action.payload.index, 1);
     },
     pushStaged: {
       reducer: (state, action) => {
-        state.teams.push(action.payload);
+        state.teams.push(action.payload.item);
       },
       prepare: (value) => {
         return {
           payload: {
             ...value,
-            currentList: "staged",
+            item: {
+              ...value.item,
+              currentList: "staged",
+
+            }
           },
         };
       },

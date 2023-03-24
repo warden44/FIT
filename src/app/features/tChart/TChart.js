@@ -108,16 +108,17 @@ function TChart(props) {
         hoverDraggingStyle={{
           width:
             item.currentList === "tChartTasks"
-              ? Dimensions.get("window").width * 0.115
+              ? Dimensions.get("window").width * 0.15
               : Dimensions.get("window").width * 0.04,
-          height: Dimensions.get("window").height * 0.03,
+          height: Dimensions.get("window").height * 0.04,
+          
         }}
         dragPayload={{ index: index, item: item, tChartID: tChartID }}
         longPressDelay={0}
         receivingStyle={styles.receiving}
         renderContent={({ viewState }) => {
           return (
-            <View style={{}}>
+            <View style={{height: "100%", justifyContent: "center"}}>
               <Text style={styles.textStyle}>{item.name}</Text>
             </View>
           );
@@ -283,8 +284,8 @@ const styles = StyleSheet.create({
   },
   tChartTask: {
     borderColor: "red",
-    width: Dimensions.get("window").width * 0.07,
     flex: 1,
+    width: Dimensions.get("window").width * 0.115,
     backgroundColor: "#FFBEBE",
   },
   tChartCustomTask: {
@@ -316,6 +317,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     textAlign: "center",
+    textAlignVertical: "center",
     margin: 0,
   },
   xButton: {
@@ -324,6 +326,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     textAlign: "left",
     borderWidth: 1,
+    borderRadius: 100
   },
   xButtonText: {
     fontWeight: "bold",

@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
 import { spliceTask, pushTask } from "./tasksSlice";
-import { spliceReady, pushReady } from "../readyTeams/readyTeamsSlice";
 import {
   spliceTChartTeam,
   spliceTChartTask,
@@ -34,27 +33,44 @@ const Tasks = () => {
         style={[
           styles.task,
           { backgroundColor: item.background_color },
-          item.background_color === "gray" ||
-          item.background_color === "#FFEA00"
+          item.background_color === "lightgray" ||
+          item.background_color === "#FFF9A6"
             ? { borderColor: "black" }
             : null,
         ]}
-        draggingStyle={{ backgroundColor: "#FFEA00", borderColor: "black" }}
+        draggingStyle={{ backgroundColor: "#FFF9A6", borderColor: "black" }}
         hoverDraggingStyle={{}}
         animateSnapback={false}
-        dragPayload={{index: index, item: item}}
-        longPressDelay={0}
+        dragPayload={{ index: index, item: item }}
+        longPressDelay={100}
         receivingStyle={styles.receiving}
         renderContent={({ viewState }) => {
           const receivingDrag = viewState && viewState.receivingDrag;
           const payload = receivingDrag && receivingDrag.payload;
           return (
-            <TouchableOpacity
-              style={styles.taskText}
-              onLongPress={() => console.log("wow")}
-            >
-              <Text style={styles.itemFont}>{item.name}</Text>
-            </TouchableOpacity>
+            <View style={styles.taskInternal}>
+              <TouchableOpacity
+                style={styles.XTaskButton}
+                onPress={() => {
+                  console.log("yay")
+                  if (!checkDoubleTasks(item.id)) {
+                    console.log("checkigndouble")
+                    dispatch(pushTask({ index: index, item: item }));
+                  }
+                }}
+              >
+                <Text
+                  style={{
+                    textAlign: "center",
+                    textAlignVertical: "center",
+                  }}
+                >
+                  X
+                </Text>
+              </TouchableOpacity>
+
+              <Text style={[styles.itemFont]}>{item.name}</Text>
+            </View>
           );
         }}
         key={index}
@@ -79,39 +95,42 @@ const Tasks = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <DraxView
-        style={styles.taskComponent}
-        onReceiveDragDrop={(event) => {
-          let payload = event.dragged.payload;
+    <DraxView
+      style={styles.container}
+      onReceiveDragDrop={(event) => {
+        let payload = event.dragged.payload;
 
-          if (payload.item.currentList === "task") {
-          } else if (payload.item.currentList === "tChartTasks") {
-            if (!checkDoubleTasks(payload.item.id)) {
-              dispatch(pushTask(payload));
-            }
-            dispatch(spliceTChartTask(payload));
+        if (payload.item.currentList === "task") {
+        } else if (payload.item.currentList === "tChartTasks") {
+          if (!checkDoubleTasks(payload.item.id)) {
+            dispatch(pushTask(payload));
           }
-        }}
-      >
-        <View style={styles.switchButton}>
-          <Switch
-          style={{flex: .75, alignItems: "flex-start"}}
-            onValueChange={() => {
-              priority === 1 ? (setPriority(2), setPriorityText("Secondary")) : (setPriority(1), setPriorityText("Primary"));
-            }}
-            value={priority === 1 ? false : true}
-            thumbColor={priority === 1 ? "red" : "red"}
-            trackColor={{ true: "white", false: "white" }}
-          />
-            <Text style={{flex: 1, textAlignVertical: "center"}}>{priorityText}</Text>
-        </View>
-        {tasks.map(
-          (item, index) =>
-            item.priority === priority && TaskDrax({ item, index })
-        )}
-      </DraxView>
-    </View>
+          dispatch(spliceTChartTask(payload));
+        }
+      }}
+    >
+      <View style={styles.switchButton}>
+        <Switch
+          style={{ flex: 0.75, alignItems: "flex-start" }}
+          onValueChange={() => {
+            priority === 1
+              ? (setPriority(2), setPriorityText("Secondary"))
+              : (setPriority(1), setPriorityText("Primary"));
+          }}
+          value={priority === 1 ? false : true}
+          thumbColor={priority === 1 ? "red" : "red"}
+          trackColor={{ true: "white", false: "white" }}
+        />
+        <Text
+          style={{ flex: 1, textAlignVertical: "center", fontWeight: "bold" }}
+        >
+          {priorityText}
+        </Text>
+      </View>
+      {tasks.map(
+        (item, index) => item.priority === priority && TaskDrax({ item, index })
+      )}
+    </DraxView>
   );
 };
 
@@ -124,14 +143,23 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     justifyContent: "center",
+    flexDirection: "column",
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    alignContent: "flex-start",
+    backgroundColor: "lightblue",
+    borderWidth: 2,
   },
   itemFont: {
+    width: "80%",
     fontSize: 12.5,
-    textAlign: "center",
+    textAlign: "left",
+    textAlignVertical: "center",
   },
   switchButton: {
-    width: "48%",
-    height: "7.25%",
+    width: Dimensions.get("window").width * 0.115,
+    height: Dimensions.get("window").height * 0.045,
     backgroundColor: "lightgray",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -142,7 +170,7 @@ const styles = StyleSheet.create({
   },
   task: {
     width: Dimensions.get("window").width * 0.115,
-    height: Dimensions.get("window").height * 0.0425,
+    height: Dimensions.get("window").height * 0.045,
     backgroundColor: "#FFBEBE",
     borderBottomWidth: 2,
     borderRightWidth: 2,
@@ -154,9 +182,11 @@ const styles = StyleSheet.create({
     margin: "1%",
     marginVertical: "1.25%",
   },
-  taskText: {
-    textAlign: "center",
-    textAlignVertical: "center",
+  taskInternal: {
+    flexDirection: "row",
+    alignItems: "center",
+    height: "100%",
+    width: "100%",
   },
   taskComponent: {
     flexDirection: "column",
@@ -167,5 +197,15 @@ const styles = StyleSheet.create({
     flex: 9,
     backgroundColor: "lightblue",
     borderWidth: 2,
+  },
+  XTaskButton: {
+    backgroundColor: "gray",
+    margin: "5%",
+    height: "90%",
+    width: "20%",
+    borderRadius: 100,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
   },
 });

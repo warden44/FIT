@@ -8,10 +8,6 @@ import {
   StatusBar,
   Switch,
 } from "react-native";
-import Top from "./sections/Top";
-import PracticeTop from "./sections/PracticeTop";
-import PracticeBottom from "./sections/PracticeBottom";
-import Bottom from "./sections/Bottom";
 import CheckListItem from "../components/CheckListItem";
 import Mayday from "../components/Mayday";
 import TeamList from "../components/TeamList";

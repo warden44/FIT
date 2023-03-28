@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "FitApp",
-    "slug": "FitApp",
+    "name": "Fit App",
+    "slug": "fit-app",
     "version": "1.0.0",
     "orientation": "landscape",
     "icon": "./assets/icon.png",
@@ -18,7 +18,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.evan32nd.fitapp"
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",
@@ -29,6 +30,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7fffb51a-74fa-4bab-9278-ede39827ac39"
+      }
+    },
+    "owner": "evan32nd"
   }
 }

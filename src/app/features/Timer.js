@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 function Timer(props) {
   const [seconds, setSeconds] = useState(0);
@@ -112,7 +112,7 @@ function Timer(props) {
       {props.size === "smallTimer" ? (
         <View style={styles.containerSmall}>
           <View style={styles.dateSmall}>
-            <Text>
+            <Text style={styles.smallFontTime}>
               {markHour < 10 && 0}
               {markHour >= 0 && markHour}:{markMin < 10 && 0}
               {markMin} {timeType}
@@ -127,6 +127,7 @@ function Timer(props) {
               resetDate();
             }}
             onPress={() => {
+              console.log(Dimensions.get("window").fontScale)
               //if timer is not running and is clicked, if timer is set to zero, reset date, else stop timer
               if (increment === 0) {
                 //start timer
@@ -139,7 +140,7 @@ function Timer(props) {
               }
             }}
           >
-            <Text adjustsFontSizeToFit>
+            <Text style={styles.smallFont}>
               {hours < 10 && 0}
               {hours >= 0 && hours}:{minutes < 10 && 0}
               {minutes}:{seconds < 10 && 0}
@@ -239,6 +240,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  smallFont: {
+    fontSize: 18,
+
+  },
+  smallFontTime: {
+    fontSize: 15,
   },
   smallTimer: {
     flex: 1,

@@ -11,8 +11,6 @@ import {
   spliceTChartTask,
   insertTChartTeam,
   insertTChartTask,
-  moveTChartTeam,
-  moveTChartTask,
 } from "./tChartSlice";
 
 import * as React from "react";
@@ -28,6 +26,8 @@ import {
 import Timer from "../Timer";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 import { useEffect } from "react";
+
+const appStyles=require("../../../../style/appStyles")
 
 function TChart(props) {
   var tChartID = props.tChartID;
@@ -62,7 +62,7 @@ function TChart(props) {
     if (active) {
       setOpac(1);
       setGlow("black");
-      setXBackground("red");
+      setXBackground("#F70808");
       timerRef.current.resetTimer();
       timerRef.current.resetDate();
       timerRef.current.startTimer();
@@ -159,7 +159,7 @@ function TChart(props) {
 
   return (
     <DraxView
-      style={[styles.tChartContainer, { opacity: opac, borderColor: glow }]}
+      style={[styles.tChartContainer, { opacity: opac, borderColor: glow }, appStyles.tChart]}
       onReceiveDragDrop={(event) => {
         let payload = event.dragged.payload;
 
@@ -325,7 +325,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     textAlign: "left",
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 100
   },
   xButtonText: {

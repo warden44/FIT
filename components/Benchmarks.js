@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 
+const appStyles=require("../style/appStyles")
+
 const Benchmarks = () => {
   const [allClear, setAllClear] = React.useState("");
   const [underControl, setUnderControl] = React.useState("");
@@ -50,7 +52,7 @@ const Benchmarks = () => {
   }, [trackTasks]);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, appStyles.tertiaryColor]}>
       {/* Check */}
       <TouchableOpacity
         style={styles.check}

@@ -19,6 +19,8 @@ import {
 } from "react-native";
 import React from "react";
 
+const appStyles = require("../../../../style/appStyles");
+
 const Tasks = () => {
   const tasks = useSelector((state) => state.tasks.tasks);
   const tChartTasks = useSelector((state) => state.tChart.tasks);
@@ -52,9 +54,9 @@ const Tasks = () => {
               <TouchableOpacity
                 style={styles.XTaskButton}
                 onPress={() => {
-                  console.log("yay")
+                  console.log("yay");
                   if (!checkDoubleTasks(item.id)) {
-                    console.log("checkigndouble")
+                    console.log("checkigndouble");
                     dispatch(pushTask({ index: index, item: item }));
                   }
                 }}
@@ -96,7 +98,7 @@ const Tasks = () => {
 
   return (
     <DraxView
-      style={styles.container}
+      style={[styles.container, appStyles.secondaryColor]}
       onReceiveDragDrop={(event) => {
         let payload = event.dragged.payload;
 
@@ -109,7 +111,7 @@ const Tasks = () => {
         }
       }}
     >
-      <View style={styles.switchButton}>
+      <View style={[styles.switchButton, appStyles.tertiaryColor]}>
         <Switch
           style={{ flex: 0.75, alignItems: "flex-start" }}
           onValueChange={() => {
@@ -160,7 +162,7 @@ const styles = StyleSheet.create({
   switchButton: {
     width: Dimensions.get("window").width * 0.115,
     height: Dimensions.get("window").height * 0.045,
-    backgroundColor: "lightgray",
+    backgroundColor: "lightblue",
     flexDirection: "row",
     justifyContent: "space-between",
     borderWidth: 1,

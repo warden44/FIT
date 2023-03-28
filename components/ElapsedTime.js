@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Audio } from "expo-av";
 
+const appStyles =require("../style/appStyles")
+
 const ElapsedTime = () => {
   const [seconds, setSeconds] = useState(55);
   const [minutes, setMinutes] = useState(19);
@@ -80,7 +82,7 @@ const ElapsedTime = () => {
   }, [sound]);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, appStyles.tertiaryColor]}>
       <TouchableOpacity
         style={{ flex: 1 }}
         onLongPress={() => (

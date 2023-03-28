@@ -16,7 +16,7 @@ const DraxItem = ({ item, index }) => {
       }}
       hoverDraggingStyle={styles.hoverDragging}
       dragPayload={{index: index, item: item}}
-      longPressDelay={150}
+      longPressDelay={0}
       receivingStyle={styles.receiving}
       renderContent={({ viewState }) => {
         return (

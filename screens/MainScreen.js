@@ -25,8 +25,13 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { DraxProvider, DraxView, DraxList } from "react-native-drax";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+
+const appStyles=require("../style/appStyles")
+
 function MainScreen(props) {
   const gestureRootViewStyle = { flex: 1 };
+
+  const appStyles=require("../style/appStyles")
 
   const [mayday, setMayday] = useState(false);
 
@@ -38,7 +43,7 @@ function MainScreen(props) {
   return (
     <GestureHandlerRootView style={gestureRootViewStyle}>
       <DraxProvider>
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, appStyles.primaryColor]}>
           <StatusBar hidden />
           <View style={styles.containerHeader}>
             <View style={styles.headerTimer}>
@@ -63,7 +68,7 @@ function MainScreen(props) {
             {/* Initial Size Up Buttons */}
 
             <View style={styles.topLeft}>
-              <View style={styles.topMaydayContainer}>
+              <View style={[styles.topMaydayContainer, appStyles.tertiaryColor]}>
                 <View style={styles.topMaydayLabel}>
                   <Text
                     style={[
@@ -178,7 +183,7 @@ function MainScreen(props) {
             <View style={styles.bottomTasks}>
               <Tasks />
             </View>
-            <View style={styles.bottomRight}>
+            <View style={[styles.bottomRight, appStyles.secondaryColor]}>
               <View style={styles.bottomBenchElapsed}>
                 <View style={styles.bottomBenchmarks}>
                   <Benchmarks />
@@ -231,7 +236,6 @@ const styles = StyleSheet.create({
   containerTop: {
     width: "100%",
     height: "30%",
-    borderTopColor: "black",
     borderTopWidth: 2,
     borderBottomColor: "black",
     flexDirection: "row",
@@ -276,7 +280,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 10,
   },
   topLeft: {
-    width: "42.5%",
+    width: "44%",
     height: "100%",
     padding: 1,
     borderBottomWidth: 2,
@@ -294,7 +298,7 @@ const styles = StyleSheet.create({
     right: "1%",
     width: "30%",
     height: "25%",
-    backgroundColor: "lightgray",
+    backgroundColor: "lightblue",
     zIndex: 1,
     borderWidth: 1,
     flexDirection: "row",

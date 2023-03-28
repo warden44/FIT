@@ -17,6 +17,8 @@ import { spliceReady } from "../src/app/features/readyTeams/readyTeamsSlice";
 import { spliceStaged } from "../src/app/features/stagedTeams/stagedTeams";
 import { spliceTChartTeam } from "../src/app/features/tChart/tChartSlice";
 
+const appStyles = require("../style/appStyles");
+
 const TeamList = (props) => {
   const rosterTeams = useSelector((state) => state.rosterTeams.teams);
   const enrouteTeams = useSelector((state) => state.enrouteTeams.teams);
@@ -35,19 +37,18 @@ const TeamList = (props) => {
 
   return (
     <DraxView
-      on
-      style={styles.container}
+      style={[styles.container, appStyles.secondaryColor]}
       onReceiveDragDrop={(event) => {
         let payload = event.dragged.payload;
         setDepartment(payload.item.department);
         //if not being dropped on itself, figure out where its coming from, then copy to list and remove from old list
         if (payload.item.currentList === listName) {
         } else if (payload.item.currentList === "roster") {
-          console.log(payload)
+          console.log(payload);
           dispatch(push(payload));
           dispatch(spliceRoster(payload));
         } else if (payload.item.currentList === "enroute") {
-          console.log("enroute")
+          console.log("enroute");
           dispatch(push(payload));
           dispatch(spliceEnroute(payload));
         } else if (payload.item.currentList === "ready") {
@@ -62,7 +63,7 @@ const TeamList = (props) => {
         }
       }}
     >
-      <View style={styles.title}>
+      <View style={[styles.title, appStyles.tertiaryColor]}>
         <Text style={styles.titleText}>{title}</Text>
       </View>
       {/* if pagination is set to true, add buttons */}
@@ -167,9 +168,9 @@ const styles = StyleSheet.create({
     color: "black",
   },
   team: {
-    width: Dimensions.get("window").width * 0.04,
-    height: Dimensions.get("window").height * 0.04,
-    margin: "1%",
+    width: Dimensions.get("window").width * 0.0375,
+    height: Dimensions.get("window").height * 0.0375,
+    margin: "2%",
   },
   teamList: {
     flexDirection: "column",
@@ -178,14 +179,13 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     width: "100%",
     flex: 6,
-    margin: 0,
     paddingVertical: 1,
   },
   title: {
     flex: 1,
     width: "100%",
     borderBottomWidth: 2,
-    backgroundColor: "lightgray",
+    backgroundColor: "lightblue",
   },
   titleText: {
     fontSize: 20,
